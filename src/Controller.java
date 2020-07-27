@@ -1,3 +1,5 @@
+
+// Connect all classes together
 public class Controller {
 
 //    private Model model;
@@ -11,7 +13,7 @@ public class Controller {
         view = v;
         formulationTableClass = ft;
         pricesTable = pt;
-        cogsTable = ct;
+//        cogsTable = ct;
         initView();
 
 //        Init product details variables in Formulation table
@@ -34,7 +36,7 @@ public class Controller {
             initTable();
         });
         view.getMenuItemChangePricesSource().addActionListener(e -> {
-            pricesTable.loadpricesTableDataSource(view.getFrame());
+            pricesTable.loadPricesTableDataSource(view.getFrame());
         });
 
     }

@@ -1,3 +1,6 @@
+
+
+// This class is Model of a raw material for price dataa
 public class RawMaterialsPricesModel {
 
     private Object[][] pricesTable;

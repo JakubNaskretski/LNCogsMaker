@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
+
+// Initiates price models and copy excel data into virtual price-model table
 public class PricesTable {
 
     private RawMaterialsPricesModel rmpm;
@@ -40,7 +42,7 @@ public class PricesTable {
     }
 
     //    Choose file with file chooser java set chosen file address and read data from file calling read func
-    public void loadpricesTableDataSource(JFrame currentFrame) {
+    public void loadPricesTableDataSource( JFrame currentFrame) {
         jfc.setDialogTitle("Open file");
         int returnValue = jfc.showOpenDialog(currentFrame);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -60,6 +62,7 @@ public class PricesTable {
         }
     }
 
+//    Opens raw materials price list, reads it and creates price models based on number of rows in the price offer
     private void initiatePriceModels(){
         File inputWorkbook = new File(rawMaterialsTablePricesPath);
         Workbook w;
@@ -77,6 +80,9 @@ public class PricesTable {
             System.out.println("Couldn't load Models");}
     }
 
+
+
+// Calls initiatePriceList(), reads price list and fill model with prices from table
     private void getPricesList() throws IOException {
 
             initiatePriceModels();

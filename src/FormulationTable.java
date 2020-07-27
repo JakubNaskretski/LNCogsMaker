@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
+// Reads formulation file, creates virtual table with formulation
+
 public class FormulationTable {
 
     private Object[][] formulationTable;
@@ -25,13 +27,8 @@ public class FormulationTable {
 
     private String productName, clientName, productCapacity, formulationDate;
 
-
-//    String excelAddress = model.getExcelAddress();
-//    String modelListData = model.getModelListData();
-//    currentFrame = view.getFrame()
-//    Selected file set get - setInputFile(selectedFile.getAbsolutePath());
-
-
+    // Creates virtual table for formulation
+    // TODO: Make dynamicly created table
     public FormulationTable() {
         this.jfc = new JFileChooser();
 
@@ -50,7 +47,7 @@ public class FormulationTable {
         this.formulationTable = formulationListData;
     }
 
-    //    Read choosen file setting TableDataModel based on readed information
+    //    Reads file with formulations and fills virtual formulation table with readed data
     public void readFormulationData() throws IOException {
         File inputWorkbook = new File(selectedFilePath);
         Workbook w;

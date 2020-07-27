@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
+
+// This class provides view for the application
 public class View implements TableModelListener {
 
     private JFrame frame;
