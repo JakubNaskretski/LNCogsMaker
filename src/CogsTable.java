@@ -38,6 +38,7 @@ public class CogsTable {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
        cogsDate = dateFormat.format(date);
 
+
         itemName2 = new String[9];
         qty = new Integer[9];
         mu = new String[9];
@@ -113,5 +114,9 @@ public class CogsTable {
 
     public Double[] getPlnQty() {
         return plnQty;
+    }
+
+    public String getCogsDate() {
+        return cogsDate;
     }
 }

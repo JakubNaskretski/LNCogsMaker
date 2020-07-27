@@ -13,7 +13,7 @@ public class Controller {
         view = v;
         formulationTableClass = ft;
         pricesTable = pt;
-//        cogsTable = ct;
+        cogsTable = ct;
         initView();
 
 //        Init product details variables in Formulation table
@@ -43,6 +43,7 @@ public class Controller {
 
 //    Initializing tables with data
     private void initTable(){
+
         view.createFormulationDataTable();
         for (int i = 0; i < formulationTableClass.getCounter().length; i++){
             for (int j=0;j<6;j++) {
@@ -121,6 +122,8 @@ public class Controller {
              }
 
              view.getCogsRawSubtotalTextField().setText(String.valueOf(subtotalRawCosts) + " PLN");
+
+
 
          }
 

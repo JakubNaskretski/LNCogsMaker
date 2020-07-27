@@ -349,6 +349,10 @@ public class View implements TableModelListener {
         return collectiveBoxChooser;
     }
 
+    public JLabel getCogsDate() {
+        return cogsDate;
+    }
+
     //    TODO: ADD ACION LISTENER FOR TABLE
     @Override
     public void tableChanged(TableModelEvent e) {
