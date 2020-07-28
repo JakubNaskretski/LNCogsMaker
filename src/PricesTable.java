@@ -78,11 +78,6 @@ public class PricesTable {
                 rmpml.getRmpml().add(new RawMaterialsPricesModel(new Integer[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()],new String[w.getSheet(i).getRows()],
                         new Double[w.getSheet(i).getRows()], new Double[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()]));
             }
-
-            for (int h=0; h<rmpml.getRmpml().size(); h++){
-                System.out.println("RMPML "+rmpml.getRmpml().get(h));
-            }
-
 //            working solution - taking only prices for 1st sheet
             // Get the first sheet
 //            Sheet sheet = w.getSheet(0);
@@ -102,6 +97,8 @@ public class PricesTable {
     private void getPricesList() throws IOException {
 
             initiatePriceModels();
+
+//            TODO: Add dictionary for material choosers
 
 //            TODO: Remove double sheet
             File inputWorkbook = new File(rawMaterialsTablePricesPath);

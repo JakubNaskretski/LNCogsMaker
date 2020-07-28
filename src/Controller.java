@@ -44,6 +44,9 @@ public class Controller {
 //    Initializing tables with data
     private void initTable(){
 
+//        Loading data for JCombo boxes materials table
+//        for (int k=0;k<view.materi)
+
         view.createFormulationDataTable();
         for (int i = 0; i < formulationTableClass.getCounter().length; i++){
             for (int j=0;j<6;j++) {
