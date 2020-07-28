@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
+// Class responsible for rendering view with no data storage
 public class View implements TableModelListener {
 
     private JFrame frame;

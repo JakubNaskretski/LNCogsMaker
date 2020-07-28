@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
+// Creates formulation virtual table, reads formulation sheet and fills table with data
 public class FormulationTable {
 
     private Object[][] formulationTable;
@@ -50,7 +51,7 @@ public class FormulationTable {
         this.formulationTable = formulationListData;
     }
 
-    //    Read choosen file setting TableDataModel based on readed information
+    //    Read chosen file setting TableDataModel based on readed information
     public void readFormulationData() throws IOException {
         File inputWorkbook = new File(selectedFilePath);
         Workbook w;

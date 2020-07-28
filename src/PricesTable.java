@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
+
+// Class creating virtual table for prices, and loads prices from excel price sheet
 public class PricesTable {
 
     private RawMaterialsPricesModel rmpm;
@@ -15,7 +17,7 @@ public class PricesTable {
 
     private JFileChooser jfc;
 //    private JFrame currentFrame;
-    private String rawMaterialsTablePricesPath = "C:\\Users\\kuba2\\IdeaProjects\\LnCogsV3\\TestExcelFiles\\TestPrices.xls";
+    private String rawMaterialsTablePricesPath = "TestExcelFiles\\TestPrices.xls";
     private double euroRate, usdRate;
 
     private String[] bottleChooserList;
@@ -39,8 +41,8 @@ public class PricesTable {
         System.out.println("New path have been set "+rawMaterialsTablePricesPath);
     }
 
-    //    Choose file with file chooser java set chosen file address and read data from file calling read func
-    public void loadpricesTableDataSource(JFrame currentFrame) {
+    // Chooses file with file chooser, set chosen file address as path and read data from file calling getPriceList()
+    public void loadPricesTableDataSource(JFrame currentFrame) {
         jfc.setDialogTitle("Open file");
         int returnValue = jfc.showOpenDialog(currentFrame);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -60,6 +62,7 @@ public class PricesTable {
         }
     }
 
+    // Reads price sheet, initiates virtual price table based on number of rows in sheet
     private void initiatePriceModels(){
         File inputWorkbook = new File(rawMaterialsTablePricesPath);
         Workbook w;
@@ -77,6 +80,7 @@ public class PricesTable {
             System.out.println("Couldn't load Models");}
     }
 
+    // Reads price sheet and fills virtual table with data from sheet
     private void getPricesList() throws IOException {
 
             initiatePriceModels();

@@ -34,7 +34,7 @@ public class Controller {
             initTable();
         });
         view.getMenuItemChangePricesSource().addActionListener(e -> {
-            pricesTable.loadpricesTableDataSource(view.getFrame());
+            pricesTable.loadPricesTableDataSource(view.getFrame());
         });
 
     }

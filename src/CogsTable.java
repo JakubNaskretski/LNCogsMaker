@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+// Creating virtual table for Cogs
 public class CogsTable {
 
     private Object[][] cogsTable;

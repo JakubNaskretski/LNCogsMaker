@@ -1,3 +1,5 @@
+
+// Class determining virtual price table model
 public class RawMaterialsPricesModel {
 
     private Object[][] pricesTable;
