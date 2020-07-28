@@ -12,6 +12,8 @@ import java.io.IOException;
 // Initiates price models and copy excel data into virtual price-model table
 public class PricesTable {
 
+    private RawMaterialsPriceModelList rmpml;
+
     private RawMaterialsPricesModel rmpm;
     private Object[] priceModelsList = new Object[1];
 
@@ -20,16 +22,17 @@ public class PricesTable {
     private String rawMaterialsTablePricesPath = "C:\\Users\\kuba2\\IdeaProjects\\LnCogsV3\\TestExcelFiles\\TestPrices.xls";
     private double euroRate, usdRate;
 
-    private String[] bottleChooserList;
-    private String[] capChooserList;
-    private String[] labelChooserList;
-    private String[] measurerChooserList;
-    private String[] unitBoxChooserList;
-    private String[] leafletChooserList;
-    private String[] collectiveBoxChooserList;
+//    private String[] bottleChooserList;
+//    private String[] capChooserList;
+//    private String[] labelChooserList;
+//    private String[] measurerChooserList;
+//    private String[] unitBoxChooserList;
+//    private String[] leafletChooserList;
+//    private String[] collectiveBoxChooserList;
 
 
     public PricesTable() {
+        this.rmpml = new RawMaterialsPriceModelList();
         this.jfc = new JFileChooser();
         this.euroRate = 4.3;
         this.usdRate = 3.8;
