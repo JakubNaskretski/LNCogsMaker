@@ -1,7 +1,7 @@
 
 
 // This class is Model of a raw material for price dataa
-public class RawMaterialsPricesModel extends RawMaterialsPriceModelList {
+public class RawMaterialsPricesModel {
 
     private Object[][] pricesTable;
     private Integer[] counter;
@@ -26,7 +26,7 @@ public class RawMaterialsPricesModel extends RawMaterialsPriceModelList {
         this.pricesTable = new Object[][]{
                 counter, systemNumbers, rawMaterialsNames,
                 minPrice, maxPrice, currency, supplier};
-        super.getRmpml().add(this);
+//        super.getRmpml().add(this);
     }
 
     public Object[][] getPricesTable() {

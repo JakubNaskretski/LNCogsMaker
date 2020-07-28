@@ -15,7 +15,7 @@ public class PricesTable {
     private RawMaterialsPriceModelList rmpml;
 
     private RawMaterialsPricesModel rmpm;
-    private Object[] priceModelsList = new Object[1];
+//    private Object[] priceModelsList = new Object[1];
 
     private JFileChooser jfc;
 //    private JFrame currentFrame;
@@ -75,8 +75,12 @@ public class PricesTable {
 //            Read number of sheet, creates instance of RMPM for each sheet with number of rows in sheet
 //            Each sheet by class is automaticcly added to RMPML
             for (int i=0;i<w.getNumberOfSheets();i++){
-                new RawMaterialsPricesModel(new Integer[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()],new String[w.getSheet(i).getRows()],
-                        new Double[w.getSheet(i).getRows()], new Double[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()]);
+                rmpml.getRmpml().add(new RawMaterialsPricesModel(new Integer[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()],new String[w.getSheet(i).getRows()],
+                        new Double[w.getSheet(i).getRows()], new Double[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()]));
+            }
+
+            for (int h=0; h<rmpml.getRmpml().size(); h++){
+                System.out.println("RMPML "+rmpml.getRmpml().get(h));
             }
 
 //            working solution - taking only prices for 1st sheet
