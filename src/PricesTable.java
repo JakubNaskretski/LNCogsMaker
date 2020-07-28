@@ -71,13 +71,22 @@ public class PricesTable {
         Workbook w;
         try {
             w = Workbook.getWorkbook(inputWorkbook);
+
+//            Read number of sheet, creates instance of RMPM for each sheet with number of rows in sheet
+//            Each sheet by class is automaticcly added to RMPML
+            for (int i=0;i<w.getNumberOfSheets();i++){
+                new RawMaterialsPricesModel(new Integer[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()],new String[w.getSheet(i).getRows()],
+                        new Double[w.getSheet(i).getRows()], new Double[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()]);
+            }
+
+//            working solution - taking only prices for 1st sheet
             // Get the first sheet
-            Sheet sheet = w.getSheet(0);
-
-            this.rmpm = new RawMaterialsPricesModel(new Integer[sheet.getRows()], new String[sheet.getRows()],new String[sheet.getRows()],
-                    new Double[sheet.getRows()], new Double[sheet.getRows()], new String[sheet.getRows()], new String[sheet.getRows()]);
-
-            priceModelsList[0] = rmpm;
+//            Sheet sheet = w.getSheet(0);
+//
+//            this.rmpm = new RawMaterialsPricesModel(new Integer[sheet.getRows()], new String[sheet.getRows()],new String[sheet.getRows()],
+//                    new Double[sheet.getRows()], new Double[sheet.getRows()], new String[sheet.getRows()], new String[sheet.getRows()]);
+//
+//            priceModelsList[0] = rmpm;
 
     } catch (Exception e){
             System.out.println("Couldn't load Models");}
@@ -96,37 +105,41 @@ public class PricesTable {
             try {
                 w = Workbook.getWorkbook(inputWorkbook);
                 // Get the first sheet
-                Sheet sheet = w.getSheet(0);
+
+//                Sheet sheet = w.getSheet(0);
 
 //                        TODO: FIX temporary solution of creating table
 //                this.pricesTable = new Object[][]{
 //                        counter, systemNumbers, rawMaterialsNames,
 //                        minPrice, maxPrice, currency, supplier};
 
-                for (int j = 0; j < 7; j++) {
-                    for (int i = 0; i < sheet.getRows(); i++) {
-                        Cell cell = sheet.getCell(j, i);
-                        CellType type = cell.getType();
+                for (int k=0; k<w.getNumberOfSheets();k++) {
+                    for (int j = 0; j < 7; j++) {
+                        for (int i = 0; i < w.getSheet(k).getRows(); i++) {
+                            Cell cell = w.getSheet(k).getCell(j, i);
+                            CellType type = cell.getType();
 //  TODO: add verify data type
 //                    model.getModelListData()[j][i] = cell.getContents();
-                        if (type == CellType.LABEL) {
+                            if (type == CellType.LABEL) {
 //                            priceModelsList[0].get [j][i] = cell.getContents();
 
-                            rmpm.getPricesTable()[j][i] = cell.getContents();
+                                rmpml.getRmpml().get(k).getPricesTable()[j][i] = cell.getContents();
+//                                rmpm.getPricesTable()[j][i] = cell.getContents();
 
                                 System.out.println("I got a label "
                                         + cell.getContents());
                             }
 
-                        if (type == CellType.NUMBER) {
-                            System.out.println("I got a number "
-                                    + cell.getContents());
-                            if (j == 3) {
-                                rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",","."));
-                            } else if(j == 4){
-                                rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",","."));
-                            } else {
-                                rmpm.getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                            if (type == CellType.NUMBER) {
+                                System.out.println("I got a number "
+                                        + cell.getContents());
+                                if (j == 3 | j == 4) {
+//                                    rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",", "."));
+                                    rmpml.getRmpml().get(k).getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",", "."));
+                                } else {
+//                                    rmpm.getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                                    rmpml.getRmpml().get(k).getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                                }
                             }
                         }
                     }
