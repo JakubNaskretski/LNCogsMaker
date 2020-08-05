@@ -1,11 +1,12 @@
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 
 // This class is Model of a raw material for price dataa
 public class RawMaterialsPricesModel {
 
     private Object[][] pricesTable;
-    private Hashtable productNumberDict;
+    private LinkedHashMap productNumberDict;
     private Integer[] counter;
     private String[] systemNumbers;
     private String[] rawMaterialsNames;
@@ -18,7 +19,7 @@ public class RawMaterialsPricesModel {
                                    String[] rawMaterialsNames, Double[] minPrice, Double[] maxPrice,
                                    String[] currency, String[] supplier)
     {
-        this.productNumberDict = new Hashtable();
+        this.productNumberDict = new LinkedHashMap();
         this.counter = counter;
         this.systemNumbers = systemNumbers;
         this.rawMaterialsNames = rawMaterialsNames;
@@ -64,7 +65,7 @@ public class RawMaterialsPricesModel {
         return supplier;
     }
 
-    public Hashtable getProductNumberDict() {
+    public LinkedHashMap getProductNumberDict() {
         return productNumberDict;
     }
 }

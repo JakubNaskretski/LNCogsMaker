@@ -115,8 +115,7 @@ public class View implements TableModelListener {
         String[] cogsTableColumnNames1 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
 //        Creating table, adding JComboBoxChoosers to each row from materialsEditorList
-        DefaultTableModel cogsMaterialsTableModel = new DefaultTableModel(cogsMaterialsData, cogsTableColumnNames1);
-        cogsMaterialsTable = new JTable(cogsMaterialsTableModel){
+        cogsMaterialsTable = new JTable(cogsMaterialsData, cogsTableColumnNames1){
             //  Determine editor to be used by row
             public TableCellEditor getCellEditor(int row, int column)
             {

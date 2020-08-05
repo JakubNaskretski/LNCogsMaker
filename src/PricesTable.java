@@ -154,11 +154,11 @@ public class PricesTable {
             }
 
 
-        System.out.println("Słownik -------");
-
-        for (Enumeration e = rmpml.getRmpml().get(2).getProductNumberDict().elements(); e.hasMoreElements();) {
-            System.out.println(e.nextElement());
-        }
+//        System.out.println("Słownik -------");
+//
+//        for (Enumeration e = rmpml.getRmpml().get(2).getProductNumberDict().elements(); e.hasMoreElements();) {
+//            System.out.println(e.nextElement());
+//        }
 
     }
 
