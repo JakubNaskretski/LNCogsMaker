@@ -13,7 +13,8 @@ public class Controller {
     private PricesTable pricesTable;
     private CogsTable cogsTable;
     private Double subtotalMaterialsCosts = 0.0;
-
+    private Double subtotalRawCosts = 0.0;
+    private Double totalCogsCosts = 0.0;
 
     public Controller(View v, FormulationTable ft, PricesTable pt, CogsTable ct) {
         view = v;
@@ -235,7 +236,6 @@ public class Controller {
 //                 cogsTable.getMu()[j] = "kg";
 //             }
 //         }
-         double subtotalRawCosts = 0;
 
          for (int i = 0; i < formulationTableClass.getCounter().length; i++) {
              cogsTable.getItemName1()[i] = formulationTableClass.getRawMaterialsNames()[i];
@@ -275,8 +275,9 @@ public class Controller {
                  cogsTable.getPlnQty()[i] = 0.0;
              }
 
-             view.getCogsRawSubtotalTextField().setText(String.valueOf(subtotalRawCosts) + " PLN");
+             view.getCogsRawSubtotalTextField().setText((subtotalRawCosts) + " PLN");
 
+             view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
 
 
          }
@@ -317,7 +318,8 @@ public class Controller {
          view.getCogsMaterialsData()[matierlasTableRow][8] = 0.0;
      }
 
-     view.getCogsMaterialsSubtotalTextField().setText(String.valueOf(subtotalMaterialsCosts) + " PLN");
+     view.getCogsMaterialsSubtotalTextField().setText((subtotalMaterialsCosts) + " PLN");
+     view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
  }
 
 

@@ -4,6 +4,7 @@ public class Main {
         // Assemble all the pieces of the MVC
 //        TODO: Write One function to read xls tables
 //            Model m = new Model();
+//        TODO: Add version for capsules also
         View v = new View();
         FormulationTable ft = new FormulationTable();
         PricesTable pt = new PricesTable();

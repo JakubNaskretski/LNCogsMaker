@@ -25,7 +25,7 @@ public class View implements TableModelListener {
     private JPanel mainJPanelContainer, middleInformationJPanel;
     private Object[][] formulationData, cogsMaterialsData, cogsRawData, cogsProductionData;
     private JLabel cogsDate, productNameLabel, clientNameLabel, productCapacityLabel, dateOfTheFormulationLabel;
-    private JTextField cogsMaterialsSubtotalTextField, cogsRawSubtotalTextField, cogsProductionSubtotalTextField;
+    private JTextField cogsMaterialsSubtotalTextField, cogsRawSubtotalTextField, cogsProductionSubtotalTextField, cogsTotalCostsTextField;
 
     private ArrayList<TableCellEditor> materialsEditorsList = new ArrayList<TableCellEditor>(9);
     private ArrayList<JComboBox> materialsChoosersList = new ArrayList<>();
@@ -82,6 +82,10 @@ public class View implements TableModelListener {
         materialsChoosersList.add(leafletChooser);
         collectiveBoxChooser  = new JComboBox();
         materialsChoosersList.add(collectiveBoxChooser);
+
+        cogsTotalCostsTextField = new JTextField();
+        cogsTotalCostsTextField.setEditable(false);
+        cogsTotalCostsTextField.setBackground(Color.WHITE);
 
         cogsDate = new JLabel("Example Cogs date");
         productNameLabel = new JLabel("Example product name");
@@ -239,6 +243,30 @@ public class View implements TableModelListener {
         c.gridwidth = 1;
         mainJPanelContainer.add(cogsProductionSubtotalTextField, c);
 
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 7;
+        c.gridwidth = 1;
+        mainJPanelContainer.add(Box.createVerticalStrut(5), c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 8;
+        c.gridwidth = 1;
+        mainJPanelContainer.add(new JLabel("Total cogs"), c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 8;
+        c.gridwidth = 1;
+        mainJPanelContainer.add(cogsTotalCostsTextField, c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 9;
+        c.gridwidth = 1;
+        mainJPanelContainer.add(Box.createVerticalStrut(10), c);
+
         // -
 
             c2.fill = GridBagConstraints.HORIZONTAL;
@@ -263,7 +291,7 @@ public class View implements TableModelListener {
 //        c.gridwidth = 1;
 //        c.gridheight = 4;
         c.gridx = 1;
-        c.gridy = 7;
+        c.gridy = 10;
         mainJPanelContainer.add(middleInformationJPanel, c);
 
 
@@ -271,19 +299,19 @@ public class View implements TableModelListener {
         c.gridwidth = 1;
         c.gridheight = 1;
         c.gridx = 1;
-        c.gridy = 8;
+        c.gridy = 11;
         mainJPanelContainer.add(new JButton("Button 2"), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 9;
+        c.gridy = 12;
         c.gridwidth = 4;
         mainJPanelContainer.add(formulationTableScrollPane,c);
 
         loadFormulationButton = new JButton("Wczytaj formulacje");
 //        c.gridwidth = 1;
         c.gridx = 0;
-        c.gridy = 10;
+        c.gridy = 13;
         mainJPanelContainer.add(loadFormulationButton, c);
 
 
@@ -393,6 +421,10 @@ public class View implements TableModelListener {
 
     public Object[][] getCogsMaterialsData() {
         return cogsMaterialsData;
+    }
+
+    public JTextField getCogsTotalCostsTextField() {
+        return cogsTotalCostsTextField;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE
