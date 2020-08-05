@@ -6,8 +6,8 @@ import java.util.Date;
 public class CogsTable {
 
     private Object[][] cogsTable;
-    private Integer[] counter = {1,2,3,4,5,6,7,8,9};
-    private String[] itemName1 = new String[9];
+    private Integer[] counter;
+    private String[] itemName1;
     private String[] itemName2;
     private Integer[] qty;
     private String[] mu;
@@ -32,13 +32,17 @@ public class CogsTable {
 //    cogsTableColumnNames = {"No.","Item", "Item 2",
 //            "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
 
-    public CogsTable() {
+    public CogsTable(int numberOfItems) {
 
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
        cogsDate = dateFormat.format(date);
 
-
+        counter = new Integer[numberOfItems];
+        for (int i=0;i<numberOfItems;i++){
+            counter[i] = i+1;
+        }
+        itemName1 = new String[numberOfItems];
         itemName2 = new String[9];
         qty = new Integer[9];
         mu = new String[9];

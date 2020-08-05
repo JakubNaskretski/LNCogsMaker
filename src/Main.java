@@ -7,7 +7,7 @@ public class Main {
         View v = new View();
         FormulationTable ft = new FormulationTable();
         PricesTable pt = new PricesTable();
-        CogsTable ct = new CogsTable();
+        CogsTable ct = new CogsTable(9);
         Controller c = new Controller(v, ft, pt, ct);
     }
 }
