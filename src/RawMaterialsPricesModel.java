@@ -1,8 +1,11 @@
+import java.util.Dictionary;
+import java.util.Hashtable;
 
-// Class determining virtual price table model
+// This class is Model of a raw material for price dataa
 public class RawMaterialsPricesModel {
 
     private Object[][] pricesTable;
+    private Hashtable productNumberDict;
     private Integer[] counter;
     private String[] systemNumbers;
     private String[] rawMaterialsNames;
@@ -15,6 +18,7 @@ public class RawMaterialsPricesModel {
                                    String[] rawMaterialsNames, Double[] minPrice, Double[] maxPrice,
                                    String[] currency, String[] supplier)
     {
+        this.productNumberDict = new Hashtable();
         this.counter = counter;
         this.systemNumbers = systemNumbers;
         this.rawMaterialsNames = rawMaterialsNames;
@@ -25,6 +29,7 @@ public class RawMaterialsPricesModel {
         this.pricesTable = new Object[][]{
                 counter, systemNumbers, rawMaterialsNames,
                 minPrice, maxPrice, currency, supplier};
+//        super.getRmpml().add(this);
     }
 
     public Object[][] getPricesTable() {
@@ -57,5 +62,9 @@ public class RawMaterialsPricesModel {
 
     public String[] getSupplier() {
         return supplier;
+    }
+
+    public Hashtable getProductNumberDict() {
+        return productNumberDict;
     }
 }

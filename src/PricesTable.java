@@ -7,29 +7,33 @@ import jxl.read.biff.BiffException;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 
 
-// Class creating virtual table for prices, and loads prices from excel price sheet
+// Initiates price models and copy excel data into virtual price-model table
 public class PricesTable {
 
+    private RawMaterialsPriceModelList rmpml;
+
     private RawMaterialsPricesModel rmpm;
-    private Object[] priceModelsList = new Object[1];
+//    private Object[] priceModelsList = new Object[1];
 
     private JFileChooser jfc;
 //    private JFrame currentFrame;
     private String rawMaterialsTablePricesPath = "TestExcelFiles\\TestPrices.xls";
     private double euroRate, usdRate;
 
-    private String[] bottleChooserList;
-    private String[] capChooserList;
-    private String[] labelChooserList;
-    private String[] measurerChooserList;
-    private String[] unitBoxChooserList;
-    private String[] leafletChooserList;
-    private String[] collectiveBoxChooserList;
+//    private String[] bottleChooserList;
+//    private String[] capChooserList;
+//    private String[] labelChooserList;
+//    private String[] measurerChooserList;
+//    private String[] unitBoxChooserList;
+//    private String[] leafletChooserList;
+//    private String[] collectiveBoxChooserList;
 
 
     public PricesTable() {
+        this.rmpml = new RawMaterialsPriceModelList();
         this.jfc = new JFileChooser();
         this.euroRate = 4.3;
         this.usdRate = 3.8;
@@ -41,8 +45,8 @@ public class PricesTable {
         System.out.println("New path have been set "+rawMaterialsTablePricesPath);
     }
 
-    // Chooses file with file chooser, set chosen file address as path and read data from file calling getPriceList()
-    public void loadPricesTableDataSource(JFrame currentFrame) {
+    //    Choose file with file chooser java set chosen file address and read data from file calling read func
+    public void loadPricesTableDataSource( JFrame currentFrame) {
         jfc.setDialogTitle("Open file");
         int returnValue = jfc.showOpenDialog(currentFrame);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -62,28 +66,40 @@ public class PricesTable {
         }
     }
 
-    // Reads price sheet, initiates virtual price table based on number of rows in sheet
+//    Opens raw materials price list, reads it and creates price models based on number of rows in the price offer
     private void initiatePriceModels(){
         File inputWorkbook = new File(rawMaterialsTablePricesPath);
         Workbook w;
         try {
             w = Workbook.getWorkbook(inputWorkbook);
+
+//            Read number of sheet, creates instance of RMPM for each sheet with number of rows in sheet
+//            Each sheet by class is automaticcly added to RMPML
+            for (int i=0;i<w.getNumberOfSheets();i++){
+                rmpml.getRmpml().add(new RawMaterialsPricesModel(new Integer[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()],new String[w.getSheet(i).getRows()],
+                        new Double[w.getSheet(i).getRows()], new Double[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()], new String[w.getSheet(i).getRows()]));
+            }
+//            working solution - taking only prices for 1st sheet
             // Get the first sheet
-            Sheet sheet = w.getSheet(0);
-
-            this.rmpm = new RawMaterialsPricesModel(new Integer[sheet.getRows()], new String[sheet.getRows()],new String[sheet.getRows()],
-                    new Double[sheet.getRows()], new Double[sheet.getRows()], new String[sheet.getRows()], new String[sheet.getRows()]);
-
-            priceModelsList[0] = rmpm;
+//            Sheet sheet = w.getSheet(0);
+//
+//            this.rmpm = new RawMaterialsPricesModel(new Integer[sheet.getRows()], new String[sheet.getRows()],new String[sheet.getRows()],
+//                    new Double[sheet.getRows()], new Double[sheet.getRows()], new String[sheet.getRows()], new String[sheet.getRows()]);
+//
+//            priceModelsList[0] = rmpm;
 
     } catch (Exception e){
             System.out.println("Couldn't load Models");}
     }
 
-    // Reads price sheet and fills virtual table with data from sheet
+
+
+// Calls initiatePriceList(), reads price list and fill model with prices from table
     private void getPricesList() throws IOException {
 
             initiatePriceModels();
+
+//            TODO: Add dictionary for material choosers
 
 //            TODO: Remove double sheet
             File inputWorkbook = new File(rawMaterialsTablePricesPath);
@@ -91,37 +107,44 @@ public class PricesTable {
             try {
                 w = Workbook.getWorkbook(inputWorkbook);
                 // Get the first sheet
-                Sheet sheet = w.getSheet(0);
+
+//                Sheet sheet = w.getSheet(0);
 
 //                        TODO: FIX temporary solution of creating table
 //                this.pricesTable = new Object[][]{
 //                        counter, systemNumbers, rawMaterialsNames,
 //                        minPrice, maxPrice, currency, supplier};
 
-                for (int j = 0; j < 7; j++) {
-                    for (int i = 0; i < sheet.getRows(); i++) {
-                        Cell cell = sheet.getCell(j, i);
-                        CellType type = cell.getType();
+                for (int k=0; k<w.getNumberOfSheets();k++) {
+                    for (int j = 0; j < 7; j++) {
+                        for (int i = 0; i < w.getSheet(k).getRows(); i++) {
+                            Cell cell = w.getSheet(k).getCell(j, i);
+                            CellType type = cell.getType();
 //  TODO: add verify data type
 //                    model.getModelListData()[j][i] = cell.getContents();
-                        if (type == CellType.LABEL) {
+                            if (type == CellType.LABEL) {
 //                            priceModelsList[0].get [j][i] = cell.getContents();
 
-                            rmpm.getPricesTable()[j][i] = cell.getContents();
+                                rmpml.getRmpml().get(k).getPricesTable()[j][i] = cell.getContents();
+
+                                if (j == 2 && k > 0){
+                                    rmpml.getRmpml().get(k).getProductNumberDict().put(rmpml.getRmpml().get(k).getSystemNumbers()[i],cell.getContents());
+                                }
 
                                 System.out.println("I got a label "
                                         + cell.getContents());
                             }
 
-                        if (type == CellType.NUMBER) {
-                            System.out.println("I got a number "
-                                    + cell.getContents());
-                            if (j == 3) {
-                                rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",","."));
-                            } else if(j == 4){
-                                rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",","."));
-                            } else {
-                                rmpm.getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                            if (type == CellType.NUMBER) {
+                                System.out.println("I got a number "
+                                        + cell.getContents());
+                                if (j == 3 | j == 4) {
+//                                    rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",", "."));
+                                    rmpml.getRmpml().get(k).getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",", "."));
+                                } else {
+//                                    rmpm.getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                                    rmpml.getRmpml().get(k).getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                                }
                             }
                         }
                     }
@@ -129,6 +152,14 @@ public class PricesTable {
             } catch (BiffException e) {
                 e.printStackTrace();
             }
+
+
+        System.out.println("Słownik -------");
+
+        for (Enumeration e = rmpml.getRmpml().get(2).getProductNumberDict().elements(); e.hasMoreElements();) {
+            System.out.println(e.nextElement());
+        }
+
     }
 
     //Files extension for file chooser
@@ -178,5 +209,9 @@ public class PricesTable {
 
     public RawMaterialsPricesModel getRmpm() {
         return rmpm;
+    }
+
+    public RawMaterialsPriceModelList getRmpml() {
+        return rmpml;
     }
 }

@@ -2,10 +2,14 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
-// Class responsible for rendering view with no data storage
+
+// This class provides view for the application
 public class View implements TableModelListener {
 
     private JFrame frame;
@@ -22,6 +26,9 @@ public class View implements TableModelListener {
     private Object[][] formulationData, cogsMaterialsData, cogsRawData, cogsProductionData;
     private JLabel cogsDate, productNameLabel, clientNameLabel, productCapacityLabel, dateOfTheFormulationLabel;
     private JTextField cogsMaterialsSubtotalTextField, cogsRawSubtotalTextField, cogsProductionSubtotalTextField;
+
+    private ArrayList<TableCellEditor> materialsEditorsList = new ArrayList<TableCellEditor>(9);
+    private ArrayList<JComboBox> materialsChoosersList = new ArrayList<>();
 
     public View(){
         frame = new JFrame();
@@ -62,12 +69,19 @@ public class View implements TableModelListener {
         menuFile.add(menuItemAddNewLabel);
 
         bottleChooser = new JComboBox();
+        materialsChoosersList.add(bottleChooser);
         capChooser  = new JComboBox();
+        materialsChoosersList.add(capChooser);
         labelChooser  = new JComboBox();
+        materialsChoosersList.add(labelChooser);
         measurerChooser  = new JComboBox();
+        materialsChoosersList.add(measurerChooser);
         unitBoxChooser  = new JComboBox();
+        materialsChoosersList.add(unitBoxChooser);
         leafletChooser  = new JComboBox();
+        materialsChoosersList.add(leafletChooser);
         collectiveBoxChooser  = new JComboBox();
+        materialsChoosersList.add(collectiveBoxChooser);
 
         cogsDate = new JLabel("Example Cogs date");
         productNameLabel = new JLabel("Example product name");
@@ -87,11 +101,33 @@ public class View implements TableModelListener {
 
         cogsTablePane = new JPanel();
 
+//        Making editorsList with JComboBoxesChoosers for cogsMaterialsTable
+        materialsEditorsList.add(new DefaultCellEditor(bottleChooser));
+        materialsEditorsList.add(new DefaultCellEditor(capChooser));
+        materialsEditorsList.add(new DefaultCellEditor(labelChooser));
+        materialsEditorsList.add(new DefaultCellEditor(measurerChooser));
+        materialsEditorsList.add(new DefaultCellEditor(unitBoxChooser));
+        materialsEditorsList.add(new DefaultCellEditor(leafletChooser));
+        materialsEditorsList.add(new DefaultCellEditor(collectiveBoxChooser));
+
         //Make new table with materials
-        cogsMaterialsData = new Object[9][9];
+        cogsMaterialsData = new Object[7][9];
         String[] cogsTableColumnNames1 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
-        cogsMaterialsTable = new JTable(cogsMaterialsData, cogsTableColumnNames1);
+//        Creating table, adding JComboBoxChoosers to each row from materialsEditorList
+        DefaultTableModel cogsMaterialsTableModel = new DefaultTableModel(cogsMaterialsData, cogsTableColumnNames1);
+        cogsMaterialsTable = new JTable(cogsMaterialsTableModel){
+            //  Determine editor to be used by row
+            public TableCellEditor getCellEditor(int row, int column)
+            {
+                int modelColumn = convertColumnIndexToModel(column);
+
+                if (modelColumn == 1 && row < 7)
+                    return  materialsEditorsList.get(row);
+                else
+                    return super.getCellEditor(row, column);
+            }
+        };
         cogsMaterialsTable.setPreferredScrollableViewportSize(cogsMaterialsTable.getPreferredSize());
         cogsMaterialsTable.getColumnModel().getColumn(1).setPreferredWidth(160);
         cogsMaterialsTableScrollPane = new JScrollPane(cogsMaterialsTable);
@@ -272,7 +308,7 @@ public class View implements TableModelListener {
         return formulationData;
     }
 
-    public Object[][] getCogsData() {
+    public Object[][] getCogsRawData() {
         return cogsRawData;
     }
 
@@ -346,6 +382,18 @@ public class View implements TableModelListener {
 
     public JComboBox getCollectiveBoxChooser() {
         return collectiveBoxChooser;
+    }
+
+    public JLabel getCogsDate() {
+        return cogsDate;
+    }
+
+    public ArrayList<JComboBox> getMaterialsChoosersList() {
+        return materialsChoosersList;
+    }
+
+    public Object[][] getCogsMaterialsData() {
+        return cogsMaterialsData;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE

@@ -1,8 +1,6 @@
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-// Table class model for view table
-// TODO: Use own model
 public class LockedTableModel extends AbstractTableModel {
 
     private final List<Object> itemsList;

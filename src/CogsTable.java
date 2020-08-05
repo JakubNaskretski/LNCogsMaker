@@ -3,7 +3,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-// Creating virtual table for Cogs
 public class CogsTable {
 
     private Object[][] cogsTable;
@@ -38,6 +37,7 @@ public class CogsTable {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
        cogsDate = dateFormat.format(date);
+
 
         itemName2 = new String[9];
         qty = new Integer[9];
@@ -114,5 +114,9 @@ public class CogsTable {
 
     public Double[] getPlnQty() {
         return plnQty;
+    }
+
+    public String getCogsDate() {
+        return cogsDate;
     }
 }

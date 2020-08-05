@@ -1,3 +1,6 @@
+import java.util.Enumeration;
+
+// Connect all classes together
 public class Controller {
 
 //    private Model model;
@@ -33,6 +36,19 @@ public class Controller {
             calculateCogs();
             initTable();
         });
+        view.getBottleChooser().addActionListener(e -> {
+
+           if (view.getBottleChooser().getSelectedIndex() > -1) {
+               System.out.println(pricesTable.getRmpml().getRmpml().get(1).getMaxPrice()[view.getBottleChooser().getSelectedIndex()]);
+               view.getCogsMaterialsData()[0][0] = pricesTable.getRmpml().getRmpml().get(1).getCounter()[view.getBottleChooser().getSelectedIndex()];
+               view.getCogsMaterialsData()[0][3] = 1;
+               view.getCogsMaterialsData()[0][4] = "pcs";
+//               TODO: set filter if min and max
+               view.getCogsMaterialsData()[0][5] = pricesTable.getRmpml().getRmpml().get(1).getMaxPrice()[view.getBottleChooser().getSelectedIndex()];
+               view.getCogsMaterialsData()[0][6] = pricesTable.getRmpml().getRmpml().get(1).getCurrency()[view.getBottleChooser().getSelectedIndex()];
+           }
+
+        });
         view.getMenuItemChangePricesSource().addActionListener(e -> {
             pricesTable.loadPricesTableDataSource(view.getFrame());
         });
@@ -41,6 +57,14 @@ public class Controller {
 
 //    Initializing tables with data
     private void initTable(){
+
+//        Loading data for JCombo boxes materials table
+        for (int i=1;i<8;i++){
+            for (Enumeration e = pricesTable.getRmpml().getRmpml().get(i).getProductNumberDict().elements(); e.hasMoreElements();){
+                view.getMaterialsChoosersList().get(i-1).addItem(e.nextElement());
+            }
+        }
+
         view.createFormulationDataTable();
         for (int i = 0; i < formulationTableClass.getCounter().length; i++){
             for (int j=0;j<6;j++) {
@@ -49,16 +73,16 @@ public class Controller {
 //            cogsTable.getItemName1CogsTable()[i+10] = formulationTableClass.getRawMaterialsNamesFormulationTable()[i];
         }
         for (int i = 0; i< cogsTable.getCounter().length; i++){
-            view.getCogsData()[i][0] = cogsTable.getCounter()[i];
+            view.getCogsRawData()[i][0] = cogsTable.getCounter()[i];
             //        TODO: Temporary solution
-            view.getCogsData()[i][1] = cogsTable.getItemName1()[i];
-            view.getCogsData()[i][2] = cogsTable.getItemName2()[i];
-            view.getCogsData()[i][3] = cogsTable.getQty()[i];
-            view.getCogsData()[i][4] = cogsTable.getMu()[i];
-            view.getCogsData()[i][5] = cogsTable.getPurchasePrice()[i];
-            view.getCogsData()[i][6] = cogsTable.getCurrency()[i];
-            view.getCogsData()[i][7] = cogsTable.getPln()[i];
-            view.getCogsData()[i][8] = cogsTable.getPlnQty()[i];
+            view.getCogsRawData()[i][1] = cogsTable.getItemName1()[i];
+            view.getCogsRawData()[i][2] = cogsTable.getItemName2()[i];
+            view.getCogsRawData()[i][3] = cogsTable.getQty()[i];
+            view.getCogsRawData()[i][4] = cogsTable.getMu()[i];
+            view.getCogsRawData()[i][5] = cogsTable.getPurchasePrice()[i];
+            view.getCogsRawData()[i][6] = cogsTable.getCurrency()[i];
+            view.getCogsRawData()[i][7] = cogsTable.getPln()[i];
+            view.getCogsRawData()[i][8] = cogsTable.getPlnQty()[i];
 
         }
     }
@@ -86,16 +110,16 @@ public class Controller {
              cogsTable.getMu()[i] = "kg";
              cogsTable.getQty()[i] = formulationTableClass.getAmountPerKG()[i];
              cogsTable.getSystemNumbers()[i] = formulationTableClass.getSystemNumbers()[i];
-             for (int j = 0; j < pricesTable.getRmpm().getCounter().length; j++) {
-                 if (formulationTableClass.getSystemNumbers()[i].equals(pricesTable.getRmpm().getSystemNumbers()[j])){
-                     System.out.println("Found price of " + formulationTableClass.getFormulationTable()[2][i]);
+             for (int j = 0; j < pricesTable.getRmpml().getRmpml().get(0).getCounter().length; j++) {
+                 if (formulationTableClass.getSystemNumbers()[i].equals(pricesTable.getRmpml().getRmpml().get(0).getSystemNumbers()[j])){
+//                     System.out.println("Found price of " + formulationTableClass.getFormulationTable()[2][i]);
 //                     TODO: FIx temporary solution
-                     if (pricesTable.getRmpm().getMinPrice() != null){
-                         cogsTable.getPurchasePrice()[i] = pricesTable.getRmpm().getMinPrice()[j];
-                         cogsTable.getCurrency()[i] = pricesTable.getRmpm().getCurrency()[j];
+                     if (pricesTable.getRmpml().getRmpml().get(0).getMinPrice() != null){
+                         cogsTable.getPurchasePrice()[i] = pricesTable.getRmpml().getRmpml().get(0).getMinPrice()[j];
+                         cogsTable.getCurrency()[i] = pricesTable.getRmpml().getRmpml().get(0).getCurrency()[j];
                      }
-                     cogsTable.getPurchasePrice()[i] = pricesTable.getRmpm().getMaxPrice()[j];
-                     cogsTable.getCurrency()[i] = pricesTable.getRmpm().getCurrency()[j];
+                     cogsTable.getPurchasePrice()[i] = pricesTable.getRmpml().getRmpml().get(0).getMaxPrice()[j];
+                     cogsTable.getCurrency()[i] = pricesTable.getRmpml().getRmpml().get(0).getCurrency()[j];
                  }
              }
 
@@ -119,6 +143,8 @@ public class Controller {
              }
 
              view.getCogsRawSubtotalTextField().setText(String.valueOf(subtotalRawCosts) + " PLN");
+
+
 
          }
 
