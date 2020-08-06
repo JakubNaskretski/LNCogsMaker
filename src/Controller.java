@@ -45,7 +45,8 @@ public class Controller {
             //TODO: czy potrzebny zapis repaint
 //            view.getFrame().repaint();
             calculateCogs();
-            initTable();
+//            view.createFormulationDataTable();
+            initRawsTable();
         });
 
 //        TODO: Check if  you can make loop over choosers
@@ -204,26 +205,6 @@ public class Controller {
 
         view.createFormulationDataTable();
 
-        for (int i = 0; i < formulationTableClass.getCounter().length; i++){
-            for (int j=0;j<6;j++) {
-                view.getFormulationData()[i][j] = formulationTableClass.getFormulationTable()[j][i];
-            }
-//            cogsTable.getItemName1CogsTable()[i+10] = formulationTableClass.getRawMaterialsNamesFormulationTable()[i];
-        }
-        for (int i = 0; i< cogsTable.getCounter().length; i++){
-            view.getCogsRawData()[i][0] = cogsTable.getCounter()[i];
-            //        TODO: Temporary solution
-            view.getCogsRawData()[i][1] = cogsTable.getItemName1()[i];
-            view.getCogsRawData()[i][2] = cogsTable.getItemName2()[i];
-            view.getCogsRawData()[i][3] = cogsTable.getQty()[i];
-            view.getCogsRawData()[i][4] = cogsTable.getMu()[i];
-            view.getCogsRawData()[i][5] = cogsTable.getPurchasePrice()[i];
-            view.getCogsRawData()[i][6] = cogsTable.getCurrency()[i];
-            view.getCogsRawData()[i][7] = cogsTable.getPln()[i];
-            view.getCogsRawData()[i][8] = cogsTable.getPlnQty()[i];
-
-        }
-
     }
 
 //     {"pcs","pcs","pcs","pcs","pcs","pcs","pcs","pcs","pcs",
@@ -262,9 +243,9 @@ public class Controller {
              }
 
              if (cogsTable.getPurchasePrice()[i] != null) {
-                 if (cogsTable.getCurrency()[i] == "EUR") {
+                 if (cogsTable.getCurrency()[i].equals("EUR")) {
                  cogsTable.getPln()[i] = (cogsTable.getPurchasePrice()[i]*pricesTable.getEuroRate());
-                 } else if (cogsTable.getCurrency()[i] == "USD") {
+                 } else if (cogsTable.getCurrency()[i].equals("USD")) {
                      cogsTable.getPln()[i] = (cogsTable.getPurchasePrice()[i]*pricesTable.getUsdRate());
                  } else {
                      cogsTable.getPln()[i] = cogsTable.getPurchasePrice()[i];
@@ -294,6 +275,28 @@ public class Controller {
      } catch (NullPointerException e){
          System.out.println("Nie załadowano danych");
          e.printStackTrace();
+     }
+ }
+
+ public void initRawsTable(){
+     for (int i = 0; i < formulationTableClass.getCounter().length; i++){
+         for (int j=0;j<6;j++) {
+             view.getFormulationData()[i][j] = formulationTableClass.getFormulationTable()[j][i];
+         }
+//            cogsTable.getItemName1CogsTable()[i+10] = formulationTableClass.getRawMaterialsNamesFormulationTable()[i];
+     }
+     for (int i = 0; i< cogsTable.getCounter().length; i++){
+         view.getCogsRawData()[i][0] = cogsTable.getCounter()[i];
+         //        TODO: Temporary solution
+         view.getCogsRawData()[i][1] = cogsTable.getItemName1()[i];
+         view.getCogsRawData()[i][2] = cogsTable.getItemName2()[i];
+         view.getCogsRawData()[i][3] = cogsTable.getQty()[i];
+         view.getCogsRawData()[i][4] = cogsTable.getMu()[i];
+         view.getCogsRawData()[i][5] = cogsTable.getPurchasePrice()[i];
+         view.getCogsRawData()[i][6] = cogsTable.getCurrency()[i];
+         view.getCogsRawData()[i][7] = cogsTable.getPln()[i];
+         view.getCogsRawData()[i][8] = cogsTable.getPlnQty()[i];
+
      }
  }
 
