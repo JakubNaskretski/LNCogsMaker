@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class Controller {
                    view.getCogsMaterialsData()[0][5] = pricesTable.getRmpml().getRmpml().get(1).getMaxPrice()[view.getBottleChooser().getSelectedIndex()];
                }
                view.getCogsMaterialsData()[0][6] = pricesTable.getRmpml().getRmpml().get(1).getCurrency()[view.getBottleChooser().getSelectedIndex()];
-               calculateMaterials(0,view.getBottleChooser().getSelectedIndex());
+               calculateMaterials(0,view.getBottleChooser().getSelectedIndex(), 1);
                view.createFormulationDataTable();
            }
         });
@@ -77,7 +79,7 @@ public class Controller {
                     view.getCogsMaterialsData()[1][5] = pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[view.getCapChooser().getSelectedIndex()];
                 }
                 view.getCogsMaterialsData()[1][6] = pricesTable.getRmpml().getRmpml().get(2).getCurrency()[view.getCapChooser().getSelectedIndex()];
-                calculateMaterials(1,view.getCapChooser().getSelectedIndex());
+                calculateMaterials(1,view.getCapChooser().getSelectedIndex(), 2);
                 view.createFormulationDataTable();
             }
         });
@@ -94,7 +96,7 @@ public class Controller {
                     view.getCogsMaterialsData()[2][5] = pricesTable.getRmpml().getRmpml().get(3).getMaxPrice()[view.getLabelChooser().getSelectedIndex()];
                 }
                 view.getCogsMaterialsData()[2][6] = pricesTable.getRmpml().getRmpml().get(3).getCurrency()[view.getLabelChooser().getSelectedIndex()];
-                calculateMaterials(2,view.getLabelChooser().getSelectedIndex());
+                calculateMaterials(2,view.getLabelChooser().getSelectedIndex(), 3);
                 view.createFormulationDataTable();
             }
         });
@@ -111,7 +113,7 @@ public class Controller {
                     view.getCogsMaterialsData()[3][5] = pricesTable.getRmpml().getRmpml().get(4).getMaxPrice()[view.getMeasurerChooser().getSelectedIndex()];
                 }
                 view.getCogsMaterialsData()[3][6] = pricesTable.getRmpml().getRmpml().get(4).getCurrency()[view.getMeasurerChooser().getSelectedIndex()];
-                calculateMaterials(3,view.getMeasurerChooser().getSelectedIndex());
+                calculateMaterials(3,view.getMeasurerChooser().getSelectedIndex(), 4);
                 view.createFormulationDataTable();
             }
         });
@@ -128,7 +130,7 @@ public class Controller {
                     view.getCogsMaterialsData()[4][5] = pricesTable.getRmpml().getRmpml().get(5).getMaxPrice()[view.getUnitBoxChooser().getSelectedIndex()];
                 }
                 view.getCogsMaterialsData()[4][6] = pricesTable.getRmpml().getRmpml().get(5).getCurrency()[view.getUnitBoxChooser().getSelectedIndex()];
-                calculateMaterials(4,view.getUnitBoxChooser().getSelectedIndex());
+                calculateMaterials(4,view.getUnitBoxChooser().getSelectedIndex(), 5);
                 view.createFormulationDataTable();
             }
         });
@@ -145,7 +147,7 @@ public class Controller {
                     view.getCogsMaterialsData()[5][5] = pricesTable.getRmpml().getRmpml().get(6).getMaxPrice()[view.getLeafletChooser().getSelectedIndex()];
                 }
                 view.getCogsMaterialsData()[5][6] = pricesTable.getRmpml().getRmpml().get(6).getCurrency()[view.getLeafletChooser().getSelectedIndex()];
-                calculateMaterials(5,view.getLeafletChooser().getSelectedIndex());
+                calculateMaterials(5,view.getLeafletChooser().getSelectedIndex(), 6);
                 view.createFormulationDataTable();
             }
         });
@@ -162,7 +164,7 @@ public class Controller {
                     view.getCogsMaterialsData()[6][5] = pricesTable.getRmpml().getRmpml().get(7).getMaxPrice()[view.getCollectiveBoxChooser().getSelectedIndex()];
                 }
                 view.getCogsMaterialsData()[6][6] = pricesTable.getRmpml().getRmpml().get(7).getCurrency()[view.getCollectiveBoxChooser().getSelectedIndex()];
-                calculateMaterials(6,view.getCollectiveBoxChooser().getSelectedIndex());
+                calculateMaterials(6,view.getCollectiveBoxChooser().getSelectedIndex(), 7);
                 view.createFormulationDataTable();
             }
         });
@@ -276,7 +278,6 @@ public class Controller {
              }
 
              view.getCogsRawSubtotalTextField().setText((subtotalRawCosts) + " PLN");
-
              view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
 
 
@@ -293,19 +294,19 @@ public class Controller {
      }
  }
 
- public void calculateMaterials(int matierlasTableRow, int selectedIndex){
+ public void calculateMaterials(int matierlasTableRow, int selectedIndex, int sheetNumberFromPriceXls){
 //        TODO: add also min price for calculations
      Double plnPrice = 0.0;
      if (view.getCogsMaterialsData()[matierlasTableRow][5] != null) {
-         if (view.getCogsMaterialsData()[matierlasTableRow][6] == "EUR") {
-             view.getCogsMaterialsData()[matierlasTableRow][7] = (pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate());
-             plnPrice = (pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate());
-         } else if (view.getCogsMaterialsData()[matierlasTableRow][6] == "USD") {
-             view.getCogsMaterialsData()[matierlasTableRow][7] = (pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate());
-             plnPrice = (pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate());
+         if (String.valueOf(view.getCogsMaterialsData()[matierlasTableRow][6]).equals("EUR")) {
+             view.getCogsMaterialsData()[matierlasTableRow][7] = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
+             plnPrice = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
+         } else if (String.valueOf(view.getCogsMaterialsData()[matierlasTableRow][6]).equals("USD")){
+             view.getCogsMaterialsData()[matierlasTableRow][7] = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
+             plnPrice = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
          } else {
-             view.getCogsMaterialsData()[matierlasTableRow][7] = pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[selectedIndex];
-             plnPrice = (pricesTable.getRmpml().getRmpml().get(2).getMaxPrice()[selectedIndex]);
+             view.getCogsMaterialsData()[matierlasTableRow][7] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
+             plnPrice = (pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]);
          }
      } else {
          view.getCogsMaterialsData()[matierlasTableRow][7] = 0.0;
@@ -321,6 +322,14 @@ public class Controller {
      view.getCogsMaterialsSubtotalTextField().setText((subtotalMaterialsCosts) + " PLN");
      view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
  }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
 
 }
