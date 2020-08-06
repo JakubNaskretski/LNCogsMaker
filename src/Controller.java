@@ -15,6 +15,8 @@ public class Controller {
     private PricesTable pricesTable;
     private CogsTable cogsTable;
     private Double subtotalMaterialsCosts = 0.0;
+    private Double subtotalBottles = 0.0, subtotalCap = 0.0, subtotalLabbel = 0.0, subtotalMeasurer = 0.0, subtotalUnitBox = 0.0, subtotalLeaflet = 0.0, subtotalCollectiveBox = 0.0;
+    private Double[] subtotalsList = {subtotalBottles, subtotalCap, subtotalLabbel, subtotalMeasurer, subtotalUnitBox, subtotalLeaflet, subtotalCollectiveBox};
     private Double subtotalRawCosts = 0.0;
     private Double totalCogsCosts = 0.0;
 
@@ -166,6 +168,7 @@ public class Controller {
                 view.getCogsMaterialsData()[6][6] = pricesTable.getRmpml().getRmpml().get(7).getCurrency()[view.getCollectiveBoxChooser().getSelectedIndex()];
                 calculateMaterials(6,view.getCollectiveBoxChooser().getSelectedIndex(), 7);
                 view.createFormulationDataTable();
+
             }
         });
 
@@ -314,13 +317,17 @@ public class Controller {
 
      if (view.getCogsMaterialsData()[matierlasTableRow][7] != null) {
          view.getCogsMaterialsData()[matierlasTableRow][8] = plnPrice * Double.valueOf(1000);
-         subtotalMaterialsCosts+=plnPrice * Double.valueOf(1000);
+         subtotalsList[sheetNumberFromPriceXls-1]=plnPrice * Double.valueOf(1000);
      } else {
          view.getCogsMaterialsData()[matierlasTableRow][8] = 0.0;
      }
 
+     subtotalMaterialsCosts = 0.0;
+     for (Double subtotalCost : subtotalsList){
+         subtotalMaterialsCosts += subtotalCost;}
      view.getCogsMaterialsSubtotalTextField().setText((subtotalMaterialsCosts) + " PLN");
      view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
+
  }
 
     public static double round(double value, int places) {
