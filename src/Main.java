@@ -12,10 +12,9 @@ public class Main {
 //            Model m = new Model();
 //        TODO: Add version for capsules also
         StartingView sv = new StartingView();
-        View v = new View();
         FormulationTable ft = new FormulationTable();
         PricesTable pt = new PricesTable();
         CogsTable ct = new CogsTable(9);
-        Controller c = new Controller(sv, v, ft, pt, ct);
+        Controller c = new Controller(sv, ft, pt, ct);
     }
 }

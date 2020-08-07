@@ -13,7 +13,7 @@ public class StartingView {
         private JMenuBar menuBar;
         private JMenu menuFile, menuEdit;
         private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemAddNewBottle, menuItemAddNewLabel;
-        private JButton loadFormulationButton;
+        private JButton loadCogsButton ,loadFormulationButton;
         private JPanel mainJPanelContainer;
 
         public StartingView(){
@@ -59,10 +59,16 @@ public class StartingView {
             mainJPanelContainer.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
 
-            loadFormulationButton = new JButton("Wczytaj formulacje");
-//        c.gridwidth = 1;
+            loadCogsButton = new JButton("Wczytaj COGs");
+            c.gridwidth = 1;
             c.gridx = 0;
             c.gridy = 0;
+            mainJPanelContainer.add(loadCogsButton, c);
+
+            loadFormulationButton = new JButton("Wczytaj formulacje");
+            c.gridwidth = 1;
+            c.gridx = 0;
+            c.gridy = 1;
             mainJPanelContainer.add(loadFormulationButton, c);
 
 

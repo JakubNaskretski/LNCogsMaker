@@ -23,9 +23,8 @@ public class Controller {
     private Double subtotalRawCosts = 0.0;
     private Double totalCogsCosts = 0.0;
 
-    public Controller(StartingView sv ,View v, FormulationTable ft, PricesTable pt, CogsTable ct) {
+    public Controller(StartingView sv, FormulationTable ft, PricesTable pt, CogsTable ct) {
         startingView = sv;
-        view = v;
         formulationTableClass = ft;
         pricesTable = pt;
         cogsTable = ct;
@@ -43,7 +42,8 @@ public class Controller {
 
         initTable();
 //        Add action listeners
-        view.getLoadFormulationButton().addActionListener(e -> {
+        startingView.getLoadFormulationButton().addActionListener(e -> {
+            this.view = new View();
             formulationTableClass.loadAndSetLoadedFile();
 //            model.setModelListData(formulationTableClass.getFormulationTable());
             //TODO: czy potrzebny zapis repaint
