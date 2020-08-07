@@ -10,6 +10,7 @@ import java.util.Set;
 public class Controller {
 
 //    private Model model;
+    private StartingView startingView;
     private View view;
     private FormulationTable formulationTableClass;
     private PricesTable pricesTable;
@@ -22,7 +23,8 @@ public class Controller {
     private Double subtotalRawCosts = 0.0;
     private Double totalCogsCosts = 0.0;
 
-    public Controller(View v, FormulationTable ft, PricesTable pt, CogsTable ct) {
+    public Controller(StartingView sv ,View v, FormulationTable ft, PricesTable pt, CogsTable ct) {
+        startingView = sv;
         view = v;
         formulationTableClass = ft;
         pricesTable = pt;
