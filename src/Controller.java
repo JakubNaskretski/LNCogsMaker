@@ -29,18 +29,11 @@ public class Controller {
         pricesTable = pt;
         cogsTable = ct;
         initView();
-
-//        Init product details variables in Formulation table
-        formulationTableClass.setProductName(view.getProductNameLabel().getText());
-        formulationTableClass.setProductCapacity(view.getProductCapacityLabel().getText());
-        formulationTableClass.setClientName(view.getClientNameLabel().getText());
-        formulationTableClass.setFormulationDate(view.getDateOfTheFormulationLabel().getText());
-
     }
 
     private void initView() {
 
-        initTable();
+//        initTable();
 //        Add action listeners
         startingView.getLoadFormulationButton().addActionListener(e -> {
             this.view = new View();
@@ -48,12 +41,24 @@ public class Controller {
 //            model.setModelListData(formulationTableClass.getFormulationTable());
             //TODO: czy potrzebny zapis repaint
 //            view.getFrame().repaint();
+            initiateTablesView();
             calculateCogs();
 //            view.createFormulationDataTable();
             initRawsTable();
         });
 
+    }
+
+    private void initiateTablesView(){
 //        TODO: Check if  you can make loop over choosers
+
+        //        Init product details variables in Formulation table
+        formulationTableClass.setProductName(view.getProductNameLabel().getText());
+        formulationTableClass.setProductCapacity(view.getProductCapacityLabel().getText());
+        formulationTableClass.setClientName(view.getClientNameLabel().getText());
+        formulationTableClass.setFormulationDate(view.getDateOfTheFormulationLabel().getText());
+
+
         view.getBottleChooser().addActionListener(e -> {
             getDataFromChooser(0, view.getBottleChooser().getSelectedIndex(), 1);
         });

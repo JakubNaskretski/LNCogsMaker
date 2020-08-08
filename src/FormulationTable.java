@@ -13,7 +13,7 @@ import java.io.IOException;
 public class FormulationTable {
 
     private Object[][] formulationTable;
-    private Integer[] counter = {1,2,3,4,5,6,7,8,9};
+    private Integer[] counter;
     private String[] rawMaterialsNames;
     private String[] systemNumbers;
     private Double[] amountPerDosage;
@@ -31,20 +31,6 @@ public class FormulationTable {
     // TODO: Make dynamicly created table
     public FormulationTable() {
         this.jfc = new JFileChooser();
-
-        rawMaterialsNames = new String[9];
-        systemNumbers = new String[9];
-        amountPerDosage = new Double[9];
-        chemicalForm = new String[9];
-        amountPerKG = new Integer[9];
-        Object[][] formulationListData = {
-                counter,
-                rawMaterialsNames,
-                systemNumbers,
-                amountPerDosage,
-                chemicalForm,
-                amountPerKG};
-        this.formulationTable = formulationListData;
     }
 
     //    Reads file with formulations and fills virtual formulation table with readed data
@@ -55,6 +41,21 @@ public class FormulationTable {
             w = Workbook.getWorkbook(inputWorkbook);
             // Get the first sheet
             Sheet sheet = w.getSheet(0);
+
+            this.counter = new Integer[sheet.getColumns()];
+            this.rawMaterialsNames = new String[sheet.getColumns()];
+            this.systemNumbers = new String[sheet.getColumns()];
+            this.amountPerDosage = new Double[sheet.getColumns()];
+            this.chemicalForm = new String[sheet.getColumns()];
+            this.amountPerKG = new Integer[sheet.getColumns()];
+            Object[][] formulationListData = {
+                counter,
+                rawMaterialsNames,
+                systemNumbers,
+                amountPerDosage,
+                chemicalForm,
+                amountPerKG};
+            this.formulationTable = formulationListData;
 
             formulationDate = sheet.getCell(0, 0).getContents();
             clientName = sheet.getCell(0, 1).getContents();
