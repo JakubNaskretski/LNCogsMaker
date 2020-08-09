@@ -43,14 +43,14 @@ public class CogsTable {
             counter[i] = i+1;
         }
         itemName1 = new String[numberOfItems];
-        itemName2 = new String[9];
-        qty = new Integer[9];
-        mu = new String[9];
-        purchasePrice = new Double[9];
-        currency = new String[9];
-        pln = new Double[9];
-        plnQty = new Double[9];
-        systemNumbers = new String[9];
+        itemName2 = new String[numberOfItems];
+        qty = new Integer[numberOfItems];
+        mu = new String[numberOfItems];
+        purchasePrice = new Double[numberOfItems];
+        currency = new String[numberOfItems];
+        pln = new Double[numberOfItems];
+        plnQty = new Double[numberOfItems];
+        systemNumbers = new String[numberOfItems];
 
         Object[][] cogsListData = {
                 counter,

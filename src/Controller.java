@@ -23,11 +23,10 @@ public class Controller {
     private Double subtotalRawCosts = 0.0;
     private Double totalCogsCosts = 0.0;
 
-    public Controller(StartingView sv, FormulationTable ft, PricesTable pt, CogsTable ct) {
+    public Controller(StartingView sv, FormulationTable ft, PricesTable pt) {
         startingView = sv;
         formulationTableClass = ft;
         pricesTable = pt;
-        cogsTable = ct;
         initView();
     }
 
@@ -36,8 +35,10 @@ public class Controller {
 //        initTable();
 //        Add action listeners
         startingView.getLoadFormulationButton().addActionListener(e -> {
-            this.view = new View();
             formulationTableClass.loadAndSetLoadedFile();
+            this.view = new View(formulationTableClass.getCounter().length);
+            this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
+            initTable();
 //            model.setModelListData(formulationTableClass.getFormulationTable());
             //TODO: czy potrzebny zapis repaint
 //            view.getFrame().repaint();
@@ -50,6 +51,22 @@ public class Controller {
     }
 
     private void initiateTablesView(){
+
+        view.getLoadFormulationButton().addActionListener(e -> {
+            view.getFrame().dispose();
+            formulationTableClass.loadAndSetLoadedFile();
+            this.view = new View(formulationTableClass.getCounter().length);
+            this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
+            initTable();
+//            model.setModelListData(formulationTableClass.getFormulationTable());
+            //TODO: czy potrzebny zapis repaint
+//            view.getFrame().repaint();
+            initiateTablesView();
+            calculateCogs();
+//            view.createFormulationDataTable();
+            initRawsTable();
+        });
+
 //        TODO: Check if  you can make loop over choosers
 
         //        Init product details variables in Formulation table

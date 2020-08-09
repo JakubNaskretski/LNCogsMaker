@@ -42,12 +42,13 @@ public class FormulationTable {
             // Get the first sheet
             Sheet sheet = w.getSheet(0);
 
-            this.counter = new Integer[sheet.getColumns()];
-            this.rawMaterialsNames = new String[sheet.getColumns()];
-            this.systemNumbers = new String[sheet.getColumns()];
-            this.amountPerDosage = new Double[sheet.getColumns()];
-            this.chemicalForm = new String[sheet.getColumns()];
-            this.amountPerKG = new Integer[sheet.getColumns()];
+//            Rows -1 because 1st line is meta data for cogs
+            this.counter = new Integer[sheet.getRows()-1];
+            this.rawMaterialsNames = new String[sheet.getRows()-1];
+            this.systemNumbers = new String[sheet.getRows()-1];
+            this.amountPerDosage = new Double[sheet.getRows()-1];
+            this.chemicalForm = new String[sheet.getRows()-1];
+            this.amountPerKG = new Integer[sheet.getRows()-1];
             Object[][] formulationListData = {
                 counter,
                 rawMaterialsNames,
@@ -65,7 +66,7 @@ public class FormulationTable {
 
 
             for (int j = 0; j < sheet.getColumns(); j++) {
-                for (int i = 1; i < 10; i++) {
+                for (int i = 1; i < sheet.getRows(); i++) {
                     Cell cell = sheet.getCell(j, i);
                     CellType type = cell.getType();
 //  TODO: add verify data type

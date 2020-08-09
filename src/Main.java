@@ -14,7 +14,6 @@ public class Main {
         StartingView sv = new StartingView();
         FormulationTable ft = new FormulationTable();
         PricesTable pt = new PricesTable();
-        CogsTable ct = new CogsTable(9);
-        Controller c = new Controller(sv, ft, pt, ct);
+        Controller c = new Controller(sv, ft, pt);
     }
 }

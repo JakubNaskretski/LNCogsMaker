@@ -12,6 +12,8 @@ import java.util.ArrayList;
 // This class provides view for the application
 public class View implements TableModelListener {
 
+
+    private int formulationSize;
     private JFrame frame;
     private JMenuBar menuBar;
     private JMenu menuFile, menuEdit;
@@ -27,10 +29,11 @@ public class View implements TableModelListener {
     private JLabel cogsDate, productNameLabel, clientNameLabel, productCapacityLabel, dateOfTheFormulationLabel;
     private JTextField cogsMaterialsSubtotalTextField, cogsRawSubtotalTextField, cogsProductionSubtotalTextField, cogsTotalCostsTextField;
 
-    private ArrayList<TableCellEditor> materialsEditorsList = new ArrayList<TableCellEditor>(9);
+    private ArrayList<TableCellEditor> materialsEditorsList = new ArrayList<TableCellEditor>();
     private ArrayList<JComboBox> materialsChoosersList = new ArrayList<>();
 
-    public View(){
+    public View(int formulationSize){
+        this.formulationSize = formulationSize;
         frame = new JFrame();
         frame.getContentPane();
         frame.getContentPane().setMaximumSize(new Dimension(1500, 1200));
@@ -139,7 +142,7 @@ public class View implements TableModelListener {
         cogsMaterialsSubtotalTextField.setBackground(Color.WHITE);
 
         //        Make new table with COGS
-        cogsRawData = new Object[9][9];
+        cogsRawData = new Object[formulationSize][9];
         String[] cogsTableColumnNames2 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
         cogsRawTable = new JTable(cogsRawData, cogsTableColumnNames2);
@@ -154,7 +157,7 @@ public class View implements TableModelListener {
         cogsRawSubtotalTextField.setBackground(Color.WHITE);
 
         //        Make new table with production
-        cogsProductionData = new Object[9][9];
+        cogsProductionData = new Object[formulationSize][9];
         String[] cogsTableColumnNames3 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
         cogsProductionTable = new JTable(cogsProductionData, cogsTableColumnNames3);
@@ -167,7 +170,7 @@ public class View implements TableModelListener {
         cogsProductionSubtotalTextField.setBackground(Color.WHITE);
 
 //Make new table with formulation
-        formulationData = new Object[9][6];
+        formulationData = new Object[formulationSize][6];
 
         formulationTablePane = new JPanel();
         String[] formulationTableColumnNames = {"No.","Surowiec", "Numer",
