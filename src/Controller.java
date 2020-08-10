@@ -35,11 +35,12 @@ public class Controller {
             this.view = new View(formulationTableClass.getCounter().length);
             this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
 
+            startingView.getFrame().dispose();
+
             displayMaterialsTable();
             calculateCogs();
             displayRawsTable();
             displayProductionTable();
-
             initiateTablesView();
         });
 

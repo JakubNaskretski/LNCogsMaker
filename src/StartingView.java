@@ -19,16 +19,17 @@ public class StartingView {
         public StartingView(){
             frame = new JFrame();
             frame.getContentPane();
-            frame.getContentPane().setMaximumSize(new Dimension(1500, 1200));
             addComponentsToPane();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setResizable(false);
             frame.setTitle("Auto cogs counter");
             frame.setLocationRelativeTo(null);
-            frame.setLocation(50,50);
+            frame.setLocation((int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth() - frame.getWidth()) / 2),
+                    (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - frame.getHeight()) / 2);
 
             // Display frame
-            frame.pack();
+//            frame.pack();
+            frame.setSize(new Dimension(200, 150));
             frame.setVisible(true);
         }
 
