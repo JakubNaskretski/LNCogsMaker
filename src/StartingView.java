@@ -25,7 +25,7 @@ public class StartingView {
             frame.setResizable(false);
             frame.setTitle("Auto cogs counter");
             frame.setLocationRelativeTo(null);
-            frame.setLocation(0,0);
+            frame.setLocation(50,50);
 
             // Display frame
             frame.pack();

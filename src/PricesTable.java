@@ -115,20 +115,20 @@ public class PricesTable {
 //                        counter, systemNumbers, rawMaterialsNames,
 //                        minPrice, maxPrice, currency, supplier};
 
-                for (int k=0; k<w.getNumberOfSheets();k++) {
-                    for (int j = 0; j < 7; j++) {
-                        for (int i = 0; i < w.getSheet(k).getRows(); i++) {
-                            Cell cell = w.getSheet(k).getCell(j, i);
+                for (int sheetNo=0; sheetNo<w.getNumberOfSheets();sheetNo++) {
+                    for (int columnNo = 0; columnNo < 7; columnNo++) {
+                        for (int rowNo = 0; rowNo < w.getSheet(sheetNo).getRows(); rowNo++) {
+                            Cell cell = w.getSheet(sheetNo).getCell(columnNo, rowNo);
                             CellType type = cell.getType();
 //  TODO: add verify data type
 //                    model.getModelListData()[j][i] = cell.getContents();
                             if (type == CellType.LABEL) {
 //                            priceModelsList[0].get [j][i] = cell.getContents();
 
-                                rmpml.getRmpml().get(k).getPricesTable()[j][i] = cell.getContents();
+                                rmpml.getRmpml().get(sheetNo).getPricesTable()[columnNo][rowNo] = cell.getContents();
 
-                                if (j == 2 && k > 0){
-                                    rmpml.getRmpml().get(k).getProductNumberDict().put(rmpml.getRmpml().get(k).getSystemNumbers()[i],cell.getContents());
+                                if (columnNo == 2 && sheetNo > 0){
+                                    rmpml.getRmpml().get(sheetNo).getProductNumberDict().put(rmpml.getRmpml().get(sheetNo).getSystemNumbers()[rowNo],cell.getContents());
                                 }
 
                                 System.out.println("I got a label "
@@ -138,12 +138,12 @@ public class PricesTable {
                             if (type == CellType.NUMBER) {
                                 System.out.println("I got a number "
                                         + cell.getContents());
-                                if (j == 3 | j == 4) {
+                                if (columnNo == 3 | columnNo == 4) {
 //                                    rmpm.getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",", "."));
-                                    rmpml.getRmpml().get(k).getPricesTable()[j][i] = Double.valueOf(cell.getContents().replace(",", "."));
+                                    rmpml.getRmpml().get(sheetNo).getPricesTable()[columnNo][rowNo] = Double.valueOf(cell.getContents().replace(",", "."));
                                 } else {
 //                                    rmpm.getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
-                                    rmpml.getRmpml().get(k).getPricesTable()[j][i] = Integer.valueOf(cell.getContents());
+                                    rmpml.getRmpml().get(sheetNo).getPricesTable()[columnNo][rowNo] = Integer.valueOf(cell.getContents());
                                 }
                             }
                         }

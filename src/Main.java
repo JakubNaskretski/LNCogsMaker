@@ -2,6 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Assemble all the pieces of the MVC
+//        TODO: set final rows number for production table
 //        TODO: Add table and logi for production part
 //        TODO: check if all forulations wiht decimal amounts will work
 //        TODO: Add logic after "add new bottle"

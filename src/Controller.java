@@ -1,7 +1,5 @@
-import javax.swing.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -17,9 +15,9 @@ public class Controller {
     private CogsTable cogsTable;
     private Double subtotalMaterialsCosts = 0.0;
     private Double subtotalBottles = 0.0, subtotalCap = 0.0, subtotalLabbel = 0.0, subtotalMeasurer = 0.0,
-            subtotalUnitBox = 0.0, subtotalLeaflet = 0.0, subtotalCollectiveBox = 0.0;
+            subtotalUnitBox = 0.0, subtotalLeaflet = 0.0, subtotalCollectiveBox = 0.0, subtotalPallete = 0.0;
     private Double[] subtotalsList = {subtotalBottles, subtotalCap, subtotalLabbel, subtotalMeasurer,
-            subtotalUnitBox, subtotalLeaflet, subtotalCollectiveBox};
+            subtotalUnitBox, subtotalLeaflet, subtotalCollectiveBox, subtotalPallete};
     private Double subtotalRawCosts = 0.0;
     private Double totalCogsCosts = 0.0;
 
@@ -32,39 +30,32 @@ public class Controller {
 
     private void initView() {
 
-//        initTable();
-//        Add action listeners
         startingView.getLoadFormulationButton().addActionListener(e -> {
             formulationTableClass.loadAndSetLoadedFile();
             this.view = new View(formulationTableClass.getCounter().length);
             this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
-            initTable();
-//            model.setModelListData(formulationTableClass.getFormulationTable());
-            //TODO: czy potrzebny zapis repaint
-//            view.getFrame().repaint();
-            initiateTablesView();
+
+            displayMaterialsTable();
             calculateCogs();
-//            view.createFormulationDataTable();
-            initRawsTable();
+            displayRawsTable();
+            displayProductionTable();
+
+            initiateTablesView();
         });
 
     }
 
     private void initiateTablesView(){
-
         view.getLoadFormulationButton().addActionListener(e -> {
             view.getFrame().dispose();
             formulationTableClass.loadAndSetLoadedFile();
             this.view = new View(formulationTableClass.getCounter().length);
             this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
-            initTable();
-//            model.setModelListData(formulationTableClass.getFormulationTable());
-            //TODO: czy potrzebny zapis repaint
-//            view.getFrame().repaint();
+            displayMaterialsTable();
             initiateTablesView();
             calculateCogs();
-//            view.createFormulationDataTable();
-            initRawsTable();
+            displayRawsTable();
+            displayProductionTable();
         });
 
 //        TODO: Check if  you can make loop over choosers
@@ -104,6 +95,10 @@ public class Controller {
             getDataFromChooser(6, view.getCollectiveBoxChooser().getSelectedIndex(), 7);
         });
 
+        view.getPalleteChooser().addActionListener(e -> {
+            getDataFromChooser(7, view.getPalleteChooser().getSelectedIndex(), 8);
+        });
+
 //        TODO: add autocalculating prices - iterates over table fields if not null calculates them
 
         view.getMenuItemChangePricesSource().addActionListener(e -> {
@@ -113,9 +108,9 @@ public class Controller {
     }
 
 //    Initializing tables with data
-    private void initTable(){
+    private void displayMaterialsTable(){
 //        Loading data for JCombo boxes materials table
-        for (int i=1;i<8;i++){
+        for (int i=1;i<9;i++){
             // Get a set of the entries
             Set set = pricesTable.getRmpml().getRmpml().get(i).getProductNumberDict().entrySet();
             // Get an iterator
@@ -181,7 +176,7 @@ public class Controller {
  }
 
 
- public void initRawsTable(){
+ public void displayRawsTable(){
      for (int i = 0; i < formulationTableClass.getCounter().length; i++){
          for (int j=0;j<6;j++) {
              view.getFormulationData()[i][j] = formulationTableClass.getFormulationTable()[j][i];
@@ -199,6 +194,19 @@ public class Controller {
          view.getCogsRawData()[i][7] = cogsTable.getPln()[i];
          view.getCogsRawData()[i][8] = cogsTable.getPlnQty()[i];
 
+     }
+ }
+
+ public void displayProductionTable(){
+
+     view.getCogsProductionData()[0][0] = "Manufacturing costs";
+     view.getCogsProductionData()[1][0] = "OH";
+     view.getCogsProductionData()[2][0] = "Tests";
+
+     for(int i=0;i<4;i++){
+        for (int j=0;j<9;j++){
+
+        }
      }
  }
 

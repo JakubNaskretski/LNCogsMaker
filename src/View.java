@@ -17,9 +17,9 @@ public class View implements TableModelListener {
     private JFrame frame;
     private JMenuBar menuBar;
     private JMenu menuFile, menuEdit;
-    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemAddNewBottle, menuItemAddNewLabel;
+    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemAddNewBottle, menuItemAddNewLabel, menuItemAddNewTests;
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
-    private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser;
+    private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser;
     private DefaultTableCellRenderer cellRenderer;
     private JScrollPane formulationTableScrollPane, cogsMaterialsTableScrollPane, cogsRawTableScrollPane, cogsProductionScrollPane;
     private JPanel formulationTablePane, cogsTablePane;
@@ -70,6 +70,8 @@ public class View implements TableModelListener {
         menuFile.add(menuItemAddNewBottle);
         menuItemAddNewLabel = new JMenuItem("Add new Label");
         menuFile.add(menuItemAddNewLabel);
+        menuItemAddNewTests = new JMenuItem("Add new test");
+        menuFile.add(menuItemAddNewTests);
 
         bottleChooser = new JComboBox();
         materialsChoosersList.add(bottleChooser);
@@ -85,6 +87,8 @@ public class View implements TableModelListener {
         materialsChoosersList.add(leafletChooser);
         collectiveBoxChooser  = new JComboBox();
         materialsChoosersList.add(collectiveBoxChooser);
+        palleteChooser = new JComboBox();
+        materialsChoosersList.add(palleteChooser);
 
         cogsTotalCostsTextField = new JTextField();
         cogsTotalCostsTextField.setEditable(false);
@@ -116,9 +120,10 @@ public class View implements TableModelListener {
         materialsEditorsList.add(new DefaultCellEditor(unitBoxChooser));
         materialsEditorsList.add(new DefaultCellEditor(leafletChooser));
         materialsEditorsList.add(new DefaultCellEditor(collectiveBoxChooser));
+        materialsEditorsList.add(new DefaultCellEditor(palleteChooser));
 
         //Make new table with materials
-        cogsMaterialsData = new Object[7][9];
+        cogsMaterialsData = new Object[8][9];
         String[] cogsTableColumnNames1 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
 //        Creating table, adding JComboBoxChoosers to each row from materialsEditorList
@@ -128,7 +133,7 @@ public class View implements TableModelListener {
             {
                 int modelColumn = convertColumnIndexToModel(column);
 
-                if (modelColumn == 1 && row < 7)
+                if (modelColumn == 1 && row < 8)
                     return  materialsEditorsList.get(row);
                 else
                     return super.getCellEditor(row, column);
@@ -157,7 +162,7 @@ public class View implements TableModelListener {
         cogsRawSubtotalTextField.setBackground(Color.WHITE);
 
         //        Make new table with production
-        cogsProductionData = new Object[formulationSize][9];
+        cogsProductionData = new Object[3][9];
         String[] cogsTableColumnNames3 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
         cogsProductionTable = new JTable(cogsProductionData, cogsTableColumnNames3);
@@ -171,7 +176,6 @@ public class View implements TableModelListener {
 
 //Make new table with formulation
         formulationData = new Object[formulationSize][6];
-
         formulationTablePane = new JPanel();
         String[] formulationTableColumnNames = {"No.","Surowiec", "Numer",
                 "mg/5ml","Forma chemiczna", "g/150ml"};
@@ -414,6 +418,10 @@ public class View implements TableModelListener {
         return collectiveBoxChooser;
     }
 
+    public JComboBox getPalleteChooser() {
+        return palleteChooser;
+    }
+
     public JLabel getCogsDate() {
         return cogsDate;
     }
@@ -428,6 +436,10 @@ public class View implements TableModelListener {
 
     public JTextField getCogsTotalCostsTextField() {
         return cogsTotalCostsTextField;
+    }
+
+    public Object[][] getCogsProductionData() {
+        return cogsProductionData;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE
