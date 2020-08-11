@@ -15,10 +15,12 @@ public class Controller {
     private CogsTable cogsTable;
     private Double subtotalMaterialsCosts = 0.0;
     private Double subtotalBottles = 0.0, subtotalCap = 0.0, subtotalLabbel = 0.0, subtotalMeasurer = 0.0,
-            subtotalUnitBox = 0.0, subtotalLeaflet = 0.0, subtotalCollectiveBox = 0.0, subtotalPallete = 0.0;
-    private Double[] subtotalsList = {subtotalBottles, subtotalCap, subtotalLabbel, subtotalMeasurer,
+            subtotalUnitBox = 0.0, subtotalLeaflet = 0.0, subtotalCollectiveBox = 0.0, subtotalPallete = 0.0, subtotalMF = 0.0, subtotalOH = 0.0, subtotalTests = 0.0;
+    private Double[] subtotalMaterialssList = {subtotalBottles, subtotalCap, subtotalLabbel, subtotalMeasurer,
             subtotalUnitBox, subtotalLeaflet, subtotalCollectiveBox, subtotalPallete};
+    private Double[] subtotalProductionList = {subtotalMF, subtotalOH, subtotalTests};
     private Double subtotalRawCosts = 0.0;
+    private Double subtotalProductionCosts = 0.0;
     private Double totalCogsCosts = 0.0;
 
     public Controller(StartingView sv, FormulationTable ft, PricesTable pt) {
@@ -102,10 +104,15 @@ public class Controller {
 
 //        TODO: add autocalculating prices - iterates over table fields if not null calculates them
 
-        view.getMenuItemChangePricesSource().addActionListener(e -> {
-            pricesTable.loadPricesTableDataSource(view.getFrame());
-        });
+        view.getMFCostChooser().addActionListener(e -> {getDataFromProductionChooser(0, view.getMFCostChooser().getSelectedIndex(), 0);});
 
+        view.getOHChooser().addActionListener(e -> {getDataFromProductionChooser(1, view.getOHChooser().getSelectedIndex(), 1);});
+
+        view.getTestsChooser().addActionListener(e -> {getDataFromProductionChooser(2, view.getTestsChooser().getSelectedIndex(), 2);});
+
+        view.getMenuItemChangePricesSource().addActionListener(e -> {
+            pricesTable.loadMaterialsPricesTableDataSource(view.getFrame());
+        });
     }
 
 //    Initializing tables with data
@@ -122,7 +129,7 @@ public class Controller {
                 view.getMaterialsChoosersList().get(i-1).addItem(me.getValue());
             }
         }
-        view.createFormulationDataTable();
+        view.repaintTables();
     }
 
 
@@ -199,67 +206,120 @@ public class Controller {
  }
 
  public void displayProductionTable(){
+//     view.getCogsProductionData()[0][0] = "Manufacturing costs";
+//     view.getCogsProductionData()[1][0] = "OH";
+//     view.getCogsProductionData()[2][0] = "Tests";
 
-     view.getCogsProductionData()[0][0] = "Manufacturing costs";
-     view.getCogsProductionData()[1][0] = "OH";
-     view.getCogsProductionData()[2][0] = "Tests";
+     for (int i=0;i<3;i++){
+         // Get a set of the entries
+         Set productionSet = pricesTable.getPmpml().getPmpml().get(i).getProductNumberDict().entrySet();
+         // Get an iterator
+         Iterator productionIter = productionSet.iterator();
 
-     for(int i=0;i<4;i++){
-        for (int j=0;j<9;j++){
-
-        }
+         while(productionIter.hasNext()) {
+             Map.Entry me = (Map.Entry)productionIter.next();
+             view.getProductionChoosersList().get(i).addItem(me.getValue());
+         }
      }
+     view.repaintTables();
+
  }
 
 
-    public void getDataFromChooser(int matierlasTableRow, int selectedIndex, int sheetNumberFromPriceXls) {
+    public void getDataFromChooser(int materialsTableRow, int selectedIndex, int sheetNumberFromPriceXls) {
         if (selectedIndex > -1) {
             System.out.println(pricesTable.getRmpml().getRmpml().get(7).getMaxPrice()[selectedIndex]);
-            view.getCogsMaterialsData()[matierlasTableRow][0] = sheetNumberFromPriceXls;
-            view.getCogsMaterialsData()[matierlasTableRow][3] = 1;
-            view.getCogsMaterialsData()[matierlasTableRow][4] = "pcs";
+            view.getCogsMaterialsData()[materialsTableRow][0] = sheetNumberFromPriceXls;
+            view.getCogsMaterialsData()[materialsTableRow][3] = 1;
+            view.getCogsMaterialsData()[materialsTableRow][4] = "pcs";
             if (pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMinPrice() != null) {
-                view.getCogsMaterialsData()[matierlasTableRow][5] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
+                view.getCogsMaterialsData()[materialsTableRow][5] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
             } else if (pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice() != null) {
-                view.getCogsMaterialsData()[matierlasTableRow][5] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
+                view.getCogsMaterialsData()[materialsTableRow][5] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
             }
-            view.getCogsMaterialsData()[matierlasTableRow][6] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getCurrency()[selectedIndex];
-            calculateMaterials(matierlasTableRow, selectedIndex, sheetNumberFromPriceXls);
-            view.createFormulationDataTable();
+            view.getCogsMaterialsData()[materialsTableRow][6] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getCurrency()[selectedIndex];
+            calculateMaterials(materialsTableRow, selectedIndex, sheetNumberFromPriceXls);
+            view.repaintTables();
         }
     }
 
+    public void getDataFromProductionChooser(int materialsTableRow, int selectedIndex, int sheetNumberFromPriceXls) {
+        if (selectedIndex > -1) {
+            view.getCogsProductionData()[materialsTableRow][0] = sheetNumberFromPriceXls+1;
+            view.getCogsProductionData()[materialsTableRow][1] = pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getRawMaterialsNames()[selectedIndex];
+            view.getCogsProductionData()[materialsTableRow][3] = 1;
+            view.getCogsProductionData()[materialsTableRow][4] = "pcs";
+            view.getCogsProductionData()[materialsTableRow][6] = pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getCurrency()[selectedIndex];
+//            TODO: Solve issue with 1+ need
+            calculateProduction(materialsTableRow, selectedIndex, sheetNumberFromPriceXls);
+            view.repaintTables();
+        }
+    }
 
- public void calculateMaterials(int matierlasTableRow, int selectedIndex, int sheetNumberFromPriceXls){
+    public void calculateProduction(int materialsTableRow, int selectedIndex, int sheetNumberFromPriceXls){
+//        TODO: add also min price for calculations
+        Double plnPrice = 0.0;
+        if (selectedIndex > -1) {
+            if (String.valueOf(view.getCogsProductionData()[materialsTableRow][6]).equals("EUR")) {
+                view.getCogsProductionData()[materialsTableRow][7] = round(pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
+                plnPrice = round(pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
+            } else if (String.valueOf(view.getCogsProductionData()[materialsTableRow][6]).equals("USD")){
+                view.getCogsProductionData()[materialsTableRow][7] = round(pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
+                plnPrice = round(pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
+            } else {
+                view.getCogsProductionData()[materialsTableRow][7] = pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getPrice()[selectedIndex];
+                plnPrice = (pricesTable.getPmpml().getPmpml().get(sheetNumberFromPriceXls).getPrice()[selectedIndex]);
+            }
+        } else {
+            view.getCogsProductionData()[materialsTableRow][7] = 0.0;
+        }
+
+        if (view.getCogsProductionData()[materialsTableRow][7] != null) {
+            view.getCogsProductionData()[materialsTableRow][8] = plnPrice * Double.valueOf(1);
+            subtotalProductionList[sheetNumberFromPriceXls]=plnPrice * Double.valueOf(1);
+        } else {
+            view.getCogsProductionData()[materialsTableRow][8] = 0.0;
+        }
+
+        subtotalProductionCosts = 0.0;
+        for (Double subtotalCost : subtotalProductionList){
+            subtotalProductionCosts += subtotalCost;}
+        view.getCogsProductionSubtotalTextField().setText((subtotalProductionCosts) + " PLN");
+        view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts) + " PLN");
+
+    }
+
+
+ public void calculateMaterials(int materialsTableRow, int selectedIndex, int sheetNumberFromPriceXls){
 //        TODO: add also min price for calculations
      Double plnPrice = 0.0;
-     if (view.getCogsMaterialsData()[matierlasTableRow][5] != null) {
-         if (String.valueOf(view.getCogsMaterialsData()[matierlasTableRow][6]).equals("EUR")) {
-             view.getCogsMaterialsData()[matierlasTableRow][7] = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
+     if (view.getCogsMaterialsData()[materialsTableRow][5] != null) {
+         if (String.valueOf(view.getCogsMaterialsData()[materialsTableRow][6]).equals("EUR")) {
+             view.getCogsMaterialsData()[materialsTableRow][7] = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
              plnPrice = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getEuroRate(), 2);
-         } else if (String.valueOf(view.getCogsMaterialsData()[matierlasTableRow][6]).equals("USD")){
-             view.getCogsMaterialsData()[matierlasTableRow][7] = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
+         } else if (String.valueOf(view.getCogsMaterialsData()[materialsTableRow][6]).equals("USD")){
+             view.getCogsMaterialsData()[materialsTableRow][7] = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
              plnPrice = round(pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]*pricesTable.getUsdRate(), 2);
          } else {
-             view.getCogsMaterialsData()[matierlasTableRow][7] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
+             view.getCogsMaterialsData()[materialsTableRow][7] = pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex];
              plnPrice = (pricesTable.getRmpml().getRmpml().get(sheetNumberFromPriceXls).getMaxPrice()[selectedIndex]);
          }
      } else {
-         view.getCogsMaterialsData()[matierlasTableRow][7] = 0.0;
+         view.getCogsMaterialsData()[materialsTableRow][7] = 0.0;
      }
 
-     if (view.getCogsMaterialsData()[matierlasTableRow][7] != null) {
-         view.getCogsMaterialsData()[matierlasTableRow][8] = plnPrice * Double.valueOf(1000);
-         subtotalsList[sheetNumberFromPriceXls-1]=plnPrice * Double.valueOf(1000);
+     if (view.getCogsMaterialsData()[materialsTableRow][7] != null) {
+         view.getCogsMaterialsData()[materialsTableRow][8] = plnPrice * Double.valueOf(1000);
+         subtotalMaterialssList[sheetNumberFromPriceXls-1]=plnPrice * Double.valueOf(1000);
      } else {
-         view.getCogsMaterialsData()[matierlasTableRow][8] = 0.0;
+         view.getCogsMaterialsData()[materialsTableRow][8] = 0.0;
      }
 
      subtotalMaterialsCosts = 0.0;
-     for (Double subtotalCost : subtotalsList){
+     for (Double subtotalCost : subtotalMaterialssList){
          subtotalMaterialsCosts += subtotalCost;}
      view.getCogsMaterialsSubtotalTextField().setText((subtotalMaterialsCosts) + " PLN");
-     view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
+     view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts) + " PLN");
 
  }
 

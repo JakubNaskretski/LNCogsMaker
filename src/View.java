@@ -19,7 +19,7 @@ public class View implements TableModelListener {
     private JMenu menuFile, menuEdit;
     private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemAddNewBottle, menuItemAddNewLabel, menuItemAddNewTests;
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
-    private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser;
+    private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser, MFCostChooser, OHChooser, TestsChooser;
     private DefaultTableCellRenderer cellRenderer;
     private JScrollPane formulationTableScrollPane, cogsMaterialsTableScrollPane, cogsRawTableScrollPane, cogsProductionScrollPane;
     private JPanel formulationTablePane, cogsTablePane;
@@ -31,6 +31,10 @@ public class View implements TableModelListener {
 
     private ArrayList<TableCellEditor> materialsEditorsList = new ArrayList<TableCellEditor>();
     private ArrayList<JComboBox> materialsChoosersList = new ArrayList<>();
+
+    private ArrayList<TableCellEditor> productionEditorsList = new ArrayList<TableCellEditor>();
+    private ArrayList<JComboBox> productionChoosersList = new ArrayList<>();
+
 
     public View(int formulationSize){
         this.formulationSize = formulationSize;
@@ -100,6 +104,12 @@ public class View implements TableModelListener {
         productCapacityLabel = new JLabel("Example capacity of the product");
         dateOfTheFormulationLabel = new JLabel("Example date");
 
+        MFCostChooser = new JComboBox();
+        productionChoosersList.add(MFCostChooser);
+        OHChooser = new JComboBox();
+        productionChoosersList.add(OHChooser);
+        TestsChooser = new JComboBox();
+        productionChoosersList.add(TestsChooser);
 
 //Making main content panel
         mainJPanelContainer = new JPanel();
@@ -161,11 +171,27 @@ public class View implements TableModelListener {
         cogsRawSubtotalTextField.setEditable(false);
         cogsRawSubtotalTextField.setBackground(Color.WHITE);
 
+        productionEditorsList.add(new DefaultCellEditor(MFCostChooser));
+        productionEditorsList.add(new DefaultCellEditor(OHChooser));
+        productionEditorsList.add(new DefaultCellEditor(TestsChooser));
+
         //        Make new table with production
         cogsProductionData = new Object[3][9];
         String[] cogsTableColumnNames3 = {"No.","Item", "Item 2",
                 "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
-        cogsProductionTable = new JTable(cogsProductionData, cogsTableColumnNames3);
+        //        Creating table, adding JComboBoxChoosers to each row from materialsEditorList
+        cogsProductionTable = new JTable(cogsProductionData, cogsTableColumnNames3){
+            //  Determine editor to be used by row
+            public TableCellEditor getCellEditor(int row, int column)
+            {
+                int productionModelColumn = convertColumnIndexToModel(column);
+
+                if (productionModelColumn == 5 && row < 3)
+                    return  productionEditorsList.get(row);
+                else
+                    return super.getCellEditor(row, column);
+            }
+        };
 //        cogsProductionTable.ed
         cogsProductionTable.setPreferredScrollableViewportSize(cogsProductionTable.getPreferredSize());
         cogsProductionTable.getColumnModel().getColumn(1).setPreferredWidth(160);
@@ -325,7 +351,7 @@ public class View implements TableModelListener {
         frame.getContentPane().add(mainJPanelContainer);
     }
 
-    public void createFormulationDataTable(){
+    public void repaintTables(){
         frame.getContentPane().revalidate();
         frame.getContentPane().repaint();
     }
@@ -440,6 +466,22 @@ public class View implements TableModelListener {
 
     public Object[][] getCogsProductionData() {
         return cogsProductionData;
+    }
+
+    public JComboBox getMFCostChooser() {
+        return MFCostChooser;
+    }
+
+    public JComboBox getOHChooser() {
+        return OHChooser;
+    }
+
+    public JComboBox getTestsChooser() {
+        return TestsChooser;
+    }
+
+    public ArrayList<JComboBox> getProductionChoosersList() {
+        return productionChoosersList;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE
