@@ -20,7 +20,7 @@ public class Controller {
             subtotalUnitBox, subtotalLeaflet, subtotalCollectiveBox, subtotalPallete};
     private Double[] subtotalProductionList = {subtotalMF, subtotalOH, subtotalTests};
     private Double subtotalRawCosts = 0.0;
-    private Double subtotalProductionCosts = 0.0;
+    private Double subtotalProductionCosts = 0.0;;
     private Double totalCogsCosts = 0.0;
 
     public Controller(StartingView sv, FormulationTable ft, PricesTable pt) {
@@ -138,7 +138,7 @@ public class Controller {
          for (int i = 0; i < formulationTableClass.getCounter().length; i++) {
              cogsTable.getItemName1()[i] = formulationTableClass.getRawMaterialsNames()[i];
              cogsTable.getMu()[i] = "kg";
-             cogsTable.getQty()[i] = formulationTableClass.getAmountPerKG()[i];
+             cogsTable.getQty()[i] = round(formulationTableClass.getAmountPerKG()[i], 2);
              cogsTable.getSystemNumbers()[i] = formulationTableClass.getSystemNumbers()[i];
              for (int j = 0; j < pricesTable.getRmpml().getRmpml().get(0).getCounter().length; j++) {
                  if (formulationTableClass.getSystemNumbers()[i].equals(pricesTable.getRmpml().getRmpml().get(0).getSystemNumbers()[j])){
@@ -153,9 +153,9 @@ public class Controller {
              }
              if (cogsTable.getPurchasePrice()[i] != null) {
                  if (cogsTable.getCurrency()[i].equals("EUR")) {
-                 cogsTable.getPln()[i] = (cogsTable.getPurchasePrice()[i]*pricesTable.getEuroRate());
+                 cogsTable.getPln()[i] = round((cogsTable.getPurchasePrice()[i]*pricesTable.getEuroRate()),2);
                  } else if (cogsTable.getCurrency()[i].equals("USD")) {
-                     cogsTable.getPln()[i] = (cogsTable.getPurchasePrice()[i]*pricesTable.getUsdRate());
+                     cogsTable.getPln()[i] = round((cogsTable.getPurchasePrice()[i]*pricesTable.getUsdRate()),2);
                  } else {
                      cogsTable.getPln()[i] = cogsTable.getPurchasePrice()[i];
                  }
@@ -163,13 +163,13 @@ public class Controller {
                  cogsTable.getPln()[i] = 0.0;
              }
              if (cogsTable.getPln()[i] != null) {
-                cogsTable.getPlnQty()[i] = cogsTable.getPln()[i] * cogsTable.getQty()[i];
+                cogsTable.getPlnQty()[i] = round(cogsTable.getPln()[i] * cogsTable.getQty()[i],2);
                 subtotalRawCosts+=cogsTable.getPlnQty()[i];
              } else {
                  cogsTable.getPlnQty()[i] = 0.0;
              }
-             view.getCogsRawSubtotalTextField().setText((subtotalRawCosts) + " PLN");
-             view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts) + " PLN");
+             view.getCogsRawSubtotalTextField().setText(round((subtotalRawCosts),2) + " PLN");
+             view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts),2) + " PLN");
          }
 
          //         PRODUCTION ============
@@ -284,8 +284,8 @@ public class Controller {
         subtotalProductionCosts = 0.0;
         for (Double subtotalCost : subtotalProductionList){
             subtotalProductionCosts += subtotalCost;}
-        view.getCogsProductionSubtotalTextField().setText((subtotalProductionCosts) + " PLN");
-        view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts) + " PLN");
+        view.getCogsProductionSubtotalTextField().setText(round((subtotalProductionCosts),2) + " PLN");
+        view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
 
     }
 
@@ -318,8 +318,8 @@ public class Controller {
      subtotalMaterialsCosts = 0.0;
      for (Double subtotalCost : subtotalMaterialssList){
          subtotalMaterialsCosts += subtotalCost;}
-     view.getCogsMaterialsSubtotalTextField().setText((subtotalMaterialsCosts) + " PLN");
-     view.getCogsTotalCostsTextField().setText((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts) + " PLN");
+     view.getCogsMaterialsSubtotalTextField().setText(round((subtotalMaterialsCosts),2) + " PLN");
+     view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
 
  }
 

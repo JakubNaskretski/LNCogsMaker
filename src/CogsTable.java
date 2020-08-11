@@ -9,7 +9,7 @@ public class CogsTable {
     private Integer[] counter;
     private String[] itemName1;
     private String[] itemName2;
-    private Integer[] qty;
+    private Double[] qty;
     private String[] mu;
     private Double[] purchasePrice;
     private String[] currency;
@@ -44,7 +44,7 @@ public class CogsTable {
         }
         itemName1 = new String[numberOfItems];
         itemName2 = new String[numberOfItems];
-        qty = new Integer[numberOfItems];
+        qty = new Double[numberOfItems];
         mu = new String[numberOfItems];
         purchasePrice = new Double[numberOfItems];
         currency = new String[numberOfItems];
@@ -92,7 +92,7 @@ public class CogsTable {
         return systemNumbers;
     }
 
-    public Integer[] getQty() {
+    public Double[] getQty() {
         return qty;
     }
 

@@ -12,6 +12,7 @@ public class Main {
 //        TODO: Write One function to read xls tables
 //            Model m = new Model();
 //        TODO: Add version for capsules also
+//        TODO: replace all Rounds in controller
         StartingView sv = new StartingView();
         FormulationTable ft = new FormulationTable();
         PricesTable pt = new PricesTable();

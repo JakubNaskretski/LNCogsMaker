@@ -18,7 +18,7 @@ public class FormulationTable {
     private String[] systemNumbers;
     private Double[] amountPerDosage;
     private String[] chemicalForm;
-    private Integer[] amountPerKG;
+    private Double[] amountPerKG;
 
     private String excelAddress;
     private JFileChooser jfc;
@@ -48,7 +48,7 @@ public class FormulationTable {
             this.systemNumbers = new String[sheet.getRows()-1];
             this.amountPerDosage = new Double[sheet.getRows()-1];
             this.chemicalForm = new String[sheet.getRows()-1];
-            this.amountPerKG = new Integer[sheet.getRows()-1];
+            this.amountPerKG = new Double[sheet.getRows()-1];
             Object[][] formulationListData = {
                 counter,
                 rawMaterialsNames,
@@ -78,12 +78,10 @@ public class FormulationTable {
                     }
 
                     if (type == CellType.NUMBER) {
-//                        System.out.println("I got a number "
-//                                + cell.getContents());
-                        if (j == 3) {
-                            formulationTable[j][i-1] = Double.valueOf(cell.getContents());
-                        } else {
+                        if (j == 0) {
                             formulationTable[j][i-1] = Integer.valueOf(cell.getContents());
+                        } else {
+                            formulationTable[j][i-1] = Double.valueOf(cell.getContents().replace(",", "."));
                         }
                     }
                 }
@@ -191,11 +189,11 @@ public class FormulationTable {
         this.chemicalForm = chemicalForm;
     }
 
-    public Integer[] getAmountPerKG() {
+    public Double[] getAmountPerKG() {
         return amountPerKG;
     }
 
-    public void setAmountPerKG(Integer[] amountPerKG) {
+    public void setAmountPerKG(Double[] amountPerKG) {
         this.amountPerKG = amountPerKG;
     }
 
