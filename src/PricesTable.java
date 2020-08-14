@@ -45,7 +45,7 @@ public class PricesTable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("New path have been set "+rawMaterialsTablePricesPath);
+        System.out.println("New path have been set "+rawMaterialsTablePricesPath+" and "+productionMaterialsTablePricePath);
     }
 
     //    Choose file with file chooser java set chosen file address and read data from file calling read func
@@ -80,7 +80,7 @@ public class PricesTable {
                 if (extension.equals(PricesTable.Utils.xls)) {
                     productionMaterialsTablePricePath = selectedFile.getAbsolutePath();
                     try {
-                        getMaterialsPricesList();
+                        getProductionPricesList();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -182,7 +182,7 @@ public class PricesTable {
                     }
                 }
             } catch (BiffException e) {
-                e.printStackTrace();
+                System.out.println("Nie zaadowano tablic cenowych");
             }
     }
 
@@ -224,6 +224,7 @@ public class PricesTable {
             }
         } catch (BiffException e) {
             e.printStackTrace();
+            System.out.println("Nie udało się załadować cen produkcji w Prices Table");
         }
     }
 

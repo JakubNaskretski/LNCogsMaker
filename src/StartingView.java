@@ -12,7 +12,7 @@ public class StartingView {
         private JFrame frame;
         private JMenuBar menuBar;
         private JMenu menuFile, menuEdit;
-        private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemAddNewBottle, menuItemAddNewLabel;
+        private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource;
         private JButton loadCogsButton ,loadFormulationButton;
         private JPanel mainJPanelContainer;
 
@@ -50,10 +50,7 @@ public class StartingView {
             menuFile.add(menuItemSave);
             menuItemChangePricesSource = new JMenuItem("Change prices source");
             menuFile.add(menuItemChangePricesSource);
-            menuItemAddNewBottle = new JMenuItem("Add new bottle");
-            menuFile.add(menuItemAddNewBottle);
-            menuItemAddNewLabel = new JMenuItem("Add new Label");
-            menuFile.add(menuItemAddNewLabel);
+
 
 //Making main content panel
             mainJPanelContainer = new JPanel();

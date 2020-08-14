@@ -38,12 +38,18 @@ public class Controller {
             this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
 
             startingView.getFrame().dispose();
+    try{
 
             displayMaterialsTable();
             calculateCogs();
             displayRawsTable();
             displayProductionTable();
-            initiateTablesView();
+
+        } catch (Exception e1) {
+        System.out.println("Nie udało się załadować danych");}
+
+        initiateTablesView();
+
         });
 
     }
@@ -54,11 +60,22 @@ public class Controller {
             formulationTableClass.loadAndSetLoadedFile();
             this.view = new View(formulationTableClass.getCounter().length);
             this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
+
+                    try{
             displayMaterialsTable();
-            initiateTablesView();
             calculateCogs();
             displayRawsTable();
             displayProductionTable();
+                    } catch (Exception e1) {
+                        System.out.println("Nie udało się załadować danych");}
+
+            initiateTablesView();
+
+        });
+
+        view.getMenuItemAddNewBottle().addActionListener(e -> {
+            view.getFrame().setEnabled(false);
+            new addItemView();
         });
 
 //        TODO: Check if  you can make loop over choosers
@@ -113,6 +130,11 @@ public class Controller {
         view.getMenuItemChangePricesSource().addActionListener(e -> {
             pricesTable.loadMaterialsPricesTableDataSource(view.getFrame());
         });
+
+        view.getMenuItemChangeProductionPricesSource().addActionListener(e -> {
+            pricesTable.loadProductionTableDataSource(view.getFrame());
+        });
+
     }
 
 //    Initializing tables with data

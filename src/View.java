@@ -17,7 +17,7 @@ public class View implements TableModelListener {
     private JFrame frame;
     private JMenuBar menuBar;
     private JMenu menuFile, menuEdit;
-    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemAddNewBottle, menuItemAddNewLabel, menuItemAddNewTests;
+    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource, menuItemAddNewBottle, menuItemAddNewLabel, menuItemAddNewTests;
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
     private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser, MFCostChooser, OHChooser, TestsChooser;
     private DefaultTableCellRenderer cellRenderer;
@@ -68,8 +68,10 @@ public class View implements TableModelListener {
         menuFile.add(menuItemNew);
         menuItemSave = new JMenuItem("Save");
         menuFile.add(menuItemSave);
-        menuItemChangePricesSource = new JMenuItem("Change prices source");
+        menuItemChangePricesSource = new JMenuItem("Change materials price source");
         menuFile.add(menuItemChangePricesSource);
+        menuItemChangeProductionPricesSource = new JMenuItem("Change production price source");
+        menuFile.add(menuItemChangeProductionPricesSource);
         menuItemAddNewBottle = new JMenuItem("Add new bottle");
         menuFile.add(menuItemAddNewBottle);
         menuItemAddNewLabel = new JMenuItem("Add new Label");
@@ -478,6 +480,14 @@ public class View implements TableModelListener {
 
     public JComboBox getTestsChooser() {
         return TestsChooser;
+    }
+
+    public JMenuItem getMenuItemAddNewBottle() {
+        return menuItemAddNewBottle;
+    }
+
+    public JMenuItem getMenuItemChangeProductionPricesSource() {
+        return menuItemChangeProductionPricesSource;
     }
 
     public ArrayList<JComboBox> getProductionChoosersList() {
