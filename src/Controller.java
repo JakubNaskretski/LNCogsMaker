@@ -46,7 +46,7 @@ public class Controller {
             displayProductionTable();
 
         } catch (Exception e1) {
-        System.out.println("Nie udało się załadować danych");}
+        new PopUpInfo("Nie udało się załadować danych", startingView.getFrame());}
 
         initiateTablesView();
 
@@ -67,15 +67,16 @@ public class Controller {
             displayRawsTable();
             displayProductionTable();
                     } catch (Exception e1) {
-                        System.out.println("Nie udało się załadować danych");}
+                        new PopUpInfo("Nie udało się załadować danych", view.getFrame());
+                    }
 
             initiateTablesView();
 
         });
 
         view.getMenuItemAddNewBottle().addActionListener(e -> {
-            view.getFrame().setEnabled(false);
-            new addItemView();
+//            view.getFrame().setEnabled(false);
+            new AddItemController(view.getFrame()).initAddItemView();
         });
 
 //        TODO: Check if  you can make loop over choosers
@@ -200,7 +201,7 @@ public class Controller {
 
 
      } catch (NullPointerException e){
-         System.out.println("Nie załadowano danych");
+         new PopUpInfo("Nie udało się załadować danych", view.getFrame());
          e.printStackTrace();
      }
  }

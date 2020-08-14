@@ -1,15 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class addItemView {
+// Displays add item window
+public class AddItemView {
 
     private JFrame frame;
-    private JButton confirmButton;
-    private JTextField productNameTextField, purchasePriceTextField, currencyTextField;
+    private JButton confirmButton, cancelButton;
+    private JTextField productNameTextField, purchasePriceTextField;
+    private JComboBox currencyChooserField;
     private JPanel mainJPanelContainer, inputBoxesContainer;
     private GridLayout inputBoxesLayout;
 
-    public addItemView() {
+    public AddItemView() {
         frame = new JFrame();
         frame.getContentPane();
         addComponentsToPane();
@@ -35,8 +37,9 @@ public class addItemView {
         purchasePriceTextField = new JTextField();
         purchasePriceTextField.setPreferredSize(new Dimension(150,20));
 
-        currencyTextField = new JTextField();
-        currencyTextField.setPreferredSize(new Dimension(150,20));
+        String[] currencyOptions = {"PLN", "EUR", "USD"};
+        currencyChooserField = new JComboBox(currencyOptions);
+        currencyChooserField.setPreferredSize(new Dimension(150,20));
 
         inputBoxesLayout = new GridLayout(2,3);
         inputBoxesContainer = new JPanel();
@@ -48,7 +51,7 @@ public class addItemView {
 
         inputBoxesContainer.add(productNameTextField);
         inputBoxesContainer.add(purchasePriceTextField);
-        inputBoxesContainer.add(currencyTextField);
+        inputBoxesContainer.add(currencyChooserField);
 
 //Making main content panel
         mainJPanelContainer = new JPanel();
@@ -66,13 +69,25 @@ public class addItemView {
         c.gridy = 1;
         mainJPanelContainer.add(confirmButton, c);
 
+        cancelButton = new JButton("Anuluj");
+        c.gridwidth = 1;
+        c.gridx = 1;
+        c.gridy = 1;
+        mainJPanelContainer.add(cancelButton, c);
+
 
         frame.getContentPane().add(mainJPanelContainer);
     }
 
-    public void createFormulationDataTable() {
-        frame.getContentPane().revalidate();
-        frame.getContentPane().repaint();
+    public JButton getConfirmButton() {
+        return confirmButton;
     }
 
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
 }

@@ -63,6 +63,7 @@ public class PricesTable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    new PopUpInfo("Ustawiono nowe źródło cen surowców");
                     System.out.println("New path have been set "+rawMaterialsTablePricesPath);
                 }
             }
@@ -84,6 +85,7 @@ public class PricesTable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    new PopUpInfo("Ustawiono nowe źródło cen produkcji");
                     System.out.println("New path have been set "+productionMaterialsTablePricePath);
                 }
             }
@@ -105,7 +107,8 @@ public class PricesTable {
             }
 
     } catch (Exception e){
-            System.out.println("Couldn't load raw materials models");}
+            new PopUpInfo("Nie udało się załadować modeli surowców");
+        }
     }
 
 
@@ -182,7 +185,7 @@ public class PricesTable {
                     }
                 }
             } catch (BiffException e) {
-                System.out.println("Nie zaadowano tablic cenowych");
+                new PopUpInfo("Nie załadowano tablic cenowych");
             }
     }
 
@@ -224,7 +227,7 @@ public class PricesTable {
             }
         } catch (BiffException e) {
             e.printStackTrace();
-            System.out.println("Nie udało się załadować cen produkcji w Prices Table");
+            new PopUpInfo("Nie udało się załadować cen produkcji w Prices Table");
         }
     }
 
