@@ -6,7 +6,7 @@ public class AddItemView {
 
     private JFrame frame;
     private JButton confirmButton, cancelButton;
-    private JTextField productNameTextField, purchaseMinPriceTextField, purchaseMaxPriceTextField;
+    private JTextField productNameTextField, purchaseMinPriceTextField, purchaseMaxPriceTextField, productSupplierTextField;
     private JComboBox currencyChooserField;
     private JPanel mainJPanelContainer, inputBoxesContainer;
     private GridLayout inputBoxesLayout;
@@ -40,29 +40,35 @@ public class AddItemView {
         purchaseMaxPriceTextField = new JTextField();
         purchaseMaxPriceTextField.setPreferredSize(new Dimension(150,20));
 
+        productSupplierTextField = new JTextField();
+        productSupplierTextField.setPreferredSize(new Dimension(150,20));
+
         String[] currencyOptions = {"PLN", "EUR", "USD"};
         currencyChooserField = new JComboBox(currencyOptions);
         currencyChooserField.setPreferredSize(new Dimension(150,20));
 
-        inputBoxesLayout = new GridLayout(2,4);
+        inputBoxesLayout = new GridLayout(2,5);
         inputBoxesContainer = new JPanel();
         inputBoxesContainer.setLayout(inputBoxesLayout);
 
         inputBoxesContainer.add(new JLabel("Product name"));
-        inputBoxesContainer.add(new JLabel("Product price"));
+        inputBoxesContainer.add(new JLabel("Product min price"));
+        inputBoxesContainer.add(new JLabel("Product max price"));
         inputBoxesContainer.add(new JLabel("Product currency"));
+        inputBoxesContainer.add(new JLabel("Product supplier"));
 
         inputBoxesContainer.add(productNameTextField);
         inputBoxesContainer.add(purchaseMinPriceTextField);
         inputBoxesContainer.add(purchaseMaxPriceTextField);
         inputBoxesContainer.add(currencyChooserField);
+        inputBoxesContainer.add(productSupplierTextField);
 
 //Making main content panel
         mainJPanelContainer = new JPanel();
         mainJPanelContainer.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.gridwidth = 1;
+        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
         mainJPanelContainer.add(inputBoxesContainer, c);

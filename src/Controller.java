@@ -76,7 +76,12 @@ public class Controller {
 
         view.getMenuItemAddNewBottle().addActionListener(e -> {
 //            view.getFrame().setEnabled(false);
-            new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
         });
 
 //        TODO: Check if  you can make loop over choosers

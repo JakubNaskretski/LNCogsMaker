@@ -22,6 +22,8 @@ public class PricesTable {
 //    private JFrame currentFrame;
     private String rawMaterialsTablePricesPath = "TestExcelFiles\\TestPrices.xls";
     private String productionMaterialsTablePricePath = "TestExcelFiles\\TestProductionPrices.xls";
+    private String rawMaterialsPricePathFolderName = "TestExcelFiles";
+    private String ProductionPricePathFolderName = "TestExcelFiles";
     private double euroRate, usdRate;
 
 //    private String[] bottleChooserList;
@@ -58,6 +60,7 @@ public class PricesTable {
             if (extension != null) {
                 if (extension.equals(PricesTable.Utils.xls)) {
                     rawMaterialsTablePricesPath = selectedFile.getAbsolutePath();
+                    rawMaterialsPricePathFolderName = selectedFile.getAbsolutePath();
                     try {
                         getMaterialsPricesList();
                     } catch (IOException e) {
@@ -80,6 +83,7 @@ public class PricesTable {
             if (extension != null) {
                 if (extension.equals(PricesTable.Utils.xls)) {
                     productionMaterialsTablePricePath = selectedFile.getAbsolutePath();
+                    ProductionPricePathFolderName = selectedFile.getAbsolutePath();
                     try {
                         getProductionPricesList();
                     } catch (IOException e) {
@@ -292,5 +296,13 @@ public class PricesTable {
 
     public String getProductionMaterialsTablePricePath() {
         return productionMaterialsTablePricePath;
+    }
+
+    public String getRawMaterialsPricePathFolderName() {
+        return rawMaterialsPricePathFolderName;
+    }
+
+    public String getProductionPricePathFolderName() {
+        return ProductionPricePathFolderName;
     }
 }

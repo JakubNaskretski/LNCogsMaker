@@ -41,7 +41,7 @@ public class PopUpInfo {
 
         alertWindow.getContentPane().add(mainPanel);
 
-        alertWindow.setPreferredSize(new Dimension(300, 200));
+        alertWindow.setPreferredSize(new Dimension(300, 80));
 
         alertWindow.pack();
         alertWindow.setVisible(true);
