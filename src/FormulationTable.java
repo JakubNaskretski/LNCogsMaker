@@ -59,10 +59,9 @@ public class FormulationTable {
             this.formulationTable = formulationListData;
 
             formulationDate = sheet.getCell(0, 0).getContents();
-            clientName = sheet.getCell(0, 1).getContents();
-            productName = sheet.getCell(0, 2).getContents();
-            productCapacity = sheet.getCell(0, 3).getContents();
-
+            clientName = sheet.getCell(1, 0).getContents();
+            productName = sheet.getCell(2, 0).getContents();
+            productCapacity = sheet.getCell(3, 0).getContents();
 
 
             for (int j = 0; j < sheet.getColumns(); j++) {

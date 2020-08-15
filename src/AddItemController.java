@@ -29,6 +29,7 @@ public class AddItemController {
         this.cogsView = cogsView;
         this.pricesTable = pricesTable;
 
+//        TODO: Fix this solution
         if (itemType.equals("Bottle")){
                 itemSheetNumber = 1;
         } else if (itemType.equals("Cap")) {

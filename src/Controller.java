@@ -74,11 +74,10 @@ public class Controller {
 
         });
 
+//        =================================== Add items listeners
         view.getMenuItemAddNewBottle().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -88,8 +87,6 @@ public class Controller {
         view.getMenuItemAddNewBottle().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -99,8 +96,6 @@ public class Controller {
         view.getMenuItemAddNewCap().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Cap").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -110,8 +105,6 @@ public class Controller {
         view.getMenuItemAddNewLabel().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Label").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -121,8 +114,6 @@ public class Controller {
         view.getMenuItemAddNewMeasurer().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -132,8 +123,6 @@ public class Controller {
         view.getMenuItemAddNewUnitBox().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Unit box").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -143,8 +132,6 @@ public class Controller {
         view.getMenuItemAddNewLeaflet().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Leaflet").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -154,8 +141,6 @@ public class Controller {
         view.getMenuItemAddNewCollectiveBox().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Collective box").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -165,22 +150,21 @@ public class Controller {
         view.getMenuItemAddNewPallete().addActionListener(e -> {
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Pallete").initAddItemView();
-
-                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
             }
         });
-
 //        TODO: Check if  you can make loop over choosers
 
         //        Init product details variables in Formulation table
-        formulationTableClass.setProductName(view.getProductNameLabel().getText());
-        formulationTableClass.setProductCapacity(view.getProductCapacityLabel().getText());
-        formulationTableClass.setClientName(view.getClientNameLabel().getText());
-        formulationTableClass.setFormulationDate(view.getDateOfTheFormulationLabel().getText());
 
+        view.getProductNameLabel().setText(formulationTableClass.getProductName());
+        view.getProductCapacityLabel().setText(formulationTableClass.getProductCapacity());
+        view.getClientNameLabel().setText(formulationTableClass.getClientName());
+        view.getDateOfTheFormulationLabel().setText(formulationTableClass.getFormulationDate());
+
+//                =================================== Item choosers listeners
 
         view.getBottleChooser().addActionListener(e -> {
             getDataFromChooser(0, view.getBottleChooser().getSelectedIndex(), 1);
@@ -216,11 +200,15 @@ public class Controller {
 
 //        TODO: add autocalculating prices - iterates over table fields if not null calculates them
 
+//                        =================================== Production costs choosers listeners
+
         view.getMFCostChooser().addActionListener(e -> {getDataFromProductionChooser(0, view.getMFCostChooser().getSelectedIndex(), 0);});
 
         view.getOHChooser().addActionListener(e -> {getDataFromProductionChooser(1, view.getOHChooser().getSelectedIndex(), 1);});
 
         view.getTestsChooser().addActionListener(e -> {getDataFromProductionChooser(2, view.getTestsChooser().getSelectedIndex(), 2);});
+
+//                               =================================== Menu items listeners
 
         view.getMenuItemChangePricesSource().addActionListener(e -> {
             pricesTable.loadMaterialsPricesTableDataSource(view.getFrame());
