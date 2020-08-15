@@ -76,7 +76,7 @@ public class Controller {
 
         view.getMenuItemAddNewBottle().addActionListener(e -> {
 //            view.getFrame().setEnabled(false);
-            new AddItemController(view.getFrame()).initAddItemView();
+            new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
         });
 
 //        TODO: Check if  you can make loop over choosers

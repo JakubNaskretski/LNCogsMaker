@@ -6,7 +6,7 @@ public class AddItemView {
 
     private JFrame frame;
     private JButton confirmButton, cancelButton;
-    private JTextField productNameTextField, purchasePriceTextField;
+    private JTextField productNameTextField, purchaseMinPriceTextField, purchaseMaxPriceTextField;
     private JComboBox currencyChooserField;
     private JPanel mainJPanelContainer, inputBoxesContainer;
     private GridLayout inputBoxesLayout;
@@ -34,14 +34,17 @@ public class AddItemView {
         productNameTextField = new JTextField();
         productNameTextField.setPreferredSize(new Dimension(150,20));
 
-        purchasePriceTextField = new JTextField();
-        purchasePriceTextField.setPreferredSize(new Dimension(150,20));
+        purchaseMinPriceTextField = new JTextField();
+        purchaseMinPriceTextField.setPreferredSize(new Dimension(150,20));
+
+        purchaseMaxPriceTextField = new JTextField();
+        purchaseMaxPriceTextField.setPreferredSize(new Dimension(150,20));
 
         String[] currencyOptions = {"PLN", "EUR", "USD"};
         currencyChooserField = new JComboBox(currencyOptions);
         currencyChooserField.setPreferredSize(new Dimension(150,20));
 
-        inputBoxesLayout = new GridLayout(2,3);
+        inputBoxesLayout = new GridLayout(2,4);
         inputBoxesContainer = new JPanel();
         inputBoxesContainer.setLayout(inputBoxesLayout);
 
@@ -50,7 +53,8 @@ public class AddItemView {
         inputBoxesContainer.add(new JLabel("Product currency"));
 
         inputBoxesContainer.add(productNameTextField);
-        inputBoxesContainer.add(purchasePriceTextField);
+        inputBoxesContainer.add(purchaseMinPriceTextField);
+        inputBoxesContainer.add(purchaseMaxPriceTextField);
         inputBoxesContainer.add(currencyChooserField);
 
 //Making main content panel
@@ -89,5 +93,21 @@ public class AddItemView {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public JTextField getProductNameTextField() {
+        return productNameTextField;
+    }
+
+    public JTextField getPurchaseMinPriceTextField() {
+        return purchaseMinPriceTextField;
+    }
+
+    public JTextField getPurchaseMaxPriceTextField() {
+        return purchaseMaxPriceTextField;
+    }
+
+    public JComboBox getCurrencyChooserField() {
+        return currencyChooserField;
     }
 }

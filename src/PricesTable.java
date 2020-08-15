@@ -94,10 +94,10 @@ public class PricesTable {
 
 //    Opens raw materials price list, reads it and creates price models based on number of rows in the price offer
     private void initiateMaterialsPriceModels(){
-        File materialnsInputWorkbook = new File(rawMaterialsTablePricesPath);
+        File materialsInputWorkbook = new File(rawMaterialsTablePricesPath);
         Workbook mw;
         try {
-            mw = Workbook.getWorkbook(materialnsInputWorkbook);
+            mw = Workbook.getWorkbook(materialsInputWorkbook);
 
 //            Read number of sheet, creates instance of RMPM for each sheet with number of rows in sheet
 //            Each sheet by class is automaticcly added to RMPML
@@ -288,5 +288,9 @@ public class PricesTable {
 
     public ProductionMaterialsPriceModelList getPmpml() {
         return pmpml;
+    }
+
+    public String getProductionMaterialsTablePricePath() {
+        return productionMaterialsTablePricePath;
     }
 }
