@@ -75,9 +75,98 @@ public class Controller {
         });
 
         view.getMenuItemAddNewBottle().addActionListener(e -> {
-//            view.getFrame().setEnabled(false);
             try {
                 new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewBottle().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewCap().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Cap").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewLabel().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Label").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewMeasurer().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewUnitBox().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Unit box").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewLeaflet().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Leaflet").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewCollectiveBox().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Collective box").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
+            } catch (Exception exceptionAddBottle){
+                exceptionAddBottle.printStackTrace();
+                new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
+            }
+        });
+
+        view.getMenuItemAddNewPallete().addActionListener(e -> {
+            try {
+                new AddItemController(view.getFrame(), pricesTable, "Pallete").initAddItemView();
+
+                // TODO: Make try catch a sa function (Occures to many times in code
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");

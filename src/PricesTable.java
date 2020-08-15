@@ -41,13 +41,17 @@ public class PricesTable {
         this.jfc = new JFileChooser();
         this.euroRate = 4.3;
         this.usdRate = 3.8;
+        loadPriceListsFromExcel();
+        System.out.println("New path have been set "+rawMaterialsTablePricesPath+" and "+productionMaterialsTablePricePath);
+    }
+
+    public void loadPriceListsFromExcel(){
         try {
             getMaterialsPricesList();
             getProductionPricesList();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("New path have been set "+rawMaterialsTablePricesPath+" and "+productionMaterialsTablePricePath);
     }
 
     //    Choose file with file chooser java set chosen file address and read data from file calling read func

@@ -1,7 +1,9 @@
 import jxl.Cell;
 import jxl.Workbook;
+import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
 import jxl.write.Label;
+import jxl.write.Number;
 import jxl.write.WritableCell;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -17,42 +19,31 @@ public class AddItemController {
     private WritableWorkbook copiedWorkbook;
     private Workbook existingPriceWorkbook;
     private JFrame cogsView;
-    private int itemSheetNumber;
 
-    private Label l;
+
+    private int itemSheetNumber, newCellNumber;
+    private String lastCellValue, textForCell;
     private WritableCell writableCell;
 
     public AddItemController(JFrame cogsView, PricesTable pricesTable, String itemType) {
         this.cogsView = cogsView;
         this.pricesTable = pricesTable;
 
-        switch (itemType){
-            case "Bottle":
+        if (itemType.equals("Bottle")){
                 itemSheetNumber = 1;
-                break;
-            case "Cap":
-                itemSheetNumber = 2;
-                break;
-            case "Label":
-                itemSheetNumber = 3;
-                break;
-            case "Measurer":
-                itemSheetNumber = 4;
-                break;
-            case "Unit box":
-                itemSheetNumber = 5;
-                break;
-            case "Leaflet":
-                itemSheetNumber = 6;
-                break;
-            case "Collective box":
-                itemSheetNumber = 7;
-                break;
-            case "Pallete":
-                itemSheetNumber = 8;
-                break;
-        }
+        } else if (itemType.equals("Cap")) {
+            itemSheetNumber = 2;
+        } else if (itemType.equals("Measurer")) {
+            itemSheetNumber = 4;
+        } else if (itemType.equals("Unit box")) {
+            itemSheetNumber = 5;
+        } else if (itemType.equals("Leaflet")) {
+            itemSheetNumber = 6;
+        } else if (itemType.equals("Collective box")) {
+            itemSheetNumber = 7;
+        } else if (itemType.equals("Pallete")) {
 
+        }
         cogsView.setEnabled(false);
     }
 
@@ -83,49 +74,70 @@ public class AddItemController {
         }
         int rowNo = (existingPriceWorkbook.getSheet(itemSheetNumber).getRows());
         try {
-        for (int columnNo = 1; columnNo < 7; columnNo++) {
+        for (int columnNo = 0; columnNo < 7; columnNo++) {
               switch (columnNo){
+                  case 0:
+                      lastCellValue = existingPriceWorkbook.getSheet(itemSheetNumber).getCell(columnNo, rowNo-1).getContents();
+                      newCellNumber = (Integer.valueOf(lastCellValue))+1;
+//                      writableCell = new Label(columnNo, rowNo, String.valueOf(newCellNumber));
+                      copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,newCellNumber));
+                      break;
                   case 1: // Checks previous cell gets int number from string, adds number to the new cell
-                      String lastCellValue = existingPriceWorkbook.getSheet(itemSheetNumber).getCell(columnNo, rowNo-1).getContents();
-                      int newCellNumber = Integer.valueOf(lastCellValue.substring(lastCellValue.length()-3))+1;
+                      lastCellValue = existingPriceWorkbook.getSheet(itemSheetNumber).getCell(columnNo, rowNo-1).getContents();
+                       newCellNumber = Integer.valueOf(lastCellValue.substring(lastCellValue.length()-3))+1;
                       if (String.valueOf(newCellNumber).length() == 1){
-                          l = new Label(columnNo, rowNo, (lastCellValue.substring(0, lastCellValue.length()-3)+"00"+newCellNumber));
+                          writableCell = new Label(columnNo, rowNo, (lastCellValue.substring(0, lastCellValue.length()-3)+"00"+newCellNumber));
                       }
                       else if (String.valueOf(newCellNumber).length() == 2){
-                          l = new Label(columnNo, rowNo, (lastCellValue.substring(0, lastCellValue.length()-3)+"0"+newCellNumber));
+                          writableCell = new Label(columnNo, rowNo, (lastCellValue.substring(0, lastCellValue.length()-3)+"0"+newCellNumber));
                       }
                       else if (String.valueOf(newCellNumber).length() == 3){
-                          l = new Label(columnNo, rowNo, (lastCellValue.substring(0, lastCellValue.length()-3)+newCellNumber));
+                          writableCell = new Label(columnNo, rowNo, (lastCellValue.substring(0, lastCellValue.length()-3)+newCellNumber));
                       }
-                      writableCell = l;
                       copiedWorkbook.getSheet(itemSheetNumber).addCell(writableCell);
                       break;
                   case 2:
-                      l = new Label(columnNo, rowNo, addItemView.getProductNameTextField().getText());
-                      writableCell = l;
+                      writableCell = new Label(columnNo, rowNo, addItemView.getProductNameTextField().getText());
                       copiedWorkbook.getSheet(itemSheetNumber).addCell(writableCell);
                       break;
                   case 3:
 //                      TODO: Add verify method
-                      l = new Label(columnNo, rowNo, addItemView.getPurchaseMinPriceTextField().getText());
-                      writableCell = l;
-                      copiedWorkbook.getSheet(itemSheetNumber).addCell(writableCell);
+                      if (addItemView.getPurchaseMinPriceTextField().getText().equals("Null")){
+                          copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,0));
+                      } else {
+                          if (addItemView.getPurchaseMinPriceTextField().getText().contains(",")){
+                              textForCell = addItemView.getPurchaseMinPriceTextField().getText().replace(",",".");
+                              copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,Double.valueOf(textForCell)));
+                          } else {
+                              copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,Double.valueOf(addItemView.getPurchaseMinPriceTextField().getText())));
+                          }
+                      }
                       break;
                   case 4:
-                      l = new Label(columnNo, rowNo, addItemView.getPurchaseMaxPriceTextField().getText());
-                      writableCell = l;
-                      copiedWorkbook.getSheet(itemSheetNumber).addCell(writableCell);
+                      if (addItemView.getPurchaseMaxPriceTextField().getText().equals("Null")){
+                          copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,0));
+                      } else {
+                          if (addItemView.getPurchaseMaxPriceTextField().getText().contains(",")){
+                              textForCell = addItemView.getPurchaseMaxPriceTextField().getText().replace(",",".");
+                              copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,Double.valueOf(textForCell)));
+                          } else {
+                              copiedWorkbook.getSheet(itemSheetNumber).addCell(new Number(columnNo,rowNo,Double.valueOf(addItemView.getPurchaseMaxPriceTextField().getText())));
+                          }
+                      }
                       break;
                   case 5:
 //                      TODO: add currency chooser
-                      l = new Label(columnNo, rowNo, "PLN");
-                      writableCell = l;
+                      writableCell = new Label(columnNo, rowNo, addItemView.getCurrencyChooserField().getSelectedItem().toString());
                       copiedWorkbook.getSheet(itemSheetNumber).addCell(writableCell);
                       break;
                   case 6:
+                      writableCell = new Label(columnNo, rowNo, addItemView.getProductSupplierTextField().getText());
+                      copiedWorkbook.getSheet(itemSheetNumber).addCell(writableCell);
                       break;
               }
           }
+            new PopUpInfo("Dodano nowy przedmiot do cennika", cogsView);
+            pricesTable.loadPriceListsFromExcel();
         } catch (WriteException e) {
             System.out.println("Nie udało się dodać komórki");
             new PopUpInfo("Nie udało się dodać komórki");

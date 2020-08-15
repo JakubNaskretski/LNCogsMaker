@@ -2,7 +2,6 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 import java.awt.*;
@@ -16,8 +15,10 @@ public class View implements TableModelListener {
     private int formulationSize;
     private JFrame frame;
     private JMenuBar menuBar;
-    private JMenu menuFile, menuEdit;
-    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource, menuItemAddNewBottle, menuItemAddNewLabel, menuItemAddNewTests;
+    private JMenu menuFile, menuAddItems;
+    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource,
+            menuItemAddNewBottle, menuItemAddNewCap, menuItemAddNewLabel, menuItemAddNewMeasurer, menuItemAddNewUnitBox, menuItemAddNewLeaflet, menuItemAddNewCollectiveBox, menuItemAddNewPallete,
+            menuItemAddNewTests;
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
     private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser, MFCostChooser, OHChooser, TestsChooser;
     private DefaultTableCellRenderer cellRenderer;
@@ -61,8 +62,8 @@ public class View implements TableModelListener {
 
         menuFile = new JMenu("Plik");
         menuBar.add(menuFile);
-        menuEdit = new JMenu("Edytuj");
-        menuBar.add(menuEdit);
+        menuAddItems = new JMenu("Dodaj przedmioty");
+        menuBar.add(menuAddItems);
 
         menuItemNew = new JMenuItem("New");
         menuFile.add(menuItemNew);
@@ -72,12 +73,28 @@ public class View implements TableModelListener {
         menuFile.add(menuItemChangePricesSource);
         menuItemChangeProductionPricesSource = new JMenuItem("Change production price source");
         menuFile.add(menuItemChangeProductionPricesSource);
+
+
+
         menuItemAddNewBottle = new JMenuItem("Add new bottle");
-        menuFile.add(menuItemAddNewBottle);
+        menuAddItems.add(menuItemAddNewBottle);
+        menuItemAddNewCap = new JMenuItem("Add new cap");
+        menuAddItems.add(menuItemAddNewCap);
         menuItemAddNewLabel = new JMenuItem("Add new Label");
-        menuFile.add(menuItemAddNewLabel);
+        menuAddItems.add(menuItemAddNewLabel);
+        menuItemAddNewMeasurer = new JMenuItem("Add new measurer");
+        menuAddItems.add(menuItemAddNewMeasurer);
+        menuItemAddNewUnitBox = new JMenuItem("Add new unit box");
+        menuAddItems.add(menuItemAddNewUnitBox);
+        menuItemAddNewLeaflet = new JMenuItem("Add new leaflet");
+        menuAddItems.add(menuItemAddNewLeaflet);
+        menuItemAddNewCollectiveBox = new JMenuItem("Add new collective box");
+        menuAddItems.add(menuItemAddNewCollectiveBox);
+        menuItemAddNewPallete = new JMenuItem("Add new pallete");
+        menuAddItems.add(menuItemAddNewPallete);
+
         menuItemAddNewTests = new JMenuItem("Add new test");
-        menuFile.add(menuItemAddNewTests);
+        menuAddItems.add(menuItemAddNewTests);
 
         bottleChooser = new JComboBox();
         materialsChoosersList.add(bottleChooser);
@@ -492,6 +509,34 @@ public class View implements TableModelListener {
 
     public ArrayList<JComboBox> getProductionChoosersList() {
         return productionChoosersList;
+    }
+
+    public JMenuItem getMenuItemAddNewCap() {
+        return menuItemAddNewCap;
+    }
+
+    public JMenuItem getMenuItemAddNewLabel() {
+        return menuItemAddNewLabel;
+    }
+
+    public JMenuItem getMenuItemAddNewMeasurer() {
+        return menuItemAddNewMeasurer;
+    }
+
+    public JMenuItem getMenuItemAddNewUnitBox() {
+        return menuItemAddNewUnitBox;
+    }
+
+    public JMenuItem getMenuItemAddNewLeaflet() {
+        return menuItemAddNewLeaflet;
+    }
+
+    public JMenuItem getMenuItemAddNewCollectiveBox() {
+        return menuItemAddNewCollectiveBox;
+    }
+
+    public JMenuItem getMenuItemAddNewPallete() {
+        return menuItemAddNewPallete;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE

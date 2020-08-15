@@ -8,8 +8,9 @@ public class AddItemView {
     private JButton confirmButton, cancelButton;
     private JTextField productNameTextField, purchaseMinPriceTextField, purchaseMaxPriceTextField, productSupplierTextField;
     private JComboBox currencyChooserField;
-    private JPanel mainJPanelContainer, inputBoxesContainer;
-    private GridLayout inputBoxesLayout;
+    private JPanel mainJPanelContainer, inputBoxContainer, buttonBoxContainer;
+    private GridLayout inputBoxesLayout, buttonsBoxLayout;
+    private String[] currencyOptions = {"PLN", "EUR", "USD"};
 
     public AddItemView() {
         frame = new JFrame();
@@ -43,47 +44,47 @@ public class AddItemView {
         productSupplierTextField = new JTextField();
         productSupplierTextField.setPreferredSize(new Dimension(150,20));
 
-        String[] currencyOptions = {"PLN", "EUR", "USD"};
         currencyChooserField = new JComboBox(currencyOptions);
         currencyChooserField.setPreferredSize(new Dimension(150,20));
+        currencyChooserField.setBackground(Color.WHITE);
 
         inputBoxesLayout = new GridLayout(2,5);
-        inputBoxesContainer = new JPanel();
-        inputBoxesContainer.setLayout(inputBoxesLayout);
+        inputBoxContainer = new JPanel();
+        inputBoxContainer.setLayout(inputBoxesLayout);
 
-        inputBoxesContainer.add(new JLabel("Product name"));
-        inputBoxesContainer.add(new JLabel("Product min price"));
-        inputBoxesContainer.add(new JLabel("Product max price"));
-        inputBoxesContainer.add(new JLabel("Product currency"));
-        inputBoxesContainer.add(new JLabel("Product supplier"));
+        buttonsBoxLayout = new GridLayout(1,2);
+        buttonBoxContainer = new JPanel();
+        buttonBoxContainer.setLayout(buttonsBoxLayout);
 
-        inputBoxesContainer.add(productNameTextField);
-        inputBoxesContainer.add(purchaseMinPriceTextField);
-        inputBoxesContainer.add(purchaseMaxPriceTextField);
-        inputBoxesContainer.add(currencyChooserField);
-        inputBoxesContainer.add(productSupplierTextField);
+        inputBoxContainer.add(new JLabel("Product name"));
+        inputBoxContainer.add(new JLabel("Product min price"));
+        inputBoxContainer.add(new JLabel("Product max price"));
+        inputBoxContainer.add(new JLabel("Product currency"));
+        inputBoxContainer.add(new JLabel("Product supplier"));
+
+        inputBoxContainer.add(productNameTextField);
+        inputBoxContainer.add(purchaseMinPriceTextField);
+        inputBoxContainer.add(purchaseMaxPriceTextField);
+        inputBoxContainer.add(currencyChooserField);
+        inputBoxContainer.add(productSupplierTextField);
 
 //Making main content panel
         mainJPanelContainer = new JPanel();
         mainJPanelContainer.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.gridwidth = 2;
+        c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 0;
-        mainJPanelContainer.add(inputBoxesContainer, c);
+        mainJPanelContainer.add(inputBoxContainer, c);
 
-        confirmButton = new JButton("Dodaj");
+        buttonBoxContainer.add(confirmButton = new JButton("Dodaj"));
+        buttonBoxContainer.add(cancelButton = new JButton("Anuluj"));
+
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 1;
-        mainJPanelContainer.add(confirmButton, c);
-
-        cancelButton = new JButton("Anuluj");
-        c.gridwidth = 1;
-        c.gridx = 1;
-        c.gridy = 1;
-        mainJPanelContainer.add(cancelButton, c);
+        mainJPanelContainer.add(buttonBoxContainer, c);
 
 
         frame.getContentPane().add(mainJPanelContainer);
@@ -115,5 +116,13 @@ public class AddItemView {
 
     public JComboBox getCurrencyChooserField() {
         return currencyChooserField;
+    }
+
+    public String[] getCurrencyOptions() {
+        return currencyOptions;
+    }
+
+    public JTextField getProductSupplierTextField() {
+        return productSupplierTextField;
     }
 }
