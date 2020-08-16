@@ -231,7 +231,20 @@ public class Controller {
         view.getCogsEurPriceTextField().addActionListener(e -> {
             if (view.getCogsEurPriceTextField().getText().length() > 0){
                 view.getCogsPlnPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate(),2)));
-                view.getCogsEurMarginTextField().setText(String.valueOf( Double.valueOf(view.getCogsEurPriceTextField().getText())-round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2)/pricesTable.getEuroRate()) + "Eur");
+                view.getCogsEurMarginTextField().setText(String.valueOf(round((Double.valueOf(view.getCogsEurPriceTextField().getText())-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate()),2) + " Eur"));
+            }
+        });
+
+        view.getCalculateCostsButton().addActionListener(e -> {
+            if (view.getCogsEurPriceTextField().getText().length() > 0){
+                view.getCogsPlnPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate(),2)));
+                view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsEurPriceTextField().getText())-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate()),2) + " Eur");
+                view.getCogsPlnMarginTexField().setText(round((Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate()-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)),2) + " Pln");
+                view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round(((Double.valueOf(view.getCogsEurPriceTextField().getText())-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate())/Double.valueOf(view.getCogsEurPriceTextField().getText()))*100,0))));
+
+            } else if (view.getCogsPlnPriceTextField().getText().length() > 0) {
+                view.getCogsEurPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate(),2)));
+                view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate()-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate()),2) + " Eur");
             }
         });
 
@@ -446,7 +459,7 @@ public class Controller {
      view.getCogsMaterialsSubtotalTextField().setText(round((subtotalMaterialsCosts),2) + " PLN");
      view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
 
-     view.getCogsEurTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2)/pricesTable.getEuroRate() + " EUR");
+     view.getCogsEurTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000/pricesTable.getEuroRate(),2) + " EUR");
      view.getCogsPlnTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
 
     }

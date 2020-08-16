@@ -24,7 +24,7 @@ public class View implements TableModelListener {
     private DefaultTableCellRenderer cellRenderer;
     private JScrollPane formulationTableScrollPane, cogsMaterialsTableScrollPane, cogsRawTableScrollPane, cogsProductionScrollPane;
     private JPanel formulationTablePane, cogsTablePane;
-    private JButton loadFormulationButton;
+    private JButton calculateCostsButton, loadFormulationButton;
     private JPanel mainJPanelContainer, middleInformationJPanel, cogsPriceJPanel;
     private Object[][] formulationData, cogsMaterialsData, cogsRawData, cogsProductionData;
     private JLabel cogsDate, productNameLabel, clientNameLabel, productCapacityLabel, dateOfTheFormulationLabel;
@@ -157,6 +157,7 @@ public class View implements TableModelListener {
         materialsEditorsList.add(new DefaultCellEditor(collectiveBoxChooser));
         materialsEditorsList.add(new DefaultCellEditor(palleteChooser));
 
+
         //Make new table with materials
         cogsMaterialsData = new Object[8][9];
         String[] cogsTableColumnNames1 = {"No.","Item", "Item 2",
@@ -237,8 +238,9 @@ public class View implements TableModelListener {
         formulationTable.setPreferredScrollableViewportSize(formulationTable.getPreferredSize());
         formulationTableScrollPane = new JScrollPane(formulationTable);
 
-        cogsPriceLayout = new GridLayout(4, 3);
+        cogsPriceLayout = new GridLayout(4, 3, 5, 5);
         cogsPriceJPanel = new JPanel();
+//        cogsPriceJPanel.setPreferredSize(new Dimension(200, 150));
         cogsPriceJPanel.setLayout(cogsPriceLayout);
 
         cogsEurTextField = new JTextField();
@@ -249,16 +251,16 @@ public class View implements TableModelListener {
         cogsPlnMarginTexField = new JTextField();
         cogsMarginPercantageTextField = new JTextField();
 
-        cogsPriceJPanel.add(new JLabel("cogs"));
+        cogsPriceJPanel.add(new JLabel("Cogs"));
         cogsPriceJPanel.add(cogsEurTextField);
         cogsPriceJPanel.add(cogsPlnTextField);
-        cogsPriceJPanel.add(new JLabel("price"));
+        cogsPriceJPanel.add(new JLabel("Price"));
         cogsPriceJPanel.add(cogsEurPriceTextField);
         cogsPriceJPanel.add(cogsPlnPriceTextField);
-        cogsPriceJPanel.add(new JLabel("margin"));
+        cogsPriceJPanel.add(new JLabel("Margin"));
         cogsPriceJPanel.add(cogsEurMarginTextField);
         cogsPriceJPanel.add(cogsPlnMarginTexField);
-        cogsPriceJPanel.add(new JLabel("margin %"));
+        cogsPriceJPanel.add(new JLabel("Margin %"));
         cogsPriceJPanel.add(cogsMarginPercantageTextField);
 
 
@@ -282,22 +284,28 @@ public class View implements TableModelListener {
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
         c.gridy = 0;
+        c.ipady = 20;
+        c.ipadx = 20;
         mainJPanelContainer.add(middleInformationJPanel, c);
 
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
+        c.ipady = 0;
+        c.ipadx = 0;
         c.gridy = 1;
         c.gridwidth = 4;
         mainJPanelContainer.add(cogsMaterialsTableScrollPane, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,10,0,0);
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
         mainJPanelContainer.add(new JLabel("Subtotal"), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,0,0,0);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -312,12 +320,14 @@ public class View implements TableModelListener {
         mainJPanelContainer.add(cogsRawTableScrollPane, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,10,0,0);
         c.gridx = 0;
         c.gridy = 4;
         c.gridwidth = 1;
         mainJPanelContainer.add(new JLabel("Subtotal"), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,0,0,0);
         c.gridx = 1;
         c.gridy = 4;
         c.gridwidth = 1;
@@ -332,12 +342,14 @@ public class View implements TableModelListener {
         mainJPanelContainer.add(cogsProductionScrollPane, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,10,0,0);
         c.gridx = 0;
         c.gridy = 6;
         c.gridwidth = 1;
         mainJPanelContainer.add(new JLabel("Subtotal"), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,0,0,0);
         c.gridx = 1;
         c.gridy = 6;
         c.gridwidth = 1;
@@ -350,27 +362,23 @@ public class View implements TableModelListener {
         mainJPanelContainer.add(Box.createVerticalStrut(5), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,10,0,0);
         c.gridx = 0;
         c.gridy = 8;
         c.gridwidth = 1;
         mainJPanelContainer.add(new JLabel("Total cogs"), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,0,0,0);
         c.gridx = 1;
         c.gridy = 8;
         c.gridwidth = 1;
         mainJPanelContainer.add(cogsTotalCostsTextField, c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
-        c.gridy = 9;
-        c.gridwidth = 1;
-        mainJPanelContainer.add(Box.createVerticalStrut(10), c);
-
         // -
 
-
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(10,10,5,10);
         c.gridx = 0;
         c.gridy = 10;
         mainJPanelContainer.add(cogsPriceJPanel, c);
@@ -381,15 +389,17 @@ public class View implements TableModelListener {
         c.gridy = 11;
         mainJPanelContainer.add(cogsDate, c);
 
-
+        calculateCostsButton = new JButton("Calculate costs");
         c.fill = GridBagConstraints.NONE;
+        c.insets = new Insets(5,10,10,10);
         c.gridwidth = 1;
         c.gridheight = 1;
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 12;
-        mainJPanelContainer.add(new JButton("Button 2"), c);
+        mainJPanelContainer.add(calculateCostsButton, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0,0,0,0);
         c.gridx = 0;
         c.gridy = 13;
         c.gridwidth = 4;
@@ -600,6 +610,10 @@ public class View implements TableModelListener {
 
     public JTextField getCogsMarginPercantageTextField() {
         return cogsMarginPercantageTextField;
+    }
+
+    public JButton getCalculateCostsButton() {
+        return calculateCostsButton;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE
