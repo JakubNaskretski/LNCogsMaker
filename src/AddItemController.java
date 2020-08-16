@@ -8,6 +8,7 @@ import jxl.write.WritableCell;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -19,13 +20,15 @@ public class AddItemController {
     private WritableWorkbook copiedWorkbook;
     private Workbook existingPriceWorkbook;
     private JFrame cogsView;
+    private Controller controller;
 
 
     private int itemSheetNumber, newCellNumber;
     private String lastCellValue, textForCell;
     private WritableCell writableCell;
 
-    public AddItemController(JFrame cogsView, PricesTable pricesTable, String itemType) {
+    public AddItemController(JFrame cogsView, PricesTable pricesTable, String itemType, Controller controller) {
+        this.controller = controller;
         this.cogsView = cogsView;
         this.pricesTable = pricesTable;
 
@@ -53,8 +56,13 @@ public class AddItemController {
 
         addItemView.getConfirmButton().addActionListener(e -> {
             addItem();
-            addItemView.getFrame().dispose();
             cogsView.setEnabled(true);
+            
+//            TODO: Fix this temporary solution
+            pricesTable.loadPriceListsFromExcel();
+            controller.loadAndDisplayDataForMaterialsTable();
+
+            addItemView.getFrame().dispose();
         });
 
         addItemView.getCancelButton().addActionListener(e -> {
@@ -138,7 +146,6 @@ public class AddItemController {
               }
           }
             new PopUpInfo("Dodano nowy przedmiot do cennika", cogsView);
-            pricesTable.loadPriceListsFromExcel();
         } catch (WriteException e) {
             System.out.println("Nie udało się dodać komórki");
             new PopUpInfo("Nie udało się dodać komórki");

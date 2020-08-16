@@ -13,7 +13,17 @@ public class RawMaterialsPriceModelList {
         return rmpml;
     }
 
+    public void clearRmpml(){
+        rmpml.clear();
+    }
+
     public void setRmpml( ArrayList<RawMaterialsPricesModel> rmpml ) {
         this.rmpml = rmpml;
     }
+
+    public int getRmpmlSize(){
+        return rmpml.size();
+    }
+
 }
+

@@ -16,7 +16,7 @@ public class View implements TableModelListener {
     private JFrame frame;
     private JMenuBar menuBar;
     private JMenu menuFile, menuAddItems;
-    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource,
+    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource, saveCogsMenuItem, loadCogsMenuItem,
             menuItemAddNewBottle, menuItemAddNewCap, menuItemAddNewLabel, menuItemAddNewMeasurer, menuItemAddNewUnitBox, menuItemAddNewLeaflet, menuItemAddNewCollectiveBox, menuItemAddNewPallete,
             menuItemAddNewTests;
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
@@ -73,24 +73,28 @@ public class View implements TableModelListener {
         menuFile.add(menuItemChangePricesSource);
         menuItemChangeProductionPricesSource = new JMenuItem("Change production price source");
         menuFile.add(menuItemChangeProductionPricesSource);
+        saveCogsMenuItem = new JMenuItem("Zapisz cogs");
+        menuFile.add(saveCogsMenuItem);
+        loadCogsMenuItem = new JMenuItem("Wczytaj cogs");
+        menuFile.add(loadCogsMenuItem);
 
 
 
-        menuItemAddNewBottle = new JMenuItem("Add new bottle");
+        menuItemAddNewBottle = new JMenuItem("Dodaj nową butelkę");
         menuAddItems.add(menuItemAddNewBottle);
-        menuItemAddNewCap = new JMenuItem("Add new cap");
+        menuItemAddNewCap = new JMenuItem("Dodaj nową nakrętkę");
         menuAddItems.add(menuItemAddNewCap);
-        menuItemAddNewLabel = new JMenuItem("Add new Label");
+        menuItemAddNewLabel = new JMenuItem("Dodaj nową etykietę");
         menuAddItems.add(menuItemAddNewLabel);
-        menuItemAddNewMeasurer = new JMenuItem("Add new measurer");
+        menuItemAddNewMeasurer = new JMenuItem("Dodaj nową miarkę");
         menuAddItems.add(menuItemAddNewMeasurer);
-        menuItemAddNewUnitBox = new JMenuItem("Add new unit box");
+        menuItemAddNewUnitBox = new JMenuItem("Dodaj nowy kartonik ");
         menuAddItems.add(menuItemAddNewUnitBox);
-        menuItemAddNewLeaflet = new JMenuItem("Add new leaflet");
+        menuItemAddNewLeaflet = new JMenuItem("Dodaj nową ulotkę");
         menuAddItems.add(menuItemAddNewLeaflet);
-        menuItemAddNewCollectiveBox = new JMenuItem("Add new collective box");
+        menuItemAddNewCollectiveBox = new JMenuItem("Dodaj nowy karton zbiorczy");
         menuAddItems.add(menuItemAddNewCollectiveBox);
-        menuItemAddNewPallete = new JMenuItem("Add new pallete");
+        menuItemAddNewPallete = new JMenuItem("Dodaj nową  paletę");
         menuAddItems.add(menuItemAddNewPallete);
 
         menuItemAddNewTests = new JMenuItem("Add new test");

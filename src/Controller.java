@@ -40,10 +40,10 @@ public class Controller {
             startingView.getFrame().dispose();
     try{
 
-            displayMaterialsTable();
-            calculateCogs();
-            displayRawsTable();
-            displayProductionTable();
+            loadAndDisplayDataForMaterialsTable();
+            calculateIngredients();
+            loadAndDisplayRawsTable();
+            loadAndDisplayProductionTable();
 
         } catch (Exception e1) {
         new PopUpInfo("Nie udało się załadować danych", startingView.getFrame());}
@@ -62,10 +62,10 @@ public class Controller {
             this.cogsTable = new CogsTable(formulationTableClass.getCounter().length);
 
                     try{
-            displayMaterialsTable();
-            calculateCogs();
-            displayRawsTable();
-            displayProductionTable();
+            loadAndDisplayDataForMaterialsTable();
+            calculateIngredients();
+            loadAndDisplayRawsTable();
+            loadAndDisplayProductionTable();
                     } catch (Exception e1) {
                         new PopUpInfo("Nie udało się załadować danych", view.getFrame());
                     }
@@ -77,7 +77,8 @@ public class Controller {
 //        =================================== Add items listeners
         view.getMenuItemAddNewBottle().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Bottle", this);
+
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -86,7 +87,7 @@ public class Controller {
 
         view.getMenuItemAddNewBottle().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Bottle", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -95,7 +96,7 @@ public class Controller {
 
         view.getMenuItemAddNewCap().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Cap").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Cap", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -104,7 +105,7 @@ public class Controller {
 
         view.getMenuItemAddNewLabel().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Label").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Label", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -113,7 +114,7 @@ public class Controller {
 
         view.getMenuItemAddNewMeasurer().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Bottle").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Bottle", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -122,7 +123,7 @@ public class Controller {
 
         view.getMenuItemAddNewUnitBox().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Unit box").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Unit box", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -131,7 +132,7 @@ public class Controller {
 
         view.getMenuItemAddNewLeaflet().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Leaflet").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Leaflet", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -140,7 +141,7 @@ public class Controller {
 
         view.getMenuItemAddNewCollectiveBox().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Collective box").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Collective box", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -149,7 +150,7 @@ public class Controller {
 
         view.getMenuItemAddNewPallete().addActionListener(e -> {
             try {
-                new AddItemController(view.getFrame(), pricesTable, "Pallete").initAddItemView();
+                new AddItemController(view.getFrame(), pricesTable, "Pallete", this).initAddItemView();
             } catch (Exception exceptionAddBottle){
                 exceptionAddBottle.printStackTrace();
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
@@ -221,9 +222,15 @@ public class Controller {
     }
 
 //    Initializing tables with data
-    private void displayMaterialsTable(){
+    protected void loadAndDisplayDataForMaterialsTable(){
 //        Loading data for JCombo boxes materials table
+
         for (int i=1;i<9;i++){
+
+            if (view.getMaterialsChoosersList().get(i-1).getItemCount() > 0){ // Clears choosers before re uploading them in the 2nd ad next calls
+                view.getMaterialsChoosersList().get(i-1).removeAllItems();
+            }
+
             // Get a set of the entries
             Set set = pricesTable.getRmpml().getRmpml().get(i).getProductNumberDict().entrySet();
             // Get an iterator
@@ -238,7 +245,29 @@ public class Controller {
     }
 
 
- public void calculateCogs(){
+    public void loadAndDisplayRawsTable(){
+        for (int i = 0; i < formulationTableClass.getCounter().length; i++){
+            for (int j=0;j<6;j++) {
+                view.getFormulationData()[i][j] = formulationTableClass.getFormulationTable()[j][i];
+            }
+        }
+        for (int i = 0; i< cogsTable.getCounter().length; i++){
+            view.getCogsRawData()[i][0] = cogsTable.getCounter()[i];
+            //        TODO: Temporary solution
+            view.getCogsRawData()[i][1] = cogsTable.getItemName1()[i];
+            view.getCogsRawData()[i][2] = cogsTable.getItemName2()[i];
+            view.getCogsRawData()[i][3] = cogsTable.getQty()[i];
+            view.getCogsRawData()[i][4] = cogsTable.getMu()[i];
+            view.getCogsRawData()[i][5] = cogsTable.getPurchasePrice()[i];
+            view.getCogsRawData()[i][6] = cogsTable.getCurrency()[i];
+            view.getCogsRawData()[i][7] = cogsTable.getPln()[i];
+            view.getCogsRawData()[i][8] = cogsTable.getPlnQty()[i];
+
+        }
+    }
+
+
+ public void calculateIngredients(){
      try {
          for (int i = 0; i < formulationTableClass.getCounter().length; i++) {
              cogsTable.getItemName1()[i] = formulationTableClass.getRawMaterialsNames()[i];
@@ -288,32 +317,7 @@ public class Controller {
      }
  }
 
-
- public void displayRawsTable(){
-     for (int i = 0; i < formulationTableClass.getCounter().length; i++){
-         for (int j=0;j<6;j++) {
-             view.getFormulationData()[i][j] = formulationTableClass.getFormulationTable()[j][i];
-         }
-     }
-     for (int i = 0; i< cogsTable.getCounter().length; i++){
-         view.getCogsRawData()[i][0] = cogsTable.getCounter()[i];
-         //        TODO: Temporary solution
-         view.getCogsRawData()[i][1] = cogsTable.getItemName1()[i];
-         view.getCogsRawData()[i][2] = cogsTable.getItemName2()[i];
-         view.getCogsRawData()[i][3] = cogsTable.getQty()[i];
-         view.getCogsRawData()[i][4] = cogsTable.getMu()[i];
-         view.getCogsRawData()[i][5] = cogsTable.getPurchasePrice()[i];
-         view.getCogsRawData()[i][6] = cogsTable.getCurrency()[i];
-         view.getCogsRawData()[i][7] = cogsTable.getPln()[i];
-         view.getCogsRawData()[i][8] = cogsTable.getPlnQty()[i];
-
-     }
- }
-
- public void displayProductionTable(){
-//     view.getCogsProductionData()[0][0] = "Manufacturing costs";
-//     view.getCogsProductionData()[1][0] = "OH";
-//     view.getCogsProductionData()[2][0] = "Tests";
+ public void loadAndDisplayProductionTable(){
 
      for (int i=0;i<3;i++){
          // Get a set of the entries
