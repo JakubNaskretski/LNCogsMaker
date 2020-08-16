@@ -57,7 +57,7 @@ public class AddItemController {
         addItemView.getConfirmButton().addActionListener(e -> {
             addItem();
             cogsView.setEnabled(true);
-            
+
 //            TODO: Fix this temporary solution
             pricesTable.loadPriceListsFromExcel();
             controller.loadAndDisplayDataForMaterialsTable();
