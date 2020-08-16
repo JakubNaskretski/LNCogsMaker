@@ -25,10 +25,12 @@ public class View implements TableModelListener {
     private JScrollPane formulationTableScrollPane, cogsMaterialsTableScrollPane, cogsRawTableScrollPane, cogsProductionScrollPane;
     private JPanel formulationTablePane, cogsTablePane;
     private JButton loadFormulationButton;
-    private JPanel mainJPanelContainer, middleInformationJPanel;
+    private JPanel mainJPanelContainer, middleInformationJPanel, cogsPriceJPanel;
     private Object[][] formulationData, cogsMaterialsData, cogsRawData, cogsProductionData;
     private JLabel cogsDate, productNameLabel, clientNameLabel, productCapacityLabel, dateOfTheFormulationLabel;
-    private JTextField cogsMaterialsSubtotalTextField, cogsRawSubtotalTextField, cogsProductionSubtotalTextField, cogsTotalCostsTextField;
+    private JTextField cogsMaterialsSubtotalTextField, cogsRawSubtotalTextField, cogsProductionSubtotalTextField, cogsTotalCostsTextField,
+            cogsEurTextField, cogsPlnTextField, cogsEurPriceTextField, cogsPlnPriceTextField, cogsEurMarginTextField, cogsPlnMarginTexField, cogsMarginPercantageTextField;
+    private GridLayout cogsPriceLayout;
 
     private ArrayList<TableCellEditor> materialsEditorsList = new ArrayList<TableCellEditor>();
     private ArrayList<JComboBox> materialsChoosersList = new ArrayList<>();
@@ -235,11 +237,53 @@ public class View implements TableModelListener {
         formulationTable.setPreferredScrollableViewportSize(formulationTable.getPreferredSize());
         formulationTableScrollPane = new JScrollPane(formulationTable);
 
+        cogsPriceLayout = new GridLayout(4, 3);
+        cogsPriceJPanel = new JPanel();
+        cogsPriceJPanel.setLayout(cogsPriceLayout);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
+        cogsEurTextField = new JTextField();
+        cogsPlnTextField = new JTextField();
+        cogsEurPriceTextField = new JTextField();
+        cogsPlnPriceTextField = new JTextField();
+        cogsEurMarginTextField = new JTextField();
+        cogsPlnMarginTexField = new JTextField();
+        cogsMarginPercantageTextField = new JTextField();
+
+        cogsPriceJPanel.add(new JLabel("cogs"));
+        cogsPriceJPanel.add(cogsEurTextField);
+        cogsPriceJPanel.add(cogsPlnTextField);
+        cogsPriceJPanel.add(new JLabel("price"));
+        cogsPriceJPanel.add(cogsEurPriceTextField);
+        cogsPriceJPanel.add(cogsPlnPriceTextField);
+        cogsPriceJPanel.add(new JLabel("margin"));
+        cogsPriceJPanel.add(cogsEurMarginTextField);
+        cogsPriceJPanel.add(cogsPlnMarginTexField);
+        cogsPriceJPanel.add(new JLabel("margin %"));
+        cogsPriceJPanel.add(cogsMarginPercantageTextField);
+
+
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridwidth = 4;
+        c2.gridy = 0;
+        middleInformationJPanel.add(dateOfTheFormulationLabel, c2);
+
+        c2.gridwidth = 4;
+        c2.gridy = 1;
+        middleInformationJPanel.add(clientNameLabel, c2);
+
+        c2.gridwidth = 4;
+        c2.gridy = 2;
+        middleInformationJPanel.add(productNameLabel, c2);
+
+        c2.gridwidth = 4;
+        c2.gridy = 3;
+        middleInformationJPanel.add(productCapacityLabel, c2);
+
+        c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
         c.gridy = 0;
-        mainJPanelContainer.add(cogsDate, c);
+        mainJPanelContainer.add(middleInformationJPanel, c);
+
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -325,49 +369,36 @@ public class View implements TableModelListener {
 
         // -
 
-            c2.fill = GridBagConstraints.HORIZONTAL;
-            c2.gridwidth = 4;
-            c2.gridy = 0;
-            middleInformationJPanel.add(dateOfTheFormulationLabel, c2);
 
-            c2.gridwidth = 4;
-            c2.gridy = 1;
-            middleInformationJPanel.add(clientNameLabel, c2);
-
-            c2.gridwidth = 4;
-            c2.gridy = 2;
-            middleInformationJPanel.add(productNameLabel, c2);
-
-            c2.gridwidth = 4;
-            c2.gridy = 3;
-            middleInformationJPanel.add(productCapacityLabel, c2);
-
-
-        c.fill = GridBagConstraints.NONE;
-//        c.gridwidth = 1;
-//        c.gridheight = 4;
-        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
         c.gridy = 10;
-        mainJPanelContainer.add(middleInformationJPanel, c);
+        mainJPanelContainer.add(cogsPriceJPanel, c);
+
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 11;
+        mainJPanelContainer.add(cogsDate, c);
 
 
         c.fill = GridBagConstraints.NONE;
         c.gridwidth = 1;
         c.gridheight = 1;
         c.gridx = 1;
-        c.gridy = 11;
+        c.gridy = 12;
         mainJPanelContainer.add(new JButton("Button 2"), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 12;
+        c.gridy = 13;
         c.gridwidth = 4;
         mainJPanelContainer.add(formulationTableScrollPane,c);
 
         loadFormulationButton = new JButton("Wczytaj formulacje");
 //        c.gridwidth = 1;
         c.gridx = 0;
-        c.gridy = 13;
+        c.gridy = 14;
         mainJPanelContainer.add(loadFormulationButton, c);
 
 
@@ -541,6 +572,34 @@ public class View implements TableModelListener {
 
     public JMenuItem getMenuItemAddNewPallete() {
         return menuItemAddNewPallete;
+    }
+
+    public JTextField getCogsEurTextField() {
+        return cogsEurTextField;
+    }
+
+    public JTextField getCogsPlnTextField() {
+        return cogsPlnTextField;
+    }
+
+    public JTextField getCogsEurPriceTextField() {
+        return cogsEurPriceTextField;
+    }
+
+    public JTextField getCogsPlnPriceTextField() {
+        return cogsPlnPriceTextField;
+    }
+
+    public JTextField getCogsEurMarginTextField() {
+        return cogsEurMarginTextField;
+    }
+
+    public JTextField getCogsPlnMarginTexField() {
+        return cogsPlnMarginTexField;
+    }
+
+    public JTextField getCogsMarginPercantageTextField() {
+        return cogsMarginPercantageTextField;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE

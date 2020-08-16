@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class Controller {
     private Double subtotalRawCosts = 0.0;
     private Double subtotalProductionCosts = 0.0;;
     private Double totalCogsCosts = 0.0;
+    private LocalDate cogsDate;
 
     public Controller(StartingView sv, FormulationTable ft, PricesTable pt) {
         startingView = sv;
@@ -56,6 +58,11 @@ public class Controller {
 
     private void initiateTablesView(){
         view.getLoadFormulationButton().addActionListener(e -> {
+
+            subtotalRawCosts = 0.0;
+            subtotalMaterialsCosts = 0.0;
+            subtotalProductionCosts = 0.0;
+
             view.getFrame().dispose();
             formulationTableClass.loadAndSetLoadedFile();
             this.view = new View(formulationTableClass.getCounter().length);
@@ -160,10 +167,11 @@ public class Controller {
 
         //        Init product details variables in Formulation table
 
-        view.getProductNameLabel().setText(formulationTableClass.getProductName());
-        view.getProductCapacityLabel().setText(formulationTableClass.getProductCapacity());
-        view.getClientNameLabel().setText(formulationTableClass.getClientName());
-        view.getDateOfTheFormulationLabel().setText(formulationTableClass.getFormulationDate());
+        view.getCogsDate().setText("Cogs utworzony "+ String.valueOf(cogsDate = LocalDate.now()));
+        view.getProductNameLabel().setText("Nazwa produktu "+formulationTableClass.getProductName());
+        view.getProductCapacityLabel().setText("Pojemność produktu "+formulationTableClass.getProductCapacity());
+        view.getClientNameLabel().setText("Klient "+formulationTableClass.getClientName());
+        view.getDateOfTheFormulationLabel().setText("Formulacja z "+formulationTableClass.getFormulationDate());
 
 //                =================================== Item choosers listeners
 
@@ -217,6 +225,14 @@ public class Controller {
 
         view.getMenuItemChangeProductionPricesSource().addActionListener(e -> {
             pricesTable.loadProductionTableDataSource(view.getFrame());
+        });
+
+//                                       =================================== Cogs price listeners
+        view.getCogsEurPriceTextField().addActionListener(e -> {
+            if (view.getCogsEurPriceTextField().getText().length() > 0){
+                view.getCogsPlnPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate(),2)));
+                view.getCogsEurMarginTextField().setText(String.valueOf( Double.valueOf(view.getCogsEurPriceTextField().getText())-round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2)/pricesTable.getEuroRate()) + "Eur");
+            }
         });
 
     }
@@ -303,7 +319,7 @@ public class Controller {
                  cogsTable.getPlnQty()[i] = 0.0;
              }
              view.getCogsRawSubtotalTextField().setText(round((subtotalRawCosts),2) + " PLN");
-             view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts),2) + " PLN");
+             view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts)/1000,2) + " PLN");
          }
 
          //         PRODUCTION ============
@@ -430,7 +446,10 @@ public class Controller {
      view.getCogsMaterialsSubtotalTextField().setText(round((subtotalMaterialsCosts),2) + " PLN");
      view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
 
- }
+     view.getCogsEurTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2)/pricesTable.getEuroRate() + " EUR");
+     view.getCogsPlnTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
+
+    }
 
 
     public static double round(double value, int places) {

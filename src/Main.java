@@ -2,6 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Assemble all the pieces of the MVC
+//        TODO: Consider making virtual table with all subtotal etc prices
 //        TODO: Subtotal costs don't reset after new formulation
 //        TODO: set final rows number for production table
 //        TODO: Add table and logi for production part
