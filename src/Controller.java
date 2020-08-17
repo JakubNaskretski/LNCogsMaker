@@ -237,10 +237,13 @@ public class Controller {
 
         view.getCalculateCostsButton().addActionListener(e -> {
             if (view.getCogsEurPriceTextField().getText().length() > 0){
-                view.getCogsPlnPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate(),2)));
-                view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsEurPriceTextField().getText())-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate()),2) + " Eur");
-                view.getCogsPlnMarginTexField().setText(round((Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate()-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)),2) + " Pln");
-                view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round(((Double.valueOf(view.getCogsEurPriceTextField().getText())-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate())/Double.valueOf(view.getCogsEurPriceTextField().getText()))*100,0))));
+                double cogsPlnPrice = round(Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate(), 2);
+                double cogsValue = ((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000);
+                
+                view.getCogsPlnPriceTextField().setText(String.valueOf(cogsPlnPrice));
+                view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsEurPriceTextField().getText())-cogsValue/pricesTable.getEuroRate()),2) + " Eur");
+                view.getCogsPlnMarginTexField().setText(round((cogsPlnPrice-cogsValue),2) + " Pln");
+                view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round(((Double.valueOf(view.getCogsEurPriceTextField().getText())-cogsValue/pricesTable.getEuroRate())/Double.valueOf(view.getCogsEurPriceTextField().getText()))*100,0))));
 
             } else if (view.getCogsPlnPriceTextField().getText().length() > 0) {
                 view.getCogsEurPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate(),2)));

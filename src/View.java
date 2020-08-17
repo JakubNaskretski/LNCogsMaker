@@ -621,10 +621,12 @@ public class View implements TableModelListener {
     public void tableChanged(TableModelEvent e) {
         int row = e.getFirstRow();
         int column = e.getColumn();
-        TableModel model = (TableModel)e.getSource();
-        String columnName = model.getColumnName(column);
-        Object data = model.getValueAt(row, column);
-        System.out.println(data);
+        if (column == 5 || column == 6) {
+            TableModel model = (TableModel) e.getSource();
+            String columnName = model.getColumnName(column);
+            Object data = model.getValueAt(row, column);
+            System.out.println("Test dat z tabeli " + data);
+        }
     }
 }
 
