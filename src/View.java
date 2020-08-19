@@ -291,7 +291,7 @@ public class View {
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
-        mainJPanelContainer.add(new JLabel("Subtotal"), c);
+        mainJPanelContainer.add(new JLabel("Subtotal "), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0,0,0,0);
@@ -313,7 +313,7 @@ public class View {
         c.gridx = 0;
         c.gridy = 3;
         c.gridwidth = 1;
-        mainJPanelContainer.add(new JLabel("Subtotal"), c);
+        mainJPanelContainer.add(new JLabel("Subtotal "), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0,0,0,0);
@@ -335,7 +335,7 @@ public class View {
         c.gridx = 0;
         c.gridy = 5;
         c.gridwidth = 1;
-        mainJPanelContainer.add(new JLabel("Subtotal"), c);
+        mainJPanelContainer.add(new JLabel("Subtotal "), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0,0,0,0);
@@ -355,7 +355,7 @@ public class View {
         c.gridx = 0;
         c.gridy = 7;
         c.gridwidth = 1;
-        mainJPanelContainer.add(new JLabel("Total cogs"), c);
+        mainJPanelContainer.add(new JLabel("Total cogs "), c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0,0,0,0);

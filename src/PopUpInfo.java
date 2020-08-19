@@ -41,7 +41,7 @@ public class PopUpInfo {
         mainPanel.add(dispatchButton);
         alertWindow.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2-150,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2-40);
         alertWindow.getContentPane().add(mainPanel);
-        alertWindow.setPreferredSize(new Dimension(300, 80));
+        alertWindow.setMinimumSize(new Dimension(300, 80));
         alertWindow.pack();
         alertWindow.setVisible(true);
     }

@@ -42,10 +42,8 @@ public class PricesTable {
         this.rmpml = new RawMaterialsPriceModelList();
         this.pmpml = new ProductionMaterialsPriceModelList();
         this.jfc = new JFileChooser();
-        System.out.println("DIR +++"+userDirectory);
         rawMaterialsTablePricesPath = userDirectory+"\\excel_prices\\material_prices.xls";
         productionMaterialsTablePricePath = userDirectory+"\\excel_prices\\production_prices.xls";
-
         this.euroRate = 4.3;
         this.usdRate = 3.8;
         loadPriceListsFromExcel();
@@ -300,5 +298,13 @@ public class PricesTable {
 
     public String getProductionPricePathFolderName() {
         return productionPricePathFolderName;
+    }
+
+    public void setEuroRate(double euroRate) {
+        this.euroRate = euroRate;
+    }
+
+    public void setUsdRate(double usdRate) {
+        this.usdRate = usdRate;
     }
 }

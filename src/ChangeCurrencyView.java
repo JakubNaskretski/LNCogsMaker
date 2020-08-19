@@ -16,12 +16,6 @@ public class ChangeCurrencyView {
         public ChangeCurrencyView(JFrame lockedWindow) {
 
             initiateWindow();
-            lockedWindow.setEnabled(false);
-
-            cancelButton.addActionListener(e -> {
-                mainFrame.dispose();
-                lockedWindow.setEnabled(true);
-            });
 
         }
 
@@ -45,7 +39,7 @@ public class ChangeCurrencyView {
             buttonsPanel = new JPanel();
             buttonsPanel.setLayout(new GridLayout(1,2,5,5));
 
-            c.gridwidth = 6;
+            c.gridwidth = 5;
             c.gridy = 1;
             c.gridx = 0;
             mainPanel.add(inputPanel, c);
@@ -66,6 +60,27 @@ public class ChangeCurrencyView {
             mainFrame.pack();
             mainFrame.setVisible(true);
         }
+
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public JButton getConfirmButton() {
+        return confirmButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JTextField getPlnPrice() {
+        return plnPrice;
+    }
+
+    public JComboBox getCurrencyChooserField() {
+        return currencyChooserField;
+    }
+
 
 
 }
