@@ -12,7 +12,7 @@ public class StartingView {
         private JFrame frame;
         private JMenuBar menuBar;
         private JMenu menuFile, menuEdit;
-        private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource;
+        private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPriceSource;
         private JButton loadCogsButton ,loadFormulationButton;
         private JPanel mainJPanelContainer;
 
@@ -48,26 +48,20 @@ public class StartingView {
             menuFile.add(menuItemNew);
             menuItemSave = new JMenuItem("Save");
             menuFile.add(menuItemSave);
-            menuItemChangePricesSource = new JMenuItem("Change prices source");
+            menuItemChangePricesSource = new JMenuItem("Change raw materials prices source");
             menuFile.add(menuItemChangePricesSource);
-
+            menuItemChangeProductionPriceSource = new JMenuItem("Change production price source");
+            menuFile.add(menuItemChangeProductionPriceSource);
 
 //Making main content panel
             mainJPanelContainer = new JPanel();
-            mainJPanelContainer.setLayout(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
+            mainJPanelContainer.setLayout(new GridLayout(2,1));
 
             loadCogsButton = new JButton("Wczytaj COGs");
-            c.gridwidth = 1;
-            c.gridx = 0;
-            c.gridy = 0;
-            mainJPanelContainer.add(loadCogsButton, c);
+            mainJPanelContainer.add(loadCogsButton);
 
             loadFormulationButton = new JButton("Wczytaj formulacje");
-            c.gridwidth = 1;
-            c.gridx = 0;
-            c.gridy = 1;
-            mainJPanelContainer.add(loadFormulationButton, c);
+            mainJPanelContainer.add(loadFormulationButton);
 
 
             frame.getContentPane().add(mainJPanelContainer);
@@ -90,5 +84,8 @@ public class StartingView {
             return menuItemChangePricesSource;
         }
 
+    public JMenuItem getMenuItemChangeProductionPriceSource() {
+        return menuItemChangeProductionPriceSource;
     }
+}
 

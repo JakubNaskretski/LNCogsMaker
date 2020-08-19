@@ -1,3 +1,9 @@
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -54,14 +60,32 @@ public class Controller {
 
         });
 
+        startingView.getMenuItemChangePricesSource().addActionListener(e -> {
+            pricesTable.loadMaterialsPricesTableDataSource(startingView.getFrame());
+        });
+
+        startingView.getMenuItemChangeProductionPriceSource().addActionListener(e -> {
+            pricesTable.loadProductionTableDataSource(startingView.getFrame());
+        });
+
     }
 
     private void initiateTablesView(){
+
+        System.out.println(view.getMainJPanelContainer().getSize() + "Main panel size");
+        System.out.println(view.getCogsTablePane().getSize() + "Cogs table Pane size");
+        System.out.println(view.getCogsMaterialsTableScrollPane().getSize() + " material scroll pane");
+        System.out.println(view.getCogsRawTableScrollPane().getSize()+" raws scroll pane");
+        System.out.println(view.getCogsProductionScrollPane().getSize() + "production scroll pane");
+        System.out.println(view.getFormulationTableScrollPane().getSize()+" formulation sxcroll pane");
+
+
+
         view.getLoadFormulationButton().addActionListener(e -> {
 
-            subtotalRawCosts = 0.0;
-            subtotalMaterialsCosts = 0.0;
-            subtotalProductionCosts = 0.0;
+//            subtotalRawCosts = 0.0;
+//            subtotalMaterialsCosts = 0.0;
+//            subtotalProductionCosts = 0.0;
 
             view.getFrame().dispose();
             formulationTableClass.loadAndSetLoadedFile();
@@ -239,7 +263,7 @@ public class Controller {
             if (view.getCogsEurPriceTextField().getText().length() > 0){
                 double cogsPlnPrice = round(Double.valueOf(view.getCogsEurPriceTextField().getText())*pricesTable.getEuroRate(), 2);
                 double cogsValue = ((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000);
-                
+
                 view.getCogsPlnPriceTextField().setText(String.valueOf(cogsPlnPrice));
                 view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsEurPriceTextField().getText())-cogsValue/pricesTable.getEuroRate()),2) + " Eur");
                 view.getCogsPlnMarginTexField().setText(round((cogsPlnPrice-cogsValue),2) + " Pln");
@@ -248,6 +272,82 @@ public class Controller {
             } else if (view.getCogsPlnPriceTextField().getText().length() > 0) {
                 view.getCogsEurPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate(),2)));
                 view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate()-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate()),2) + " Eur");
+            }
+        });
+
+
+        view.getCogsRawTable().getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                int row = e.getFirstRow();
+                int column = e.getColumn();
+                if (column == 5) {
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
+
+                    TableModel model = (TableModel) e.getSource();
+                    String columnName = model.getColumnName(column);
+                    Object data = model.getValueAt(row, column);
+
+                    if (view.getCogsRawTable().isEditing()) {
+                        System.out.println(data);
+                        String komórka = String.valueOf(data);
+//                        if (Double.valueOf(komórka) > 0){
+//                            if (cogsTable.getPurchasePrice()[row] == null) {
+                        cogsTable.getPurchasePrice()[row] = Double.valueOf(komórka);
+
+//                            }
+                        if (cogsTable.getPurchasePrice()[row] != null && cogsTable.getCurrency()[row] != null) {
+
+                            try {
+
+                                loadAndDisplayDataForMaterialsTable();
+                                calculateIngredients();
+                                loadAndDisplayRawsTable();
+                                loadAndDisplayProductionTable();
+
+                            } catch (Exception e1) {
+                                new PopUpInfo("Nie udało się załadować danych", startingView.getFrame());
+                            }
+
+//                            initiateTablesView();
+
+                        }
+                    }
+                } else if (column == 6) {
+                    TableModel model = (TableModel) e.getSource();
+                    String columnName = model.getColumnName(column);
+                    Object data = model.getValueAt(row, column);
+//                    try {
+                    System.out.println(data);
+                    String komórka = String.valueOf(data);
+//                    if (cogsTable.getCurrency()[row] == null) {
+                    cogsTable.getCurrency()[row] = String.valueOf(komórka);
+                }
+//                }
+
+                if (cogsTable.getPurchasePrice()[row] != null && cogsTable.getCurrency()[row] != null) {
+
+                    try {
+
+                        loadAndDisplayDataForMaterialsTable();
+                        calculateIngredients();
+                        loadAndDisplayRawsTable();
+                        loadAndDisplayProductionTable();
+
+                    } catch (Exception e1) {
+                        new PopUpInfo("Nie udało się załadować danych", startingView.getFrame());
+                    }
+
+//                    initiateTablesView();
+
+                }
+
             }
         });
 
@@ -301,6 +401,10 @@ public class Controller {
 
  public void calculateIngredients(){
      try {
+         subtotalRawCosts = 0.0;
+         subtotalMaterialsCosts = 0.0;
+         subtotalProductionCosts = 0.0;
+
          for (int i = 0; i < formulationTableClass.getCounter().length; i++) {
              cogsTable.getItemName1()[i] = formulationTableClass.getRawMaterialsNames()[i];
              cogsTable.getMu()[i] = "kg";
