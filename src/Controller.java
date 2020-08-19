@@ -187,6 +187,14 @@ public class Controller {
                 new PopUpInfo("Nie udało się otworzyć widoku dodawania butelki");
             }
         });
+
+        view.getMenuItemChangeCurrencies().addActionListener(e -> {
+            new ChangeCurrencyView(view.getFrame());
+        });
+
+        startingView.getMenuItemChangeCurrencies().addActionListener(e -> {
+            new ChangeCurrencyView(startingView.getFrame());
+        });
 //        TODO: Check if  you can make loop over choosers
 
         //        Init product details variables in Formulation table

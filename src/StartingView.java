@@ -11,8 +11,8 @@ public class StartingView {
 
         private JFrame frame;
         private JMenuBar menuBar;
-        private JMenu menuFile, menuEdit;
-        private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPriceSource;
+        private JMenu menuFile, menuEdit, changeCurrencies;
+        private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPriceSource, menuItemChangeCurrencies;
         private JButton loadCogsButton ,loadFormulationButton;
         private JPanel mainJPanelContainer;
 
@@ -43,6 +43,8 @@ public class StartingView {
             menuBar.add(menuFile);
             menuEdit = new JMenu("Edytuj");
             menuBar.add(menuEdit);
+            changeCurrencies = new JMenu("Currencies");
+            menuBar.add(changeCurrencies);
 
             menuItemNew = new JMenuItem("New");
             menuFile.add(menuItemNew);
@@ -52,6 +54,11 @@ public class StartingView {
             menuFile.add(menuItemChangePricesSource);
             menuItemChangeProductionPriceSource = new JMenuItem("Change production price source");
             menuFile.add(menuItemChangeProductionPriceSource);
+
+            menuItemChangeCurrencies = new JMenuItem("Change currencies rate");
+            changeCurrencies.add(menuItemChangeCurrencies);
+
+
 
 //Making main content panel
             mainJPanelContainer = new JPanel();
@@ -86,6 +93,10 @@ public class StartingView {
 
     public JMenuItem getMenuItemChangeProductionPriceSource() {
         return menuItemChangeProductionPriceSource;
+    }
+
+    public JMenuItem getMenuItemChangeCurrencies() {
+        return menuItemChangeCurrencies;
     }
 }
 

@@ -15,10 +15,11 @@ public class View {
     private int formulationSize;
     private JFrame frame;
     private JMenuBar menuBar;
-    private JMenu menuFile, menuAddItems;
+    private JMenu menuFile, menuAddItems, changeCurrencies;
     private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource, saveCogsMenuItem, loadCogsMenuItem,
             menuItemAddNewBottle, menuItemAddNewCap, menuItemAddNewLabel, menuItemAddNewMeasurer, menuItemAddNewUnitBox, menuItemAddNewLeaflet, menuItemAddNewCollectiveBox, menuItemAddNewPallete,
-            menuItemAddNewTests;
+            menuItemAddNewTests,
+            menuItemChangeCurrencies;
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
     private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser, MFCostChooser, OHChooser, TestsChooser;
     private DefaultTableCellRenderer cellRenderer;
@@ -67,6 +68,8 @@ public class View {
         menuBar.add(menuFile);
         menuAddItems = new JMenu("Dodaj przedmioty");
         menuBar.add(menuAddItems);
+        changeCurrencies = new JMenu("Currency");
+        menuBar.add(changeCurrencies);
 
         menuItemNew = new JMenuItem("New");
         menuFile.add(menuItemNew);
@@ -102,6 +105,11 @@ public class View {
 
         menuItemAddNewTests = new JMenuItem("Add new test");
         menuAddItems.add(menuItemAddNewTests);
+
+        menuItemChangeCurrencies = new JMenuItem("Change currencies rate");
+        changeCurrencies.add(menuItemChangeCurrencies);
+//        menuItemchangeUsdCurrency = new JMenuItem("Change Usd currency rate");
+//        changeCurrencies.add(menuItemchangeUsdCurrency);
 
         bottleChooser = new JComboBox();
         materialsChoosersList.add(bottleChooser);
@@ -415,6 +423,7 @@ public class View {
 
         cogsMaterialsTableScrollPane = new JScrollPane(mainJPanelContainer);
         cogsMaterialsTableScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        cogsMaterialsTableScrollPane.setMinimumSize(new Dimension(768, 832));
 
         frame.getContentPane().add(cogsMaterialsTableScrollPane);
     }
@@ -654,6 +663,10 @@ public class View {
 
     public JScrollPane getCogsProductionScrollPane() {
         return cogsProductionScrollPane;
+    }
+
+    public JMenuItem getMenuItemChangeCurrencies() {
+        return menuItemChangeCurrencies;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE
