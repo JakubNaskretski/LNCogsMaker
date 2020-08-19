@@ -270,8 +270,13 @@ public class Controller {
                 view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round(((Double.valueOf(view.getCogsEurPriceTextField().getText())-cogsValue/pricesTable.getEuroRate())/Double.valueOf(view.getCogsEurPriceTextField().getText()))*100,0))));
 
             } else if (view.getCogsPlnPriceTextField().getText().length() > 0) {
-                view.getCogsEurPriceTextField().setText(String.valueOf(round(Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate(),2)));
-                view.getCogsEurMarginTextField().setText(round((Double.valueOf(view.getCogsPlnPriceTextField().getText())/pricesTable.getEuroRate()-((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000)/pricesTable.getEuroRate()),2) + " Eur");
+                double cogsPlnPrice = round(Double.valueOf(view.getCogsPlnPriceTextField().getText()), 2);
+                double cogsValue = ((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000);
+
+                view.getCogsEurPriceTextField().setText(String.valueOf(round(cogsPlnPrice/pricesTable.getEuroRate(),2)));
+                view.getCogsEurMarginTextField().setText(round((cogsPlnPrice/pricesTable.getEuroRate()-(cogsValue/pricesTable.getEuroRate())),2) + " Eur");
+                view.getCogsPlnMarginTexField().setText(round((cogsPlnPrice - cogsValue),2) + "Pln");
+                view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round((((cogsPlnPrice-cogsValue)/Double.valueOf(cogsPlnPrice))*100),0))));
             }
         });
 

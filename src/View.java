@@ -22,7 +22,7 @@ public class View {
     private JTable formulationTable, cogsMaterialsTable, cogsRawTable, cogsProductionTable;
     private JComboBox bottleChooser, capChooser, labelChooser, measurerChooser, unitBoxChooser, leafletChooser, collectiveBoxChooser, palleteChooser, MFCostChooser, OHChooser, TestsChooser;
     private DefaultTableCellRenderer cellRenderer;
-    private JScrollPane formulationTableScrollPane, cogsMaterialsTableScrollPane, cogsRawTableScrollPane, cogsProductionScrollPane;
+    private JScrollPane mainScrollPane, formulationTableScrollPane, cogsMaterialsTableScrollPane, cogsRawTableScrollPane, cogsProductionScrollPane;
     private JPanel subtotalMaterialsPanel, subtotalRawsPanel, subtotal,ProductionPanel ,formulationTablePane, cogsTablePane;
     private JButton calculateCostsButton, loadFormulationButton;
     private JPanel mainJPanelContainer, middleInformationJPanel, cogsPriceJPanel;
@@ -413,7 +413,10 @@ public class View {
         cogsProductionScrollPane.setMinimumSize(new Dimension(768, 71));
         formulationTableScrollPane.setMinimumSize(new Dimension(768,171));
 
-        frame.getContentPane().add(mainJPanelContainer);
+        cogsMaterialsTableScrollPane = new JScrollPane(mainJPanelContainer);
+        cogsMaterialsTableScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+        frame.getContentPane().add(cogsMaterialsTableScrollPane);
     }
 
     public void repaintTables(){

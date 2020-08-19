@@ -6,6 +6,7 @@ import jxl.read.biff.BiffException;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 
 
 // Initiates price models and copy excel data into virtual price-model table
@@ -20,10 +21,11 @@ public class PricesTable {
 
     private JFileChooser jfc;
 //    private JFrame currentFrame;
-    private String rawMaterialsTablePricesPath = "TestExcelFiles\\TestPrices.xls";
-    private String productionMaterialsTablePricePath = "TestExcelFiles\\TestProductionPrices.xls";
-    private String rawMaterialsPricePathFolderName = "TestExcelFiles";
-    private String ProductionPricePathFolderName = "TestExcelFiles";
+    private String rawMaterialsTablePricesPath;
+    private String productionMaterialsTablePricePath;
+    private String rawMaterialsPricePathFolderName = "excel_prices";
+    private String productionPricePathFolderName = "excel_prices";
+    private String userDirectory;
     private double euroRate, usdRate;
 
 //    private String[] bottleChooserList;
@@ -36,9 +38,13 @@ public class PricesTable {
 
 
     public PricesTable() {
+        this.userDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
         this.rmpml = new RawMaterialsPriceModelList();
         this.pmpml = new ProductionMaterialsPriceModelList();
         this.jfc = new JFileChooser();
+        rawMaterialsTablePricesPath = userDirectory+"\\excel_prices\\Prices.xls";
+        productionMaterialsTablePricePath = userDirectory+"\\excel_prices\\ProductionPrices.xls";
+
         this.euroRate = 4.3;
         this.usdRate = 3.8;
         loadPriceListsFromExcel();
@@ -174,7 +180,7 @@ public class PricesTable {
             if (extension != null) {
                 if (extension.equals(PricesTable.Utils.xls)) {
                     productionMaterialsTablePricePath = selectedFile.getAbsolutePath();
-                    ProductionPricePathFolderName = selectedFile.getAbsolutePath();
+                    productionPricePathFolderName = selectedFile.getAbsolutePath();
                     try {
                         getProductionPricesList();
                     } catch (IOException e) {
@@ -292,6 +298,6 @@ public class PricesTable {
     }
 
     public String getProductionPricePathFolderName() {
-        return ProductionPricePathFolderName;
+        return productionPricePathFolderName;
     }
 }
