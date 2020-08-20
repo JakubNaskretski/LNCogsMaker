@@ -15,4 +15,12 @@ public class ProductionMaterialsPriceModelList {
     public void setPmpml(ArrayList<ProductionMaterialsPriceModel> pmpml) {
         this.pmpml = pmpml;
     }
+
+    public void clearPmpml(){
+        pmpml.clear();
+    }
+
+    public int getPmpmlSize(){
+        return pmpml.size();
+    }
 }

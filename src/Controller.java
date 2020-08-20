@@ -16,10 +16,10 @@ public class Controller {
 
 //    private Model model;
     private StartingView startingView;
-    private View view;
-    private FormulationTable formulationTableClass;
-    private PricesTable pricesTable;
-    private CogsTable cogsTable;
+    protected View view;
+    protected FormulationTable formulationTableClass;
+    protected PricesTable pricesTable;
+    protected CogsTable cogsTable;
     private Double subtotalMaterialsCosts = 0.0;
     private Double subtotalBottles = 0.0, subtotalCap = 0.0, subtotalLabbel = 0.0, subtotalMeasurer = 0.0,
             subtotalUnitBox = 0.0, subtotalLeaflet = 0.0, subtotalCollectiveBox = 0.0, subtotalPallete = 0.0, subtotalMF = 0.0, subtotalOH = 0.0, subtotalTests = 0.0;
@@ -107,6 +107,10 @@ public class Controller {
 
             initiateTablesView();
 
+        });
+
+        view.getMenuItemExport().addActionListener(e -> {
+            new ExportCogs(this);
         });
 
 //        =================================== Add items listeners
@@ -597,8 +601,23 @@ public class Controller {
 
     }
 
+    public Double getSubtotalMaterialsCosts() {
+        return subtotalMaterialsCosts;
+    }
 
-    public static double round(double value, int places) {
+    public Double getSubtotalRawCosts() {
+        return subtotalRawCosts;
+    }
+
+    public Double getSubtotalProductionCosts() {
+        return subtotalProductionCosts;
+    }
+
+    public Double getTotalCogsCosts() {
+        return totalCogsCosts;
+    }
+
+    protected static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
         BigDecimal bd = BigDecimal.valueOf(value);

@@ -11,7 +11,7 @@ public class StartingView {
 
         private JFrame frame;
         private JMenuBar menuBar;
-        private JMenu menuFile, menuEdit, changeCurrencies;
+        private JMenu menuFile, changeCurrencies;
         private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPriceSource, menuItemChangeCurrencies;
         private JButton loadCogsButton ,loadFormulationButton;
         private JPanel mainJPanelContainer;
@@ -41,8 +41,6 @@ public class StartingView {
 
             menuFile = new JMenu("Plik");
             menuBar.add(menuFile);
-            menuEdit = new JMenu("Edytuj");
-            menuBar.add(menuEdit);
             changeCurrencies = new JMenu("Currencies");
             menuBar.add(changeCurrencies);
 

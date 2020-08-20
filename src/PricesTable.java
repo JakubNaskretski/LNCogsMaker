@@ -222,6 +222,10 @@ public class PricesTable {
         try{
             pw = Workbook.getWorkbook(productionInputWorkbook);
 
+            if (pmpml.getPmpmlSize() > 0){
+                pmpml.clearPmpml();
+            }
+
             for (int i=0;i<pw.getNumberOfSheets();i++){
                 pmpml.getPmpml().add(new ProductionMaterialsPriceModel(new Integer[pw.getSheet(i).getRows()], new String[pw.getSheet(i).getRows()],
                         new Double[pw.getSheet(i).getRows()], new String[pw.getSheet(i).getRows()]));

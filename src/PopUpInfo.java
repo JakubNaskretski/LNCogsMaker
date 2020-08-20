@@ -6,6 +6,7 @@ public class PopUpInfo {
     private JFrame alertWindow;
     private JButton dispatchButton;
     private JPanel mainPanel;
+    private JLabel displayedText;
 
     public PopUpInfo(String textToDisplay, JFrame lockedWindow) {
 
@@ -36,9 +37,14 @@ public class PopUpInfo {
 
         dispatchButton = new JButton("Ok");
 
-
-        mainPanel.add(new JLabel(textToDisplay));
+        this.displayedText = new JLabel(textToDisplay);
+        displayedText.setBounds(50,50,50,50);
+        displayedText.setHorizontalAlignment(JLabel.CENTER);
+        displayedText.setVerticalAlignment(JLabel.CENTER);
+        displayedText.setFont(new Font("Verdana", Font.PLAIN, 14));
+        mainPanel.add(displayedText);
         mainPanel.add(dispatchButton);
+
         alertWindow.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2-150,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2-40);
         alertWindow.getContentPane().add(mainPanel);
         alertWindow.setMinimumSize(new Dimension(300, 80));

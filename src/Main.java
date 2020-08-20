@@ -26,13 +26,13 @@ public class Main {
             // handle exception
         }
         catch (ClassNotFoundException e) {
-            // handle exception
+            new PopUpInfo("Cannot find look class");
         }
         catch (InstantiationException e) {
-            // handle exception
+            new PopUpInfo("Instation exception with look class");
         }
         catch (IllegalAccessException e) {
-            // handle exception
+            new PopUpInfo("No acces for look class");
         }
 
         StartingView sv = new StartingView();

@@ -1,9 +1,6 @@
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -16,7 +13,7 @@ public class View {
     private JFrame frame;
     private JMenuBar menuBar;
     private JMenu menuFile, menuAddItems, changeCurrencies;
-    private JMenuItem menuItemNew, menuItemSave, menuItemChangePricesSource, menuItemChangeProductionPricesSource, saveCogsMenuItem, loadCogsMenuItem,
+    private JMenuItem menuItemNew, menuItemExport, menuItemChangePricesSource, menuItemChangeProductionPricesSource, saveCogsMenuItem, loadCogsMenuItem,
             menuItemAddNewBottle, menuItemAddNewCap, menuItemAddNewLabel, menuItemAddNewMeasurer, menuItemAddNewUnitBox, menuItemAddNewLeaflet, menuItemAddNewCollectiveBox, menuItemAddNewPallete,
             menuItemAddNewTests,
             menuItemChangeCurrencies;
@@ -72,17 +69,17 @@ public class View {
         menuBar.add(changeCurrencies);
 
         menuItemNew = new JMenuItem("New");
-        menuFile.add(menuItemNew);
-        menuItemSave = new JMenuItem("Save");
-        menuFile.add(menuItemSave);
+//        menuFile.add(menuItemNew);
+        menuItemExport = new JMenuItem("Export cogs");
+        menuFile.add(menuItemExport);
         menuItemChangePricesSource = new JMenuItem("Change materials price source");
         menuFile.add(menuItemChangePricesSource);
         menuItemChangeProductionPricesSource = new JMenuItem("Change production price source");
         menuFile.add(menuItemChangeProductionPricesSource);
         saveCogsMenuItem = new JMenuItem("Zapisz cogs");
-        menuFile.add(saveCogsMenuItem);
+//        menuFile.add(saveCogsMenuItem);
         loadCogsMenuItem = new JMenuItem("Wczytaj cogs");
-        menuFile.add(loadCogsMenuItem);
+//        menuFile.add(loadCogsMenuItem);
 
 
 
@@ -667,6 +664,10 @@ public class View {
 
     public JMenuItem getMenuItemChangeCurrencies() {
         return menuItemChangeCurrencies;
+    }
+
+    public JMenuItem getMenuItemExport() {
+        return menuItemExport;
     }
 
     //    TODO: ADD ACION LISTENER FOR TABLE
