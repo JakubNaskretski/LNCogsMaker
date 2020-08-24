@@ -22,6 +22,8 @@ public class ChangeCurrencyView {
         private void initiateWindow(){
 
             mainFrame = new JFrame();
+            Image icon = new ImageIcon("images\\LNIcon.png").getImage();
+            mainFrame.setIconImage(icon);
             mainFrame.setTitle("Change currency ratio");
             mainPanel = new JPanel();
             mainPanel.setLayout(new GridBagLayout());

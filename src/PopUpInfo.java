@@ -32,6 +32,8 @@ public class PopUpInfo {
     private void initiateWindow( String textToDisplay){
 
         alertWindow = new JFrame();
+        Image icon = new ImageIcon("images\\LNIcon.png").getImage();
+        alertWindow.setIconImage(icon);
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2,1));
 

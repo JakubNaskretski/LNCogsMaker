@@ -20,10 +20,9 @@ public class FormulationTable {
     private String[] chemicalForm;
     private Double[] amountPerKG;
 
-    private String excelAddress;
+    private String excelAddress, selectedFilePath;
     private JFileChooser jfc;
     private JFrame currentFrame;
-    private String selectedFilePath;
 
     private String productName, clientName, productCapacity, formulationDate;
 

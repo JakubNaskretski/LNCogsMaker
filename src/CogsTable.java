@@ -27,12 +27,17 @@ public class CogsTable {
 
     private String cogsDate;
 
+    private int percentageMargin;
+    private double[] cogsPriceElements = new double[6];
+    private String[] cogsPriceElementsNames = {"Cogs value", "Cogs price", "Cogs margin", "Cogs margin %"};
+
 
 
 //    cogsTableColumnNames = {"No.","Item", "Item 2",
 //            "QTY","m.u.", "Purchase price", "Currency", "PLN", "PLN * QTY"};
 
     public CogsTable(int numberOfItems) {
+        this.percentageMargin = 0;
 
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -122,5 +127,21 @@ public class CogsTable {
 
     public String getCogsDate() {
         return cogsDate;
+    }
+
+    public int getPercentageMargin() {
+        return percentageMargin;
+    }
+
+    public double[] getCogsPriceElements() {
+        return cogsPriceElements;
+    }
+
+    public void setPercentageMargin(int percentageMargin) {
+        this.percentageMargin = percentageMargin;
+    }
+
+    public String[] getCogsPriceElementsNames() {
+        return cogsPriceElementsNames;
     }
 }

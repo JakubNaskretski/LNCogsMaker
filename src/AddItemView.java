@@ -14,6 +14,8 @@ public class AddItemView {
 
     public AddItemView() {
         frame = new JFrame();
+        Image icon = new ImageIcon("images\\LNIcon.png").getImage();
+        frame.setIconImage(icon);
         frame.getContentPane();
         addComponentsToPane();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

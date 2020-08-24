@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class StartingView {
@@ -17,7 +18,12 @@ public class StartingView {
         private JPanel mainJPanelContainer;
 
         public StartingView(){
+
             frame = new JFrame();
+
+            Image icon = new ImageIcon("images\\LNIcon.png").getImage();
+            frame.setIconImage(icon);
+
             frame.getContentPane();
             addComponentsToPane();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,20 +47,20 @@ public class StartingView {
 
             menuFile = new JMenu("Plik");
             menuBar.add(menuFile);
-            changeCurrencies = new JMenu("Currencies");
-            menuBar.add(changeCurrencies);
+//            changeCurrencies = new JMenu("Currencies");
+//            menuBar.add(changeCurrencies);
 
             menuItemNew = new JMenuItem("New");
-            menuFile.add(menuItemNew);
+//            menuFile.add(menuItemNew);
             menuItemSave = new JMenuItem("Save");
-            menuFile.add(menuItemSave);
+//            menuFile.add(menuItemSave);
             menuItemChangePricesSource = new JMenuItem("Change raw materials prices source");
             menuFile.add(menuItemChangePricesSource);
             menuItemChangeProductionPriceSource = new JMenuItem("Change production price source");
             menuFile.add(menuItemChangeProductionPriceSource);
 
-            menuItemChangeCurrencies = new JMenuItem("Change currencies rate");
-            changeCurrencies.add(menuItemChangeCurrencies);
+//            menuItemChangeCurrencies = new JMenuItem("Change currencies rate");
+//            changeCurrencies.add(menuItemChangeCurrencies);
 
 
 

@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -13,7 +14,7 @@ public class View {
     private JFrame frame;
     private JMenuBar menuBar;
     private JMenu menuFile, menuAddItems, changeCurrencies;
-    private JMenuItem menuItemNew, menuItemExport, menuItemChangePricesSource, menuItemChangeProductionPricesSource, saveCogsMenuItem, loadCogsMenuItem,
+    private JMenuItem menuItemNew, menuItemExport, menuItemChangePricesSource, menuItemChangeProductionPricesSource, saveCogsMenuItem, loadCogsMenuItem, menuItemPrintCogs,
             menuItemAddNewBottle, menuItemAddNewCap, menuItemAddNewLabel, menuItemAddNewMeasurer, menuItemAddNewUnitBox, menuItemAddNewLeaflet, menuItemAddNewCollectiveBox, menuItemAddNewPallete,
             menuItemAddNewTests,
             menuItemChangeCurrencies;
@@ -39,8 +40,16 @@ public class View {
     private Dimension screenSize;
 
     public View(int formulationSize){
+//        ImageIcon icon = createImageIcon("images/LNIcon.png",
+//                "Company logo");
+
+
         this.formulationSize = formulationSize;
         frame = new JFrame();
+
+        Image icon = new ImageIcon("images\\LNIcon.png").getImage();
+        frame.setIconImage(icon);
+
         frame.getContentPane();
 //        frame.getContentPane().setMaximumSize(new Dimension(1500, 1200));
 //        frame.setResizable(false);
@@ -72,6 +81,8 @@ public class View {
 //        menuFile.add(menuItemNew);
         menuItemExport = new JMenuItem("Export cogs");
         menuFile.add(menuItemExport);
+        menuItemPrintCogs = new JMenuItem("Print cogs");
+        menuFile.add(menuItemPrintCogs);
         menuItemChangePricesSource = new JMenuItem("Change materials price source");
         menuFile.add(menuItemChangePricesSource);
         menuItemChangeProductionPricesSource = new JMenuItem("Change production price source");
@@ -237,7 +248,7 @@ public class View {
         formulationData = new Object[formulationSize][6];
         formulationTablePane = new JPanel();
         String[] formulationTableColumnNames = {"No.","Surowiec", "Numer",
-                "mg/5ml","Forma chemiczna", "g/150ml"};
+                "mg per dosage","Forma chemiczna", "g per capacity"};
         formulationTable = new JTable(formulationData, formulationTableColumnNames);
         formulationTable.getColumnModel().getColumn(1).setPreferredWidth(240);
         formulationTable.getColumnModel().getColumn(2).setPreferredWidth(160);
@@ -428,6 +439,18 @@ public class View {
     public void repaintTables(){
         frame.getContentPane().revalidate();
         frame.getContentPane().repaint();
+    }
+
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected ImageIcon createImageIcon(String path,
+                                        String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 
     public JButton getLoadFormulationButton() {
@@ -669,6 +692,12 @@ public class View {
     public JMenuItem getMenuItemExport() {
         return menuItemExport;
     }
+
+    public JMenuItem getMenuItemPrintCogs() {
+        return menuItemPrintCogs;
+    }
+
+
 
     //    TODO: ADD ACION LISTENER FOR TABLE
 

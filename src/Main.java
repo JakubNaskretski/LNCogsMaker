@@ -17,6 +17,7 @@ public class Main {
 //            Model m = new Model();
 //        TODO: Add version for capsules also
 //        TODO: replace all Rounds in controller
+//        TODO: pass parent window
 
         try {
             // Set cross-platform Java L&F (also called "Metal")
@@ -40,4 +41,7 @@ public class Main {
         PricesTable pt = new PricesTable();
         Controller c = new Controller(sv, ft, pt);
     }
+
+
+
 }

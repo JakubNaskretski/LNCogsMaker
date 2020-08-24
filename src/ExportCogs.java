@@ -1,4 +1,7 @@
 import jxl.Workbook;
+import jxl.format.BorderLineStyle;
+import jxl.format.Colour;
+import jxl.format.UnderlineStyle;
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
 
@@ -55,13 +58,13 @@ public class ExportCogs {
 //                ------------------
 
                 for (int columnFirstRow=0;columnFirstRow<cogsTableColumnNames.length;columnFirstRow++){
-                    cellToSave = new Label(columnFirstRow, rowNoVar, cogsTableColumnNames[columnFirstRow]);
+                    cellToSave = new Label(columnFirstRow, rowNoVar, cogsTableColumnNames[columnFirstRow], createCellFormat(true, 1));
                     sheetToSave.addCell(cellToSave);
                 }
 
                 for (int rowNo=0; rowNo<controller.view.getCogsMaterialsData().length;rowNo++){
                     for (int columnNo=0; columnNo<controller.view.getCogsMaterialsData()[rowNo].length;columnNo++){
-                        cellToSave = new Label(columnNo, rowNo+1, String.valueOf(controller.view.getCogsMaterialsData()[rowNo][columnNo]));
+                        cellToSave = new Label(columnNo, rowNo+1, String.valueOf(controller.view.getCogsMaterialsData()[rowNo][columnNo]), createCellFormat(true, 2));
                         sheetToSave.addCell(cellToSave);
                         System.out.println("i "+rowNo);
                         System.out.println("j "+columnNo);
@@ -69,7 +72,7 @@ public class ExportCogs {
                     this.rowNoVar = rowNo+1;
                 }
 
-                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar+1, String.valueOf(controller.getSubtotalMaterialsCosts()));
+                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar+1, String.valueOf(controller.getSubtotalMaterialsCosts()), createCellFormat(true, 1));
                 sheetToSave.addCell(cellToSave);
 
 //                ------------------
@@ -78,13 +81,13 @@ public class ExportCogs {
                 this.rowNoVar = controller.view.getCogsMaterialsData().length+2;
 
                 for (int columnFirstRow=columnNoVar;columnFirstRow<cogsTableColumnNames.length;columnFirstRow++){
-                    cellToSave = new Label(columnFirstRow, rowNoVar, cogsTableColumnNames[columnFirstRow]);
+                    cellToSave = new Label(columnFirstRow, rowNoVar, cogsTableColumnNames[columnFirstRow], createCellFormat(true, 1));
                     sheetToSave.addCell(cellToSave);
                 }
 
                 for (int rowNo=0; rowNo<controller.view.getCogsRawData().length;rowNo++){
                     for (int columnNo=0; columnNo<controller.view.getCogsRawData()[rowNo].length;columnNo++){
-                        cellToSave = new Label(columnNo, rowNoVar, String.valueOf(controller.view.getCogsRawData()[rowNo][columnNo]));
+                        cellToSave = new Label(columnNo, rowNoVar, String.valueOf(controller.view.getCogsRawData()[rowNo][columnNo]), createCellFormat(true, 2));
                         sheetToSave.addCell(cellToSave);
                         System.out.println("i "+rowNo);
                         System.out.println("j "+columnNo);
@@ -93,7 +96,7 @@ public class ExportCogs {
                     this.rowNoVar++;
                 }
 
-                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar, String.valueOf(controller.getSubtotalRawCosts()));
+                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar, String.valueOf(controller.getSubtotalRawCosts()), createCellFormat(true, 1));
                 sheetToSave.addCell(cellToSave);
 
 //                                ------------------
@@ -102,13 +105,13 @@ public class ExportCogs {
                 this.rowNoVar ++;
 
                 for (int columnFirstRow=columnNoVar;columnFirstRow<cogsTableColumnNames.length;columnFirstRow++){
-                    cellToSave = new Label(columnFirstRow, rowNoVar, cogsTableColumnNames[columnFirstRow]);
+                    cellToSave = new Label(columnFirstRow, rowNoVar, cogsTableColumnNames[columnFirstRow], createCellFormat(true, 1));
                     sheetToSave.addCell(cellToSave);
                 }
 
                 for (int rowNo=0; rowNo<controller.view.getCogsProductionData().length;rowNo++){
                     for (int columnNo=0; columnNo<controller.view.getCogsProductionData()[rowNo].length;columnNo++){
-                        cellToSave = new Label(columnNo, rowNoVar, String.valueOf(controller.view.getCogsProductionData()[rowNo][columnNo]));
+                        cellToSave = new Label(columnNo, rowNoVar, String.valueOf(controller.view.getCogsProductionData()[rowNo][columnNo]), createCellFormat(true, 2));
                         sheetToSave.addCell(cellToSave);
                         System.out.println("i "+rowNo);
                         System.out.println("j "+columnNo);
@@ -117,16 +120,44 @@ public class ExportCogs {
                     this.rowNoVar++;
                 }
 
-                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar, String.valueOf(controller.getSubtotalProductionCosts()));
+                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar, String.valueOf(controller.getSubtotalProductionCosts()), createCellFormat(true, 1));
                 sheetToSave.addCell(cellToSave);
 
                 this.rowNoVar++;
 
 //                TODO: move round to controller
-                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar, String.valueOf(controller.round(controller.getSubtotalRawCosts()
-                        +controller.getSubtotalMaterialsCosts()
-                        +controller.getSubtotalProductionCosts(), 2)));
+//                cellToSave = new Label(controller.view.getCogsMaterialsData().length, rowNoVar, String.valueOf(controller.round((controller.getSubtotalRawCosts()
+//                        +controller.getSubtotalMaterialsCosts()
+//                        +controller.getSubtotalProductionCosts())/1000, 2))+" PLN");
+//                sheetToSave.addCell(cellToSave);
+
+                int columnNo = controller.view.getCogsMaterialsData().length -2;
+                int cogsNumbersCounter = 0;
+                int cogsNamesCounter = 0;
+                    for (int k=0; k<10;k++){
+                        if (columnNo == controller.view.getCogsMaterialsData().length-2){
+                            cellToSave = new Label(columnNo,rowNoVar,String.valueOf(controller.cogsTable.getCogsPriceElementsNames()[cogsNamesCounter]), createCellFormat(true, 2));
+                            columnNo = controller.view.getCogsMaterialsData().length -1;
+                            cogsNamesCounter++;
+                            sheetToSave.addCell(cellToSave);
+                        } else if (columnNo == controller.view.getCogsMaterialsData().length-1){
+                        cellToSave = new Label(columnNo,rowNoVar,String.valueOf(controller.cogsTable.getCogsPriceElements()[cogsNumbersCounter])+ " Eur", createCellFormat(true, 2));
+                        columnNo = controller.view.getCogsMaterialsData().length;
+                        cogsNumbersCounter++;
+                        sheetToSave.addCell(cellToSave);
+                    } else if (columnNo == controller.view.getCogsMaterialsData().length){
+                            cellToSave = new Label(columnNo,rowNoVar,String.valueOf(controller.cogsTable.getCogsPriceElements()[cogsNumbersCounter])+ " Pln", createCellFormat(true, 2));
+                            rowNoVar++;
+                            cogsNumbersCounter++;
+                            columnNo = controller.view.getCogsMaterialsData().length-2;
+                            sheetToSave.addCell(cellToSave);
+                        }
+                    }
+
+                cellToSave = new Label(columnNo,rowNoVar,String.valueOf(controller.cogsTable.getPercentageMargin())+" %", createCellFormat(true, 2));
                 sheetToSave.addCell(cellToSave);
+
+//                Changing cells look
 
 
                 try {
@@ -149,6 +180,33 @@ public class ExportCogs {
 //            System.out.println(savePath);
         }
 
+    public WritableCellFormat createCellFormat(boolean b, int formatType) throws WriteException {
+        WritableFont wfontStatus;
+        WritableCellFormat fCellstatus;
+        if (formatType == 1) {
+            wfontStatus = new WritableFont(WritableFont.createFont("Arial"), WritableFont.DEFAULT_POINT_SIZE, WritableFont.NO_BOLD, false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+            fCellstatus = new WritableCellFormat(wfontStatus);
+
+
+            fCellstatus.setWrap(true);
+            fCellstatus.setAlignment(jxl.format.Alignment.CENTRE);
+            fCellstatus.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
+            fCellstatus.setBorder(jxl.format.Border.ALL, BorderLineStyle.THICK, Colour.BLACK);
+            fCellstatus.setBackground(Colour.LIGHT_TURQUOISE2);
+            return fCellstatus;
+        } else {
+            wfontStatus = new WritableFont(WritableFont.createFont("Arial"), WritableFont.DEFAULT_POINT_SIZE, WritableFont.NO_BOLD, false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+            fCellstatus = new WritableCellFormat(wfontStatus);
+
+
+            fCellstatus.setWrap(true);
+            fCellstatus.setAlignment(jxl.format.Alignment.CENTRE);
+            fCellstatus.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
+            fCellstatus.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.MEDIUM, Colour.BLACK);
+            return fCellstatus;
+    }
+
+    }
 
 
 

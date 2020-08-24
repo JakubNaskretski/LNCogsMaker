@@ -1,9 +1,6 @@
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -68,9 +65,9 @@ public class Controller {
             pricesTable.loadProductionTableDataSource(startingView.getFrame());
         });
 
-        startingView.getMenuItemChangeCurrencies().addActionListener(e -> {
-            new ChangeCurrencyController(startingView.getFrame(), pricesTable, this);
-        });
+//        startingView.getMenuItemChangeCurrencies().addActionListener(e -> {
+//            new ChangeCurrencyController(startingView.getFrame(), pricesTable, this);
+//        });
 
     }
 
@@ -111,6 +108,10 @@ public class Controller {
 
         view.getMenuItemExport().addActionListener(e -> {
             new ExportCogs(this);
+        });
+
+        view.getMenuItemPrintCogs().addActionListener(e -> {
+//            new JLabel()
         });
 
 //        =================================== Add items listeners
@@ -208,6 +209,7 @@ public class Controller {
         view.getProductCapacityLabel().setText("Pojemność produktu "+formulationTableClass.getProductCapacity());
         view.getClientNameLabel().setText("Klient "+formulationTableClass.getClientName());
         view.getDateOfTheFormulationLabel().setText("Formulacja z "+formulationTableClass.getFormulationDate());
+
 
 //                =================================== Item choosers listeners
 
@@ -504,27 +506,44 @@ public class Controller {
 
     protected void calculateCogsPrices(){
         if (view.getCogsEurPriceTextField().getText().length() > 0){
+
             double cogsEurPrice = Double.valueOf(view.getCogsEurPriceTextField().getText());
             double cogsValue = (round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2));
 
-            view.getCogsEurTextField().setText(String.valueOf(round(cogsValue/pricesTable.getEuroRate(),2))+" EUR");
+            double cogsEurValue = (round(cogsValue/pricesTable.getEuroRate(),2));
+            view.getCogsEurTextField().setText(String.valueOf(cogsEurValue)+" EUR");
             view.getCogsPlnTextField().setText(String.valueOf(cogsValue)+" PLN");
 
-            view.getCogsPlnPriceTextField().setText(String.valueOf(round(cogsEurPrice*pricesTable.getEuroRate(),2))+" PLN");
+            double plnCogsPrice = (round(cogsEurPrice*pricesTable.getEuroRate(),2));
+            view.getCogsPlnPriceTextField().setText(String.valueOf(plnCogsPrice)+" PLN");
 
-            view.getCogsEurMarginTextField().setText(String.valueOf(round(cogsEurPrice-(cogsValue/pricesTable.getEuroRate()),2))+" EUR");
-            view.getCogsPlnMarginTexField().setText(String.valueOf(round((cogsEurPrice*pricesTable.getEuroRate())-cogsValue,2))+" PLN");
+            double eurMargin = (round(cogsEurPrice-(cogsValue/pricesTable.getEuroRate()),2));
+            double plnMargin = ((round((cogsEurPrice*pricesTable.getEuroRate())-cogsValue,2)));
+            view.getCogsEurMarginTextField().setText(String.valueOf(eurMargin)+" EUR");
+            view.getCogsPlnMarginTexField().setText(String.valueOf(plnMargin)+" PLN");
 
-            view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round((((cogsEurPrice-(cogsValue/pricesTable.getEuroRate()))/Double.valueOf(cogsEurPrice))*100),0))));
+            int percentageMargin = (int)(round((((cogsEurPrice-(cogsValue/pricesTable.getEuroRate()))/Double.valueOf(cogsEurPrice))*100),0));
+            view.getCogsMarginPercantageTextField().setText(String.valueOf(percentageMargin));
+
+            cogsTable.getCogsPriceElements()[0] = cogsEurValue;
+            cogsTable.getCogsPriceElements()[1] = cogsValue;
+            cogsTable.getCogsPriceElements()[2] = cogsEurPrice;
+            cogsTable.getCogsPriceElements()[3] = plnCogsPrice;
+            cogsTable.getCogsPriceElements()[4] = eurMargin;
+            cogsTable.getCogsPriceElements()[5] = plnMargin;
+
+            cogsTable.setPercentageMargin(percentageMargin);
+
+
 
 
         } else if (view.getCogsPlnPriceTextField().getText().length() > 0) {
             double cogsPlnPrice = round(Double.valueOf(view.getCogsPlnPriceTextField().getText()), 2);
             double cogsValue = (round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2));
 
-            view.getCogsEurTextField().setText( String.valueOf(round(cogsPlnPrice*pricesTable.getEuroRate(),2))+" EUR");
-            view.getCogsPlnTextField().setText(String.valueOf(cogsPlnPrice));
-            view.getCogsEurPriceTextField().setText(String.valueOf(round(cogsPlnPrice/pricesTable.getEuroRate(),2)));
+            view.getCogsEurTextField().setText( String.valueOf(cogsValue+" EUR"));
+            view.getCogsPlnTextField().setText(String.valueOf(cogsValue));
+            view.getCogsEurPriceTextField().setText(String.valueOf(round(cogsPlnPrice/pricesTable.getEuroRate(),2) + " EUR"));
             view.getCogsEurMarginTextField().setText(round((cogsPlnPrice/pricesTable.getEuroRate()-(cogsValue/pricesTable.getEuroRate())),2) + " EUR");
             view.getCogsPlnMarginTexField().setText(round((cogsPlnPrice - cogsValue),2) + "PLN");
             view.getCogsMarginPercantageTextField().setText(String.valueOf((int)(round((((cogsPlnPrice-cogsValue)/Double.valueOf(cogsPlnPrice))*100),0))));
@@ -558,7 +577,7 @@ public class Controller {
 
         subtotalProductionCosts = 0.0;
         for (Double subtotalCost : subtotalProductionList){
-            subtotalProductionCosts += subtotalCost;}
+            subtotalProductionCosts += round(subtotalCost, 1);}
         view.getCogsProductionSubtotalTextField().setText(round((subtotalProductionCosts),2) + " PLN");
         view.getCogsTotalCostsTextField().setText(round((subtotalRawCosts + subtotalMaterialsCosts + subtotalProductionCosts)/1000,2) + " PLN");
 
