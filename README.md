@@ -17,8 +17,18 @@ In future release excel will be replace by OBDC interface which will get informa
 
 Additional Libraries:
   - Java Excel API
+
+## Installation
+Currently requires JDK in version 14.0
+
+## Usage
+After opening app, there is starting view with some basic options avalible on the navbar and load formulation button.
+![There shiuld be starting view](/images/StartingView.png)
   
-  ## Usage
-  After opening app, there is starting view with some basic options avalible on the navbar and load cogs button.
-  ![There shiuld be starting view](/images/StartingView.png)
-  Starting View
+Starting View
+
+Clicking load formulation allows to choose from formulations and going to the next screen.
+![There shiuld be main view](/images/MainView.png)
+
+
+ 
