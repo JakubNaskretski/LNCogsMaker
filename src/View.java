@@ -418,7 +418,7 @@ public class View {
         c.gridwidth = 4;
         mainJPanelContainer.add(formulationTableScrollPane,c);
 
-        loadFormulationButton = new JButton("Wczytaj formulacje");
+        loadFormulationButton = new JButton("Load formulation");
 //        c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 11;
