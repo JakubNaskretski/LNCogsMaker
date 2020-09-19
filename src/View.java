@@ -72,7 +72,7 @@ public class View {
 
         menuFile = new JMenu("Plik");
         menuBar.add(menuFile);
-        menuAddItems = new JMenu("Dodaj przedmioty");
+        menuAddItems = new JMenu("Add items");
         menuBar.add(menuAddItems);
         changeCurrencies = new JMenu("Currency");
         menuBar.add(changeCurrencies);
@@ -87,9 +87,9 @@ public class View {
         menuFile.add(menuItemChangePricesSource);
         menuItemChangeProductionPricesSource = new JMenuItem("Change production price source");
         menuFile.add(menuItemChangeProductionPricesSource);
-        saveCogsMenuItem = new JMenuItem("Zapisz cogs");
+        saveCogsMenuItem = new JMenuItem("Save cogs");
 //        menuFile.add(saveCogsMenuItem);
-        loadCogsMenuItem = new JMenuItem("Wczytaj cogs");
+        loadCogsMenuItem = new JMenuItem("Load cogs");
 //        menuFile.add(loadCogsMenuItem);
 
 
