@@ -68,10 +68,10 @@ public class StartingView {
             mainJPanelContainer = new JPanel();
             mainJPanelContainer.setLayout(new GridLayout(2,1));
 
-            loadCogsButton = new JButton("Wczytaj COGs");
+            loadCogsButton = new JButton("Load COGs");
             mainJPanelContainer.add(loadCogsButton);
 
-            loadFormulationButton = new JButton("Wczytaj formulacje");
+            loadFormulationButton = new JButton("Load formulation");
             mainJPanelContainer.add(loadFormulationButton);
 
 
