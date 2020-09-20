@@ -27,7 +27,7 @@ After opening app, there is starting view with some basic options avalible on th
   
 Starting View
 
-Clicking load formulation allows to choose from formulations and going to the next screen.
+Clicking load formulation allows to choose formulation and move to the next screen.
 ![There shiuld be main view](/images/MainView.png)
 
 
