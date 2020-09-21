@@ -1,3 +1,9 @@
+import controllers.Controller;
+import tablesModels.FormulationTable;
+import tablesModels.PricesTable;
+import views.PopUpInfoView;
+import views.StartingView;
+
 import javax.swing.*;
 
 public class Main {
@@ -27,13 +33,13 @@ public class Main {
             // handle exception
         }
         catch (ClassNotFoundException e) {
-            new PopUpInfo("Cannot find look class");
+            new PopUpInfoView("Cannot find look class");
         }
         catch (InstantiationException e) {
-            new PopUpInfo("Instation exception with look class");
+            new PopUpInfoView("Instation exception with look class");
         }
         catch (IllegalAccessException e) {
-            new PopUpInfo("No acces for look class");
+            new PopUpInfoView("No acces for look class");
         }
 
         StartingView sv = new StartingView();
