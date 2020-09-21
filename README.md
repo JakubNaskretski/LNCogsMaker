@@ -1,6 +1,7 @@
 # LnCogsMaker
 Small GUI app used to automation process of calculation COGs (Cost of Goods) for price offer preparations
-Currently Functioning Beta Version
+
+### Currently Functioning Beta Version
 
 ## Description
 Target of this app is to help and speed up during calculating COGs process during product evaluation in company.
@@ -27,7 +28,7 @@ After opening app, there is starting view with some basic options avalible on th
   
 Starting views.View
 
-Clicking load formulation allows to choose from formulations and going to the next screen.
+Clicking load formulation allows to choose formulation and move to the next screen.
 ![There shiuld be main view](/images/MainView.png)
 
 
