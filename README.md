@@ -24,12 +24,12 @@ Currently requires JDK in version 14.0
 
 ## Usage
 After opening app, there is starting view with some basic options avalible on the navbar and load formulation button.
-![There shiuld be starting view](/images/StartingView.png)
+![There shuld be starting view](/images/StartingView.png)
   
 Starting views.View
 
 Clicking load formulation allows to choose formulation and move to the next screen.
-![There shiuld be main view](/images/MainView.png)
+![There shuld be main view](/images/MainView.png)
 
 
  
