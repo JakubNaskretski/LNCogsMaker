@@ -12,6 +12,7 @@ Application includes some usefull futures as:
   - loading and changing prices source
   - uploading different formulations
   - adding new items and new prices to the data source
+  - updating currency rates for EUR and USD
 
 Source of data for now is excel sheet with .xls extension. 
 In future release excel will be replace by OBDC interface which will get information directly from ERP system implemented in the company. 
